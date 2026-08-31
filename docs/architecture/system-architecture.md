@@ -3,7 +3,7 @@
              +---------+---------+
              |                   |
              v                   v
-        Flutter UI          User Input
+        java UI          User Input
              |
              v
         Spring Boot
