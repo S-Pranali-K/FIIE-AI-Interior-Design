@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F5F0"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- HEADER -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Room Survey"
+            android:textColor="#2F3E35"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Tell us about your room and design requirements"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+
+        <!-- SECTION A -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="A. ROOM DETAILS"
+            android:textColor="#2F3E35"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Room Type"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerRoomType"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Room Size (approximately)"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etRoomLength"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:hint="Length (ft)"
+                android:inputType="numberDecimal"
+                android:padding="12dp" />
+
+            <EditText
+                android:id="@+id/etRoomWidth"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:hint="Width (ft)"
+                android:inputType="numberDecimal"
+                android:padding="12dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Ceiling Height"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etCeilingHeight"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Height (ft)"
+            android:inputType="numberDecimal"
+            android:padding="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Number of Doors"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etDoors"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="e.g. 1"
+            android:inputType="number"
+            android:padding="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Number of Windows"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etWindows"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="e.g. 2"
+            android:inputType="number"
+            android:padding="12dp" />
+
+
+        <!-- SECTION B -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="B. EXISTING ROOM INFORMATION"
+            android:textColor="#2F3E35"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Existing Furniture"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <CheckBox
+            android:id="@+id/cbBed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bed" />
+
+        <CheckBox
+            android:id="@+id/cbWardrobe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wardrobe" />
+
+        <CheckBox
+            android:id="@+id/cbStudyTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Study Table" />
+
+        <CheckBox
+            android:id="@+id/cbChair"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chair" />
+
+        <CheckBox
+            android:id="@+id/cbSofa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sofa" />
+
+        <CheckBox
+            android:id="@+id/cbTvUnit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TV Unit" />
+
+        <CheckBox
+            android:id="@+id/cbOthers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Others" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Keep Existing Furniture?"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <RadioGroup
+            android:id="@+id/rgFurnitureAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbKeepFurniture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Keep" />
+
+            <RadioButton
+                android:id="@+id/rbRepositionFurniture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reposition" />
+
+            <RadioButton
+                android:id="@+id/rbReplaceFurniture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Replace" />
+
+        </RadioGroup>
+
+
+        <!-- SECTION C -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="C. DESIGN PREFERENCES"
+            android:textColor="#2F3E35"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Preferred Style"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Color Preference"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerColor"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Material Preference"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerMaterial"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Lighting Preference"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerLighting"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <EditText
+            android:id="@+id/etSpecialRequirement"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="14dp"
+            android:gravity="top"
+            android:hint="Any special requirement? e.g. more storage, study area, open space"
+            android:inputType="textMultiLine"
+            android:padding="12dp" />
+
+
+        <!-- SECTION D -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="D. VASTU PREFERENCES"
+            android:textColor="#2F3E35"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/cbEnableVastu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enable Vastu-aware recommendations" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Main Door Direction"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerDoorDirection"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Bed Direction"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerBedDirection"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Kitchen Direction"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerKitchenDirection"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Pooja / Temple Direction"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerPoojaDirection"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+
+        <!-- SECTION E -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="E. BUDGET DETAILS"
+            android:textColor="#2F3E35"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Total Budget (₹)"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etBudget"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="e.g. 100000"
+            android:inputType="number"
+            android:padding="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Budget Priority"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <RadioGroup
+            android:id="@+id/rgBudgetPriority"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rbLowCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Low Cost" />
+
+            <RadioButton
+                android:id="@+id/rbBalanced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Balanced" />
+
+            <RadioButton
+                android:id="@+id/rbPremium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premium" />
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Expected Completion"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerCompletion"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+
+        <!-- BUTTON -->
+
+        <Button
+            android:id="@+id/btnContinueSurvey"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:text="Continue to Image Analysis"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</ScrollView>

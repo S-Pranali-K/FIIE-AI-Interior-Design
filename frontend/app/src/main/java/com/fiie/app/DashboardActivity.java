@@ -6,23 +6,23 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class PreferencesActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity {
 
-    private Button btnGenerateDesign;
+    private Button btnNewDesign;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_preferences);
+        setContentView(R.layout.activity_dashboard);
 
-        btnGenerateDesign = findViewById(R.id.btnGenerateDesign);
+        btnNewDesign = findViewById(R.id.btnNewDesign);
 
-        btnGenerateDesign.setOnClickListener(v -> {
+        btnNewDesign.setOnClickListener(v -> {
 
             Intent intent = new Intent(
-                    PreferencesActivity.this,
-                    SurveyActivity.class
+                    DashboardActivity.this,
+                    NewProjectActivity.class
             );
 
             startActivity(intent);

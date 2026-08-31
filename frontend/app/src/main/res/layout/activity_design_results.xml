@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F5F0">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Design Results"
+            android:textColor="#2F3E35"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvRoomSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="AI analysis completed for your room"
+            android:textColor="#666666"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/ivDesignPreview"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginTop="20dp"
+            android:background="#E5E1DB"
+            android:contentDescription="AI design preview"
+            android:scaleType="centerInside" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Recommended Design"
+            android:textColor="#2F3E35"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvStyleRecommendation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Modern functional interior"
+            android:textColor="#444444"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvFunctionalRecommendation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Functional layout recommendations will appear here."
+            android:textColor="#555555"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tvVastuRecommendation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Vastu recommendations will appear here."
+            android:textColor="#555555"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btnViewDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="View Design Details" />
+
+    </LinearLayout>
+
+</ScrollView>
