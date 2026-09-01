@@ -1,3 +1,4 @@
+
 package com.file.backend.service;
 
 import com.file.backend.entity.User;
@@ -13,6 +14,20 @@ public class AuthService {
 
     public AuthService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public String register(String name, String email, String password) {
+
+        Optional<User> existingUser = userRepository.findByEmail(email);
+
+        if (existingUser.isPresent()) {
+            return "Email already registered";
+        }
+
+        User user = new User(name, email, password);
+        userRepository.save(user);
+
+        return "Registration successful";
     }
 
     public String login(String email, String password) {
@@ -32,3 +47,4 @@ public class AuthService {
         return "Login successful";
     }
 }
+
