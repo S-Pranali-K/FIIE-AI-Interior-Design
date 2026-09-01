@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="glassCanvasBackground" format="reference|color" />
+    <attr name="glassCardBackground" format="color" />
+    <attr name="glassCardStroke" format="color" />
+    <attr name="glassInputBackground" format="color" />
+    <attr name="glassInputStroke" format="color" />
+    <attr name="glassButtonGradientStart" format="color" />
+    <attr name="glassButtonGradientEnd" format="color" />
+    <attr name="glassTextColorPrimary" format="color" />
+    <attr name="glassTextColorSecondary" format="color" />
+</resources>
