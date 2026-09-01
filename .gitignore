@@ -38,4 +38,5 @@ control_inputs/
 
 # OS
 .DS_Store
-Thumbs.db
+Thumbs.db*.iml
+frontend/frontend.iml
