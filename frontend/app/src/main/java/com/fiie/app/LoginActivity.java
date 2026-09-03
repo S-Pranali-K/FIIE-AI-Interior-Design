@@ -10,12 +10,24 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.fiie.app.network.ApiService;
+import com.fiie.app.network.RetrofitClient;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail;
     private EditText etPassword;
     private Button btnLogin;
     private TextView tvRegister;
+
+    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +39,11 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         tvRegister = findViewById(R.id.tvRegister);
+
+        // Create Retrofit API service
+        apiService = RetrofitClient
+                .getInstance()
+                .create(ApiService.class);
 
         btnLogin.setOnClickListener(v -> validateLogin());
 
@@ -70,12 +87,71 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        Intent intent = new Intent(
-                LoginActivity.this,
-                DashboardActivity.class
-        );
+        // Call backend
+        loginToBackend(email, password);
+    }
 
-        startActivity(intent);
-        finish();
+    private void loginToBackend(String email, String password) {
+
+        Map<String, String> loginData = new HashMap<>();
+
+        loginData.put("email", email);
+        loginData.put("password", password);
+
+        btnLogin.setEnabled(false);
+
+        Call<String> call = apiService.login(loginData);
+
+        call.enqueue(new Callback<String>() {
+
+            @Override
+            public void onResponse(
+                    Call<String> call,
+                    Response<String> response
+            ) {
+
+                btnLogin.setEnabled(true);
+
+                if (response.isSuccessful()) {
+
+                    Toast.makeText(
+                            LoginActivity.this,
+                            "Login successful",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                    Intent intent = new Intent(
+                            LoginActivity.this,
+                            DashboardActivity.class
+                    );
+
+                    startActivity(intent);
+                    finish();
+
+                } else {
+
+                    Toast.makeText(
+                            LoginActivity.this,
+                            "Login failed. Check email and password.",
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
+            }
+
+            @Override
+            public void onFailure(
+                    Call<String> call,
+                    Throwable t
+            ) {
+
+                btnLogin.setEnabled(true);
+
+                Toast.makeText(
+                        LoginActivity.this,
+                        "Connection failed: " + t.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
     }
 }

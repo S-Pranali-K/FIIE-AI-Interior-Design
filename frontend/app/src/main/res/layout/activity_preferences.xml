@@ -1,145 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F5F0">
+    android:background="@drawable/bg_glass_orbs"
+    android:padding="20dp">
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:paddingVertical="20dp">
 
-            <TextView
-                android:id="@+id/tvPreferencesTitle"
+            <!-- Main Glass Card Container -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/glassCardPreferences"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Design Preferences"
-                android:textColor="#2F3E35"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                android:background="@drawable/glass_card_10"
+                android:padding="24dp">
 
-            <TextView
-                android:id="@+id/tvPreferencesSubtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Tell us how you want your space to look and function."
-                android:textColor="#777777"
-                android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/tvPreferencesTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Design Preferences"
+                    android:textColor="#FFFFFF"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tvRoomTypeLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="Room Type"
-                android:textColor="#2F3E35"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvPreferencesSubtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Tell us how you want your space to look and function."
+                    android:textColor="#B0BEC5"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPreferencesTitle" />
 
-            <Spinner
-                android:id="@+id/spinnerRoomType"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="8dp" />
+                <!-- Room Type -->
+                <TextView
+                    android:id="@+id/tvRoomTypeLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Room Type"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPreferencesSubtitle" />
 
-            <TextView
-                android:id="@+id/tvStyleLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Preferred Design Style"
-                android:textColor="#2F3E35"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                <Spinner
+                    android:id="@+id/spinnerRoomType"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/glass_input_10"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvRoomTypeLabel" />
 
-            <Spinner
-                android:id="@+id/spinnerStyle"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="8dp" />
+                <!-- Preferred Design Style -->
+                <TextView
+                    android:id="@+id/tvStyleLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Preferred Design Style"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/spinnerRoomType" />
 
-            <TextView
-                android:id="@+id/tvBudgetLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Budget Range"
-                android:textColor="#2F3E35"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                <Spinner
+                    android:id="@+id/spinnerStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/glass_input_10"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvStyleLabel" />
 
-            <Spinner
-                android:id="@+id/spinnerBudget"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="8dp" />
+                <!-- Budget Range -->
+                <TextView
+                    android:id="@+id/tvBudgetLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Budget Range"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/spinnerStyle" />
 
-            <TextView
-                android:id="@+id/tvFunctionalLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Functional Requirements"
-                android:textColor="#2F3E35"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                <Spinner
+                    android:id="@+id/spinnerBudget"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/glass_input_10"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvBudgetLabel" />
 
-            <EditText
-                android:id="@+id/etFunctionalRequirements"
-                android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:layout_marginTop="8dp"
-                android:gravity="top|start"
-                android:hint="Example: More storage, better lighting, study area..."
-                android:inputType="textMultiLine"
-                android:padding="12dp"
-                android:backgroundTint="#2F3E35" />
+                <!-- Functional Requirements -->
+                <TextView
+                    android:id="@+id/tvFunctionalLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Functional Requirements"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/spinnerBudget" />
 
-            <TextView
-                android:id="@+id/tvVastuLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Vastu Guidance"
-                android:textColor="#2F3E35"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/etFunctionalRequirements"
+                    android:layout_width="0dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/glass_input_10"
+                    android:gravity="top|start"
+                    android:hint="Example: More storage, better lighting, study area..."
+                    android:inputType="textMultiLine"
+                    android:padding="16dp"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#80FFFFFF"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvFunctionalLabel" />
 
-            <Switch
-                android:id="@+id/switchVastu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Include optional Vastu-based suggestions"
-                android:textColor="#555555"
-                android:textSize="14sp" />
+                <!-- Vastu Guidance -->
+                <TextView
+                    android:id="@+id/tvVastuLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Vastu Guidance"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/etFunctionalRequirements" />
 
-            <Button
-                android:id="@+id/btnGenerateDesign"
-                android:layout_width="match_parent"
-                android:layout_height="58dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="24dp"
-                android:backgroundTint="#2F3E35"
-                android:text="GENERATE DESIGN"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchVastu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Include optional Vastu-based suggestions"
+                    android:textColor="#B0BEC5"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvVastuLabel" />
+
+                <!-- Action Button -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnGenerateDesign"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="28dp"
+                    android:background="@drawable/glass_btn_10"
+                    android:text="GENERATE DESIGN"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/switchVastu" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 

@@ -1,41 +1,40 @@
-# Python
+# Android / Gradle
+.gradle/
+**/build/
+**/.cxx/
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+**/*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+
+# Node / Python / AI service generated files
+node_modules/
 __pycache__/
-*.py[cod]
-*.pyd
+*.pyc
 
-# Virtual environment
-venv/
-.venv/
-env/
-
-# Environment variables / secrets
+# Environment / secrets
 .env
 .env.*
 !.env.example
 
-# AI model weights - DO NOT upload
-*.pt
-*.pth
-*.onnx
+# Duplicate project copies
+/FIIE-AI-Interior-Design/
+/FIIE-clone/
+
+# AI generation environment and models
+ai-generation/venv/
+ai-generation/models/
+ai-generation/output/
+ai-generation/input/
+ai-generation/__pycache__/
+*.ckpt
 *.safetensors
-
-# Test/input images
-*.jpg
-*.jpeg
-*.png
-*.webp
-
-# Generated outputs
-generated/
-control_inputs/
-
-# Logs
-*.log
-
-# IDE
-.vscode/
-.idea/
-
-# OS
-.DS_Store
-Thumbs.db

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Deep Dark Canvas -->
+    <item>
+        <color android:color="#0B1120" />
+    </item>
+
+    <!-- Top Glow Orb (Emerald / Dark Forest Accent) -->
+    <item android:bottom="350dp" android:right="120dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="300dp"
+                android:startColor="#552C3E35"
+                android:endColor="#00000000" />
+        </shape>
+    </item>
+
+    <!-- Bottom Glow Orb (Warm Copper / Sand Accent) -->
+    <item android:top="350dp" android:left="120dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="300dp"
+                android:startColor="#458C7A6B"
+                android:endColor="#00000000" />
+        </shape>
+    </item>
+</layer-list>

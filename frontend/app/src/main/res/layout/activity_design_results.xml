@@ -21,122 +21,117 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingVertical="12dp">
+            android:paddingVertical="10dp">
 
-            <!-- Header Section -->
-            <TextView
-                android:id="@+id/tvDashboardTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Welcome to FIIE"
-                android:textColor="#FFFFFF"
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvDashboardSubtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Design a more functional and personalized space."
-                android:textColor="#B0BEC5"
-                android:textSize="15sp" />
-
-            <!-- Card 1: Start New Design -->
+            <!-- Main Glass Card Container -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/glassCardNewDesign"
+                android:id="@+id/glassCardResults"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:background="@drawable/glass_card_10"
                 android:padding="24dp">
 
                 <TextView
-                    android:id="@+id/tvNewDesignTitle"
+                    android:id="@+id/tvHeaderTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Start a New Design"
+                    android:text="Design Results"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="26sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tvNewDesignDescription"
+                    android:id="@+id/tvRoomSummary"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Upload a room image and let FIIE analyze your space and generate personalized interior design recommendations."
+                    android:layout_marginTop="6dp"
+                    android:text="AI analysis completed for your room"
                     android:textColor="#B0BEC5"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvNewDesignTitle" />
+                    app:layout_constraintTop_toBottomOf="@id/tvHeaderTitle" />
+
+                <!-- AI Design Preview Image Container -->
+                <ImageView
+                    android:id="@+id/ivDesignPreview"
+                    android:layout_width="0dp"
+                    android:layout_height="220dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/glass_input_10"
+                    android:contentDescription="AI design preview"
+                    android:padding="4dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvRoomSummary" />
+
+                <TextView
+                    android:id="@+id/tvRecTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Recommended Design"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivDesignPreview" />
+
+                <TextView
+                    android:id="@+id/tvStyleRecommendation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Modern functional interior"
+                    android:textColor="#E0E0E0"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvRecTitle" />
+
+                <TextView
+                    android:id="@+id/tvFunctionalRecommendation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Functional layout recommendations will appear here."
+                    android:textColor="#B0BEC5"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvStyleRecommendation" />
+
+                <TextView
+                    android:id="@+id/tvVastuRecommendation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Vastu recommendations will appear here."
+                    android:textColor="#B0BEC5"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvFunctionalRecommendation" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnNewDesign"
+                    android:id="@+id/btnViewDetails"
                     android:layout_width="0dp"
                     android:layout_height="54dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="28dp"
                     android:background="@drawable/glass_btn_10"
-                    android:text="START NEW DESIGN"
+                    android:text="VIEW DESIGN DETAILS"
                     android:textColor="#FFFFFF"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvNewDesignDescription" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Card 2: My Projects -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/glassCardProjects"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/glass_card_10"
-                android:padding="24dp">
-
-                <TextView
-                    android:id="@+id/tvProjectsTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="My Projects"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvProjectsDescription"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Your saved interior design projects will appear here."
-                    android:textColor="#B0BEC5"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvProjectsTitle" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnProjects"
-                    android:layout_width="0dp"
-                    android:layout_height="54dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/glass_btn_10"
-                    android:text="VIEW MY PROJECTS"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvProjectsDescription" />
+                    app:layout_constraintTop_toBottomOf="@id/tvVastuRecommendation" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
