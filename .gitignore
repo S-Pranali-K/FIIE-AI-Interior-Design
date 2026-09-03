@@ -29,3 +29,12 @@ __pycache__/
 # Duplicate project copies
 /FIIE-AI-Interior-Design/
 /FIIE-clone/
+
+# AI generation environment and models
+ai-generation/venv/
+ai-generation/models/
+ai-generation/output/
+ai-generation/input/
+ai-generation/__pycache__/
+*.ckpt
+*.safetensors
