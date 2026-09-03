@@ -44,21 +44,17 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         tvAlreadyAccount = findViewById(R.id.tvAlreadyAccount);
 
-        // Connect Retrofit to backend API
         apiService = RetrofitClient
                 .getInstance()
                 .create(ApiService.class);
 
-        // Register button
         btnRegister.setOnClickListener(v -> validateRegistration());
 
-        // Already have account -> Login
         tvAlreadyAccount.setOnClickListener(v -> {
             Intent intent = new Intent(
                     RegisterActivity.this,
                     LoginActivity.class
             );
-
             startActivity(intent);
             finish();
         });
@@ -71,14 +67,12 @@ public class RegisterActivity extends AppCompatActivity {
         String password = etRegisterPassword.getText().toString();
         String confirmPassword = etConfirmPassword.getText().toString();
 
-        // Name validation
         if (name.isEmpty()) {
             etName.setError("Full name is required");
             etName.requestFocus();
             return;
         }
 
-        // Email validation
         if (email.isEmpty()) {
             etRegisterEmail.setError("Email is required");
             etRegisterEmail.requestFocus();
@@ -91,7 +85,6 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Password validation
         if (password.isEmpty()) {
             etRegisterPassword.setError("Password is required");
             etRegisterPassword.requestFocus();
@@ -106,7 +99,6 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Confirm password validation
         if (confirmPassword.isEmpty()) {
             etConfirmPassword.setError(
                     "Please confirm your password"
@@ -123,7 +115,6 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Everything is valid -> call backend
         registerToBackend(name, email, password);
     }
 
@@ -139,7 +130,6 @@ public class RegisterActivity extends AppCompatActivity {
         registerData.put("email", email);
         registerData.put("password", password);
 
-        // Prevent multiple clicks
         btnRegister.setEnabled(false);
 
         Call<String> call = apiService.register(registerData);
@@ -162,8 +152,6 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT
                     ).show();
 
-                    // IMPORTANT:
-                    // Redirect to Login AFTER successful backend response
                     Intent intent = new Intent(
                             RegisterActivity.this,
                             LoginActivity.class
@@ -174,12 +162,19 @@ public class RegisterActivity extends AppCompatActivity {
 
                 } else {
 
-                    String errorMessage = "Registration failed";
+                    String errorMessage =
+                            "Registration failed (" +
+                                    response.code() + ")";
 
                     try {
                         if (response.errorBody() != null) {
-                            errorMessage =
+
+                            String serverMessage =
                                     response.errorBody().string();
+
+                            if (!serverMessage.isEmpty()) {
+                                errorMessage = serverMessage;
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
