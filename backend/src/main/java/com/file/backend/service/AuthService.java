@@ -15,6 +15,20 @@ public class AuthService {
         this.userRepository = userRepository;
     }
 
+    public String register(String email, String password) {
+
+        Optional<User> existingUser = userRepository.findByEmail(email);
+
+        if (existingUser.isPresent()) {
+            return "Email already registered";
+        }
+
+        User user = new User(email, password);
+        userRepository.save(user);
+
+        return "Registration successful";
+    }
+
     public String login(String email, String password) {
 
         Optional<User> userOptional = userRepository.findByEmail(email);
