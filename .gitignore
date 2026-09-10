@@ -1,0 +1,40 @@
+# Android / Gradle
+.gradle/
+**/build/
+**/.cxx/
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+**/*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+
+# Node / Python / AI service generated files
+node_modules/
+__pycache__/
+*.pyc
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Duplicate project copies
+/FIIE-AI-Interior-Design/
+/FIIE-clone/
+
+# AI generation environment and models
+ai-generation/venv/
+ai-generation/models/
+ai-generation/output/
+ai-generation/input/
+ai-generation/__pycache__/
+*.ckpt
+*.safetensors

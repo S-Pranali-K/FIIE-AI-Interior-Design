@@ -5,122 +5,169 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F5F0"
+    android:background="?attr/glassCanvasBackground"
     android:padding="24dp">
 
-    <TextView
-        android:id="@+id/tvNewProjectTitle"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="New Interior Design"
-        android:textColor="#2F3E35"
-        android:textSize="28sp"
-        android:textStyle="bold"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvNewProjectSubtitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Let's understand your room before creating your personalized design."
-        android:textColor="#777777"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvNewProjectTitle" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="12dp">
 
-    <TextView
-        android:id="@+id/tvRoomImageTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Room Image"
-        android:textColor="#2F3E35"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvNewProjectSubtitle" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/glassCardNewProject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/glass_card_10"
+                android:padding="24dp">
 
-    <TextView
-        android:id="@+id/tvRoomImageDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Upload a clear image of the room you want to redesign."
-        android:textColor="#777777"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRoomImageTitle" />
+                <!-- Title -->
 
-    <Button
-        android:id="@+id/btnSelectRoomImage"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#2F3E35"
-        android:text="SELECT ROOM IMAGE"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRoomImageDescription" />
-    <ImageView
-        android:id="@+id/ivRoomPreview"
-        android:layout_width="0dp"
-        android:layout_height="220dp"
-        android:layout_marginTop="16dp"
-        android:background="#E5E2DC"
-        android:contentDescription="Selected room image"
-        android:scaleType="centerCrop"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnSelectRoomImage" />
+                <TextView
+                    android:id="@+id/tvNewProjectTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="New Interior Design"
+                    android:textColor="?attr/glassTextColorPrimary"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvPreferencesTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Design Preferences"
-        android:textColor="#2F3E35"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivRoomPreview" />
+                <!-- Subtitle -->
 
-    <TextView
-        android:id="@+id/tvPreferencesDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Your style, functional requirements, and budget will be used to personalize the design."
-        android:textColor="#777777"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvPreferencesTitle" />
+                <TextView
+                    android:id="@+id/tvNewProjectSubtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Let's understand your room before creating your personalized design."
+                    android:textColor="?attr/glassTextColorSecondary"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvNewProjectTitle" />
 
-    <Button
-        android:id="@+id/btnContinuePreferences"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#D9DED9"
-        android:text="CONTINUE"
-        android:textColor="#2F3E35"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvPreferencesDescription" />
+                <!-- Description -->
+
+                <TextView
+                    android:id="@+id/tvRoomImageDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Upload a clear photo of your room first. Then complete your design preferences and room survey so FIIE can understand your space."
+                    android:textColor="?attr/glassTextColorSecondary"
+                    android:textSize="15sp"
+                    android:lineSpacingExtra="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvNewProjectSubtitle" />
+
+                <!-- Room Image Title -->
+
+                <TextView
+                    android:id="@+id/tvRoomImageTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Room Image"
+                    android:textColor="?attr/glassTextColorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvRoomImageDescription" />
+
+                <!-- Select Image -->
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSelectRoomImage"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/glass_btn_10"
+                    android:text="SELECT ROOM IMAGE"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvRoomImageTitle" />
+
+                <!-- Image Preview -->
+
+                <ImageView
+                    android:id="@+id/ivRoomPreview"
+                    android:layout_width="0dp"
+                    android:layout_height="220dp"
+                    android:layout_marginTop="16dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Selected room image preview"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnSelectRoomImage" />
+
+                <!-- Preferences Section -->
+
+                <TextView
+                    android:id="@+id/tvPreferencesTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Design Preferences"
+                    android:textColor="?attr/glassTextColorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivRoomPreview" />
+
+                <TextView
+                    android:id="@+id/tvPreferencesDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:text="Continue to set your style, budget, functional requirements and other design preferences."
+                    android:textColor="?attr/glassTextColorSecondary"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPreferencesTitle" />
+
+                <!-- Continue -->
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnContinuePreferences"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/glass_btn_10"
+                    android:text="CONTINUE TO PREFERENCES"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPreferencesDescription" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
