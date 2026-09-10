@@ -49,6 +49,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".ImageUploadActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".AIAnalysisActivity"
             android:exported="false" />
 

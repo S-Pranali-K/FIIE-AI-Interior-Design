@@ -1,35 +1,34 @@
 package com.fiie.app;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.widget.ProgressBar;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AIAnalysisActivity extends AppCompatActivity {
+public class ImageUploadActivity extends AppCompatActivity {
 
-    private ProgressBar progressAnalysis;
-    private TextView tvProgress;
-    private TextView tvAnalysisMessage;
+    private static final int IMAGE_PICKER_REQUEST = 100;
 
-    private int progress = 0;
+    private ImageView ivRoomImage;
+    private TextView tvImageStatus;
+    private Button btnSelectImage;
+    private Button btnContinueImage;
 
-    private final Handler handler =
-            new Handler(Looper.getMainLooper());
+    private Uri selectedImageUri;
 
-
-    // =========================================
-    // PROJECT DATA
-    // =========================================
-
-    private long userId;
+    // -----------------------------------------
+    // Project / Survey Data
+    // -----------------------------------------
 
     private String roomImageUri;
 
-    // Room information
+    private long userId;
+
     private String roomType;
     private String roomLength;
     private String roomWidth;
@@ -37,7 +36,6 @@ public class AIAnalysisActivity extends AppCompatActivity {
     private String doors;
     private String windows;
 
-    // Existing furniture
     private boolean hasBed;
     private boolean hasWardrobe;
     private boolean hasStudyTable;
@@ -48,25 +46,21 @@ public class AIAnalysisActivity extends AppCompatActivity {
 
     private String furnitureAction;
 
-    // Design preferences
     private String style;
     private String color;
     private String material;
     private String lighting;
+
     private String specialRequirement;
 
-    // Vastu
     private boolean vastuEnabled;
     private String doorDirection;
     private String bedDirection;
     private String kitchenDirection;
     private String poojaDirection;
 
-    // Budget
     private String budget;
     private String budgetPriority;
-
-    // Completion
     private String completion;
 
 
@@ -74,43 +68,81 @@ public class AIAnalysisActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_ai_analysis);
+        setContentView(R.layout.activity_image_upload);
 
 
         // -----------------------------------------
         // Initialize Views
         // -----------------------------------------
 
-        progressAnalysis =
-                findViewById(R.id.progressAnalysis);
+        ivRoomImage =
+                findViewById(R.id.ivRoomImage);
 
-        tvProgress =
-                findViewById(R.id.tvProgress);
+        tvImageStatus =
+                findViewById(R.id.tvImageStatus);
 
-        tvAnalysisMessage =
-                findViewById(R.id.tvAnalysisMessage);
+        btnSelectImage =
+                findViewById(R.id.btnSelectImage);
 
-
-        // -----------------------------------------
-        // Receive Complete Project Data
-        // -----------------------------------------
-
-        receiveProjectData();
+        btnContinueImage =
+                findViewById(R.id.btnContinueImage);
 
 
         // -----------------------------------------
-        // Start Analysis
+        // Receive Survey Data
         // -----------------------------------------
 
-        startAnalysis();
+        receiveSurveyData();
+
+
+        // -----------------------------------------
+        // Display Existing Image
+        // -----------------------------------------
+
+        if (roomImageUri != null
+                && !roomImageUri.isEmpty()) {
+
+            selectedImageUri =
+                    Uri.parse(roomImageUri);
+
+            ivRoomImage.setImageURI(
+                    selectedImageUri
+            );
+
+            ivRoomImage.setVisibility(
+                    ImageView.VISIBLE
+            );
+
+            tvImageStatus.setText(
+                    "Room image selected successfully"
+            );
+        }
+
+
+        // -----------------------------------------
+        // Select / Replace Image
+        // -----------------------------------------
+
+        btnSelectImage.setOnClickListener(
+                v -> openImagePicker()
+        );
+
+
+        // -----------------------------------------
+        // Continue to AI Analysis
+        // -----------------------------------------
+
+        btnContinueImage.setOnClickListener(
+                v -> continueToAIAnalysis()
+        );
     }
 
 
     // =========================================
-    // RECEIVE PROJECT DATA
+    // RECEIVE SURVEY DATA
     // =========================================
 
-    private void receiveProjectData() {
+    private void receiveSurveyData() {
 
         Intent intent = getIntent();
 
@@ -127,7 +159,7 @@ public class AIAnalysisActivity extends AppCompatActivity {
 
 
         // -----------------------------------------
-        // Room Image
+        // Image
         // -----------------------------------------
 
         roomImageUri =
@@ -216,6 +248,7 @@ public class AIAnalysisActivity extends AppCompatActivity {
                         "has_other_furniture",
                         false
                 );
+
 
         furnitureAction =
                 intent.getStringExtra(
@@ -311,105 +344,27 @@ public class AIAnalysisActivity extends AppCompatActivity {
 
 
     // =========================================
-    // AI ANALYSIS UI
+    // CONTINUE TO AI ANALYSIS
     // =========================================
 
-    private void startAnalysis() {
+    private void continueToAIAnalysis() {
 
-        progress = 0;
+        if (selectedImageUri == null) {
 
-        progressAnalysis.setProgress(0);
+            Toast.makeText(
+                    ImageUploadActivity.this,
+                    "Please select a room image first.",
+                    Toast.LENGTH_SHORT
+            ).show();
 
-        tvProgress.setText("0%");
+            return;
+        }
 
-        tvAnalysisMessage.setText(
-                "Starting FIIE analysis..."
-        );
-
-
-        handler.postDelayed(
-                new Runnable() {
-
-                    @Override
-                    public void run() {
-
-                        progress += 5;
-
-                        progressAnalysis.setProgress(
-                                progress
-                        );
-
-                        tvProgress.setText(
-                                progress + "%"
-                        );
-
-
-                        if (progress < 25) {
-
-                            tvAnalysisMessage.setText(
-                                    "Processing room image..."
-                            );
-
-                        } else if (progress < 45) {
-
-                            tvAnalysisMessage.setText(
-                                    "Understanding room and existing furniture..."
-                            );
-
-                        } else if (progress < 65) {
-
-                            tvAnalysisMessage.setText(
-                                    "Evaluating space utilization and movement..."
-                            );
-
-                        } else if (progress < 80) {
-
-                            tvAnalysisMessage.setText(
-                                    "Analyzing preferences, Vastu and budget..."
-                            );
-
-                        } else if (progress < 100) {
-
-                            tvAnalysisMessage.setText(
-                                    "Preparing personalized design recommendations..."
-                            );
-
-                        } else {
-
-                            tvAnalysisMessage.setText(
-                                    "Analysis completed!"
-                            );
-
-                            handler.postDelayed(
-                                    () -> openDesignResults(),
-                                    800
-                            );
-
-                            return;
-                        }
-
-
-                        handler.postDelayed(
-                                this,
-                                150
-                        );
-                    }
-                },
-                300
-        );
-    }
-
-
-    // =========================================
-    // OPEN DESIGN RESULTS
-    // =========================================
-
-    private void openDesignResults() {
 
         Intent intent =
                 new Intent(
-                        AIAnalysisActivity.this,
-                        DesignResultsActivity.class
+                        ImageUploadActivity.this,
+                        AIAnalysisActivity.class
                 );
 
 
@@ -432,7 +387,7 @@ public class AIAnalysisActivity extends AppCompatActivity {
 
         intent.putExtra(
                 "room_image_uri",
-                roomImageUri
+                selectedImageUri.toString()
         );
 
 
@@ -547,7 +502,7 @@ public class AIAnalysisActivity extends AppCompatActivity {
 
 
         // -----------------------------------------
-        // Vastu
+        // Vastu Preferences
         // -----------------------------------------
 
         intent.putExtra(
@@ -602,7 +557,7 @@ public class AIAnalysisActivity extends AppCompatActivity {
 
 
         // -----------------------------------------
-        // Navigate
+        // Open AI Analysis
         // -----------------------------------------
 
         startActivity(intent);
@@ -611,11 +566,72 @@ public class AIAnalysisActivity extends AppCompatActivity {
     }
 
 
+    // =========================================
+    // IMAGE PICKER
+    // =========================================
+
+    private void openImagePicker() {
+
+        Intent intent =
+                new Intent(
+                        Intent.ACTION_OPEN_DOCUMENT
+                );
+
+        intent.setType("image/*");
+
+        intent.addCategory(
+                Intent.CATEGORY_OPENABLE
+        );
+
+        startActivityForResult(
+                intent,
+                IMAGE_PICKER_REQUEST
+        );
+    }
+
+
+    // =========================================
+    // IMAGE RESULT
+    // =========================================
+
     @Override
-    protected void onDestroy() {
+    protected void onActivityResult(
+            int requestCode,
+            int resultCode,
+            Intent data
+    ) {
 
-        super.onDestroy();
+        super.onActivityResult(
+                requestCode,
+                resultCode,
+                data
+        );
 
-        handler.removeCallbacksAndMessages(null);
+        if (requestCode == IMAGE_PICKER_REQUEST
+                && resultCode == RESULT_OK
+                && data != null
+                && data.getData() != null) {
+
+            selectedImageUri =
+                    data.getData();
+
+            ivRoomImage.setImageURI(
+                    selectedImageUri
+            );
+
+            ivRoomImage.setVisibility(
+                    ImageView.VISIBLE
+            );
+
+            tvImageStatus.setText(
+                    "Room image selected successfully"
+            );
+
+            Toast.makeText(
+                    ImageUploadActivity.this,
+                    "Room image updated successfully.",
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
     }
 }
