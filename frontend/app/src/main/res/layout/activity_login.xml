@@ -5,100 +5,118 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F5F0"
-    android:padding="24dp">
+    android:background="#F5F3EE"
+    android:padding="28dp">
 
+    <!-- Logo -->
     <TextView
         android:id="@+id/tvLoginLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="FIIE"
-        android:textColor="#2F3E35"
-        android:textSize="42sp"
+        android:textColor="#35443A"
+        android:textSize="38sp"
         android:textStyle="bold"
+        android:letterSpacing="0.12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="70dp" />
+        android:layout_marginTop="65dp" />
 
+    <!-- Welcome -->
     <TextView
         android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome Back"
-        android:textColor="#2F3E35"
-        android:textSize="26sp"
+        android:textColor="#35443A"
+        android:textSize="27sp"
         android:textStyle="bold"
-        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLoginLogo" />
+        app:layout_constraintTop_toBottomOf="@id/tvLoginLogo"
+        android:layout_marginTop="32dp" />
 
+    <!-- Subtitle -->
     <TextView
         android:id="@+id/tvLoginSubtitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Sign in to continue your interior design journey"
-        android:textColor="#777777"
+        android:textColor="#7A7A72"
         android:textSize="14sp"
         android:gravity="center"
-        android:layout_marginTop="8dp"
+        android:lineSpacingExtra="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
+        app:layout_constraintTop_toBottomOf="@id/tvWelcome"
+        android:layout_marginTop="10dp" />
 
+    <!-- Email -->
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="58dp"
         android:hint="Email address"
+        android:textColor="#35443A"
+        android:textColorHint="#96968E"
+        android:textSize="15sp"
         android:inputType="textEmailAddress"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:backgroundTint="#2F3E35"
-        android:layout_marginTop="40dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:backgroundTint="#B9B8AE"
+        android:layout_marginTop="42dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvLoginSubtitle" />
 
+    <!-- Password -->
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="58dp"
         android:hint="Password"
+        android:textColor="#35443A"
+        android:textColorHint="#96968E"
+        android:textSize="15sp"
         android:inputType="textPassword"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:backgroundTint="#2F3E35"
-        android:layout_marginTop="16dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:backgroundTint="#B9B8AE"
+        android:layout_marginTop="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etEmail" />
 
+    <!-- Login Button -->
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:text="LOGIN"
-        android:textSize="15sp"
+        android:textSize="14sp"
         android:textStyle="bold"
+        android:letterSpacing="0.08"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#2F3E35"
-        android:layout_marginTop="28dp"
+        android:backgroundTint="#35443A"
+        android:elevation="0dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etPassword" />
 
+    <!-- Register -->
     <TextView
         android:id="@+id/tvRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Don't have an account? Register"
-        android:textColor="#2F3E35"
+        android:text="Don't have an account?  Register"
+        android:textColor="#5C695F"
         android:textSize="14sp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="22dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
