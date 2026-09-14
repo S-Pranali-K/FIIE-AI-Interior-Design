@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 public class RegisterRequest {
 
     @NotBlank
+    private String name;
+
+    @NotBlank
     @Email
     private String email;
 
@@ -13,6 +16,14 @@ public class RegisterRequest {
     private String password;
 
     public RegisterRequest() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

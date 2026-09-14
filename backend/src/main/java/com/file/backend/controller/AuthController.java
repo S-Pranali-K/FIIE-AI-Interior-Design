@@ -23,6 +23,7 @@ public class AuthController {
             @Valid @RequestBody RegisterRequest request) {
 
         String result = authService.register(
+                request.getName(),
                 request.getEmail(),
                 request.getPassword()
         );
