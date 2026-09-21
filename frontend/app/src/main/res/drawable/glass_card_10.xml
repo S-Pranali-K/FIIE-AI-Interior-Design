@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
-    <!-- Match attr name: glassCardBackground -->
+    <!-- Warm translucent glass -->
     <solid android:color="?attr/glassCardBackground" />
 
-    <corners android:radius="28dp" />
-
-    <!-- Match attr name: glassCardStroke -->
+    <!-- Soft premium border -->
     <stroke
-        android:width="1.5dp"
+        android:width="1dp"
         android:color="?attr/glassCardStroke" />
+
+    <!-- FIIE rounded geometry -->
+    <corners android:radius="@dimen/fiie_card_radius" />
+
 </shape>

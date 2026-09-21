@@ -3,12 +3,29 @@ package com.fiie.app;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
+import android.database.Cursor;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.fiie.app.network.ApiService;
+import com.fiie.app.network.RetrofitClient;
+import com.google.gson.JsonObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ImageUploadActivity extends AppCompatActivity {
 
@@ -28,6 +45,7 @@ public class ImageUploadActivity extends AppCompatActivity {
     private String roomImageUri;
 
     private long userId;
+    private long projectId;
 
     private String roomType;
     private String roomLength;
@@ -63,6 +81,8 @@ public class ImageUploadActivity extends AppCompatActivity {
     private String budgetPriority;
     private String completion;
 
+    private ApiService apiService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,23 +90,23 @@ public class ImageUploadActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_image_upload);
 
-
         // -----------------------------------------
         // Initialize Views
         // -----------------------------------------
 
-        ivRoomImage =
-                findViewById(R.id.ivRoomImage);
+        ivRoomImage = findViewById(R.id.ivRoomImage);
+        tvImageStatus = findViewById(R.id.tvImageStatus);
+        btnSelectImage = findViewById(R.id.btnSelectImage);
+        btnContinueImage = findViewById(R.id.btnContinueImage);
 
-        tvImageStatus =
-                findViewById(R.id.tvImageStatus);
+        // -----------------------------------------
+        // Retrofit API
+        // -----------------------------------------
 
-        btnSelectImage =
-                findViewById(R.id.btnSelectImage);
-
-        btnContinueImage =
-                findViewById(R.id.btnContinueImage);
-
+        apiService =
+                RetrofitClient
+                        .getInstance()
+                        .create(ApiService.class);
 
         // -----------------------------------------
         // Receive Survey Data
@@ -94,6 +114,21 @@ public class ImageUploadActivity extends AppCompatActivity {
 
         receiveSurveyData();
 
+        // -----------------------------------------
+        // Validate Project ID
+        // -----------------------------------------
+
+        if (projectId == -1) {
+
+            Toast.makeText(
+                    this,
+                    "Project ID missing. Please create the project again.",
+                    Toast.LENGTH_LONG
+            ).show();
+
+            finish();
+            return;
+        }
 
         // -----------------------------------------
         // Display Existing Image
@@ -118,7 +153,6 @@ public class ImageUploadActivity extends AppCompatActivity {
             );
         }
 
-
         // -----------------------------------------
         // Select / Replace Image
         // -----------------------------------------
@@ -127,9 +161,8 @@ public class ImageUploadActivity extends AppCompatActivity {
                 v -> openImagePicker()
         );
 
-
         // -----------------------------------------
-        // Continue to AI Analysis
+        // Continue
         // -----------------------------------------
 
         btnContinueImage.setOnClickListener(
@@ -146,9 +179,8 @@ public class ImageUploadActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-
         // -----------------------------------------
-        // User
+        // User ID
         // -----------------------------------------
 
         userId =
@@ -157,6 +189,15 @@ public class ImageUploadActivity extends AppCompatActivity {
                         -1
                 );
 
+        // -----------------------------------------
+        // Project ID
+        // -----------------------------------------
+
+        projectId =
+                intent.getLongExtra(
+                        "PROJECT_ID",
+                        -1
+                );
 
         // -----------------------------------------
         // Image
@@ -166,7 +207,6 @@ public class ImageUploadActivity extends AppCompatActivity {
                 intent.getStringExtra(
                         "room_image_uri"
                 );
-
 
         // -----------------------------------------
         // Room Information
@@ -201,7 +241,6 @@ public class ImageUploadActivity extends AppCompatActivity {
                 intent.getStringExtra(
                         "windows"
                 );
-
 
         // -----------------------------------------
         // Existing Furniture
@@ -249,12 +288,10 @@ public class ImageUploadActivity extends AppCompatActivity {
                         false
                 );
 
-
         furnitureAction =
                 intent.getStringExtra(
                         "furniture_action"
                 );
-
 
         // -----------------------------------------
         // Design Preferences
@@ -285,9 +322,8 @@ public class ImageUploadActivity extends AppCompatActivity {
                         "special_requirement"
                 );
 
-
         // -----------------------------------------
-        // Vastu Preferences
+        // Vastu
         // -----------------------------------------
 
         vastuEnabled =
@@ -316,7 +352,6 @@ public class ImageUploadActivity extends AppCompatActivity {
                         "pooja_direction"
                 );
 
-
         // -----------------------------------------
         // Budget
         // -----------------------------------------
@@ -330,7 +365,6 @@ public class ImageUploadActivity extends AppCompatActivity {
                 intent.getStringExtra(
                         "budget_priority"
                 );
-
 
         // -----------------------------------------
         // Completion
@@ -349,10 +383,14 @@ public class ImageUploadActivity extends AppCompatActivity {
 
     private void continueToAIAnalysis() {
 
+        // -----------------------------------------
+        // Validate Image
+        // -----------------------------------------
+
         if (selectedImageUri == null) {
 
             Toast.makeText(
-                    ImageUploadActivity.this,
+                    this,
                     "Please select a room image first.",
                     Toast.LENGTH_SHORT
             ).show();
@@ -360,6 +398,327 @@ public class ImageUploadActivity extends AppCompatActivity {
             return;
         }
 
+        // -----------------------------------------
+        // Validate Project
+        // -----------------------------------------
+
+        if (projectId == -1) {
+
+            Toast.makeText(
+                    this,
+                    "Project ID is missing.",
+                    Toast.LENGTH_LONG
+            ).show();
+
+            return;
+        }
+
+        // -----------------------------------------
+        // Disable button during upload
+        // -----------------------------------------
+
+        btnContinueImage.setEnabled(false);
+
+        tvImageStatus.setText(
+                "Uploading image..."
+        );
+
+        Toast.makeText(
+                this,
+                "Uploading image...",
+                Toast.LENGTH_SHORT
+        ).show();
+
+        // -----------------------------------------
+        // Upload Image
+        // -----------------------------------------
+
+        uploadImage();
+    }
+
+
+    // =========================================
+    // UPLOAD IMAGE TO BACKEND
+    // =========================================
+
+    private void uploadImage() {
+
+        try {
+
+            // -----------------------------------------
+            // Convert URI to File
+            // -----------------------------------------
+
+            File imageFile =
+                    createFileFromUri(
+                            selectedImageUri
+                    );
+
+            if (imageFile == null) {
+
+                btnContinueImage.setEnabled(true);
+
+                Toast.makeText(
+                        this,
+                        "Unable to read selected image.",
+                        Toast.LENGTH_LONG
+                ).show();
+
+                return;
+            }
+
+            // -----------------------------------------
+            // Request Body
+            // -----------------------------------------
+
+            RequestBody requestFile =
+                    RequestBody.create(
+                            MediaType.parse(
+                                    getContentResolver()
+                                            .getType(selectedImageUri)
+                            ),
+                            imageFile
+                    );
+
+            // -----------------------------------------
+            // Multipart
+            // -----------------------------------------
+
+            MultipartBody.Part body =
+                    MultipartBody.Part.createFormData(
+                            "file",
+                            imageFile.getName(),
+                            requestFile
+                    );
+
+            // -----------------------------------------
+            // API Call
+            // -----------------------------------------
+
+            Call<JsonObject> call =
+                    apiService.uploadRoomImage(
+                            projectId,
+                            body
+                    );
+
+            call.enqueue(
+                    new Callback<JsonObject>() {
+
+                        @Override
+                        public void onResponse(
+                                Call<JsonObject> call,
+                                Response<JsonObject> response
+                        ) {
+
+                            btnContinueImage.setEnabled(true);
+
+                            if (response.isSuccessful()
+                                    && response.body() != null) {
+
+                                tvImageStatus.setText(
+                                        "Image uploaded successfully"
+                                );
+
+                                Toast.makeText(
+                                        ImageUploadActivity.this,
+                                        "Image uploaded successfully.",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+
+                                // -----------------------------------------
+                                // Open AI Analysis
+                                // -----------------------------------------
+
+                                openAIAnalysis();
+
+                            } else {
+
+                                Toast.makeText(
+                                        ImageUploadActivity.this,
+                                        "Image upload failed. HTTP "
+                                                + response.code(),
+                                        Toast.LENGTH_LONG
+                                ).show();
+
+                                tvImageStatus.setText(
+                                        "Image upload failed"
+                                );
+                            }
+                        }
+
+
+                        @Override
+                        public void onFailure(
+                                Call<JsonObject> call,
+                                Throwable t
+                        ) {
+
+                            btnContinueImage.setEnabled(true);
+
+                            tvImageStatus.setText(
+                                    "Image upload failed"
+                            );
+
+                            Toast.makeText(
+                                    ImageUploadActivity.this,
+                                    "Upload error: "
+                                            + t.getMessage(),
+                                    Toast.LENGTH_LONG
+                            ).show();
+                        }
+                    }
+            );
+
+        } catch (Exception e) {
+
+            btnContinueImage.setEnabled(true);
+
+            Toast.makeText(
+                    this,
+                    "Error preparing image: "
+                            + e.getMessage(),
+                    Toast.LENGTH_LONG
+            ).show();
+        }
+    }
+
+
+    // =========================================
+    // CREATE FILE FROM URI
+    // =========================================
+
+    private File createFileFromUri(Uri uri)
+            throws Exception {
+
+        String fileName =
+                getFileName(uri);
+
+        if (fileName == null
+                || fileName.isEmpty()) {
+
+            fileName =
+                    "room_image.jpg";
+        }
+
+        File file =
+                new File(
+                        getCacheDir(),
+                        fileName
+                );
+
+        InputStream inputStream =
+                getContentResolver()
+                        .openInputStream(uri);
+
+        if (inputStream == null) {
+
+            return null;
+        }
+
+        FileOutputStream outputStream =
+                new FileOutputStream(file);
+
+        byte[] buffer =
+                new byte[4096];
+
+        int bytesRead;
+
+        while (
+                (bytesRead =
+                        inputStream.read(buffer))
+                        != -1
+        ) {
+
+            outputStream.write(
+                    buffer,
+                    0,
+                    bytesRead
+            );
+        }
+
+        outputStream.flush();
+        outputStream.close();
+        inputStream.close();
+
+        return file;
+    }
+
+
+    // =========================================
+    // GET FILE NAME
+    // =========================================
+
+    private String getFileName(Uri uri) {
+
+        String result = null;
+
+        if ("content".equals(
+                uri.getScheme()
+        )) {
+
+            Cursor cursor =
+                    getContentResolver().query(
+                            uri,
+                            null,
+                            null,
+                            null,
+                            null
+                    );
+
+            if (cursor != null) {
+
+                try {
+
+                    int nameIndex =
+                            cursor.getColumnIndex(
+                                    OpenableColumns.DISPLAY_NAME
+                            );
+
+                    if (nameIndex >= 0
+                            && cursor.moveToFirst()) {
+
+                        result =
+                                cursor.getString(
+                                        nameIndex
+                                );
+                    }
+
+                } finally {
+
+                    cursor.close();
+                }
+            }
+        }
+
+        if (result == null) {
+
+            result =
+                    uri.getPath();
+
+            if (result != null) {
+
+                int cut =
+                        result.lastIndexOf('/');
+
+                if (cut != -1) {
+
+                    result =
+                            result.substring(
+                                    cut + 1
+                            );
+                }
+            }
+        }
+
+        return result;
+    }
+
+
+    // =========================================
+    // OPEN AI ANALYSIS
+    // =========================================
+
+    private void openAIAnalysis() {
 
         Intent intent =
                 new Intent(
@@ -367,29 +726,32 @@ public class ImageUploadActivity extends AppCompatActivity {
                         AIAnalysisActivity.class
                 );
 
-
         // -----------------------------------------
         // User
         // -----------------------------------------
 
-        if (userId != -1) {
-
-            intent.putExtra(
-                    "USER_ID",
-                    userId
-            );
-        }
-
+        intent.putExtra(
+                "USER_ID",
+                userId
+        );
 
         // -----------------------------------------
-        // Room Image
+        // Project
+        // -----------------------------------------
+
+        intent.putExtra(
+                "PROJECT_ID",
+                projectId
+        );
+
+        // -----------------------------------------
+        // Image
         // -----------------------------------------
 
         intent.putExtra(
                 "room_image_uri",
                 selectedImageUri.toString()
         );
-
 
         // -----------------------------------------
         // Room Information
@@ -425,9 +787,8 @@ public class ImageUploadActivity extends AppCompatActivity {
                 windows
         );
 
-
         // -----------------------------------------
-        // Existing Furniture
+        // Furniture
         // -----------------------------------------
 
         intent.putExtra(
@@ -470,7 +831,6 @@ public class ImageUploadActivity extends AppCompatActivity {
                 furnitureAction
         );
 
-
         // -----------------------------------------
         // Design Preferences
         // -----------------------------------------
@@ -500,9 +860,8 @@ public class ImageUploadActivity extends AppCompatActivity {
                 specialRequirement
         );
 
-
         // -----------------------------------------
-        // Vastu Preferences
+        // Vastu
         // -----------------------------------------
 
         intent.putExtra(
@@ -530,7 +889,6 @@ public class ImageUploadActivity extends AppCompatActivity {
                 poojaDirection
         );
 
-
         // -----------------------------------------
         // Budget
         // -----------------------------------------
@@ -545,7 +903,6 @@ public class ImageUploadActivity extends AppCompatActivity {
                 budgetPriority
         );
 
-
         // -----------------------------------------
         // Completion
         // -----------------------------------------
@@ -555,9 +912,8 @@ public class ImageUploadActivity extends AppCompatActivity {
                 completion
         );
 
-
         // -----------------------------------------
-        // Open AI Analysis
+        // Start AI Analysis
         // -----------------------------------------
 
         startActivity(intent);

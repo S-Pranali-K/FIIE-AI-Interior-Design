@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.fiie.app.model.ProjectSurveyRequest;
 import com.fiie.app.network.ApiService;
 import com.fiie.app.network.RetrofitClient;
 import com.google.gson.JsonObject;
@@ -65,8 +66,7 @@ public class SurveyActivity extends AppCompatActivity {
 
     private String roomImageUri;
 
-    // Logged-in user ID
-    private long userId;
+    private long userId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,22 +74,28 @@ public class SurveyActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_survey);
 
-        // Receive room image URI
         roomImageUri =
-                getIntent().getStringExtra(
-                        "room_image_uri"
-                );
+                getIntent().getStringExtra("room_image_uri");
 
-        // Receive logged-in user ID
         userId =
                 getIntent().getLongExtra(
                         "USER_ID",
                         -1
                 );
 
-        // Check session
+        // If USER_ID was not passed, get it from session
         if (userId == -1) {
+            userId =
+                    getSharedPreferences(
+                            "FIIE_PREFS",
+                            MODE_PRIVATE
+                    ).getLong(
+                            "USER_ID",
+                            -1
+                    );
+        }
 
+        if (userId == -1) {
             Toast.makeText(
                     this,
                     "User session not found. Please login again.",
@@ -118,144 +124,88 @@ public class SurveyActivity extends AppCompatActivity {
     private void initializeViews() {
 
         spinnerRoomType =
-                findViewById(
-                        R.id.spinnerRoomType
-                );
+                findViewById(R.id.spinnerRoomType);
 
         etRoomLength =
-                findViewById(
-                        R.id.etRoomLength
-                );
+                findViewById(R.id.etRoomLength);
 
         etRoomWidth =
-                findViewById(
-                        R.id.etRoomWidth
-                );
+                findViewById(R.id.etRoomWidth);
 
         etCeilingHeight =
-                findViewById(
-                        R.id.etCeilingHeight
-                );
+                findViewById(R.id.etCeilingHeight);
 
         etDoors =
-                findViewById(
-                        R.id.etDoors
-                );
+                findViewById(R.id.etDoors);
 
         etWindows =
-                findViewById(
-                        R.id.etWindows
-                );
+                findViewById(R.id.etWindows);
 
         cbBed =
-                findViewById(
-                        R.id.cbBed
-                );
+                findViewById(R.id.cbBed);
 
         cbWardrobe =
-                findViewById(
-                        R.id.cbWardrobe
-                );
+                findViewById(R.id.cbWardrobe);
 
         cbStudyTable =
-                findViewById(
-                        R.id.cbStudyTable
-                );
+                findViewById(R.id.cbStudyTable);
 
         cbChair =
-                findViewById(
-                        R.id.cbChair
-                );
+                findViewById(R.id.cbChair);
 
         cbSofa =
-                findViewById(
-                        R.id.cbSofa
-                );
+                findViewById(R.id.cbSofa);
 
         cbTvUnit =
-                findViewById(
-                        R.id.cbTvUnit
-                );
+                findViewById(R.id.cbTvUnit);
 
         cbOthers =
-                findViewById(
-                        R.id.cbOthers
-                );
+                findViewById(R.id.cbOthers);
 
         rgFurnitureAction =
-                findViewById(
-                        R.id.rgFurnitureAction
-                );
+                findViewById(R.id.rgFurnitureAction);
 
         spinnerStyle =
-                findViewById(
-                        R.id.spinnerStyle
-                );
+                findViewById(R.id.spinnerStyle);
 
         spinnerColor =
-                findViewById(
-                        R.id.spinnerColor
-                );
+                findViewById(R.id.spinnerColor);
 
         spinnerMaterial =
-                findViewById(
-                        R.id.spinnerMaterial
-                );
+                findViewById(R.id.spinnerMaterial);
 
         spinnerLighting =
-                findViewById(
-                        R.id.spinnerLighting
-                );
+                findViewById(R.id.spinnerLighting);
 
         etSpecialRequirement =
-                findViewById(
-                        R.id.etSpecialRequirement
-                );
+                findViewById(R.id.etSpecialRequirement);
 
         cbEnableVastu =
-                findViewById(
-                        R.id.cbEnableVastu
-                );
+                findViewById(R.id.cbEnableVastu);
 
         spinnerDoorDirection =
-                findViewById(
-                        R.id.spinnerDoorDirection
-                );
+                findViewById(R.id.spinnerDoorDirection);
 
         spinnerBedDirection =
-                findViewById(
-                        R.id.spinnerBedDirection
-                );
+                findViewById(R.id.spinnerBedDirection);
 
         spinnerKitchenDirection =
-                findViewById(
-                        R.id.spinnerKitchenDirection
-                );
+                findViewById(R.id.spinnerKitchenDirection);
 
         spinnerPoojaDirection =
-                findViewById(
-                        R.id.spinnerPoojaDirection
-                );
+                findViewById(R.id.spinnerPoojaDirection);
 
         etBudget =
-                findViewById(
-                        R.id.etBudget
-                );
+                findViewById(R.id.etBudget);
 
         rgBudgetPriority =
-                findViewById(
-                        R.id.rgBudgetPriority
-                );
+                findViewById(R.id.rgBudgetPriority);
 
         spinnerCompletion =
-                findViewById(
-                        R.id.spinnerCompletion
-                );
+                findViewById(R.id.spinnerCompletion);
 
         btnContinueSurvey =
-                findViewById(
-                        R.id.btnContinueSurvey
-                );
+                findViewById(R.id.btnContinueSurvey);
     }
 
     private void setupSpinners() {
@@ -423,10 +373,6 @@ public class SurveyActivity extends AppCompatActivity {
                         .toString()
                         .trim();
 
-        // -----------------------------------------
-        // Basic Room Validation
-        // -----------------------------------------
-
         if (spinnerRoomType.getSelectedItemPosition() == 0) {
             showMessage("Please select room type");
             return;
@@ -462,18 +408,10 @@ public class SurveyActivity extends AppCompatActivity {
             return;
         }
 
-        // -----------------------------------------
-        // Furniture Validation
-        // -----------------------------------------
-
         if (rgFurnitureAction.getCheckedRadioButtonId() == -1) {
             showMessage("Please select furniture action");
             return;
         }
-
-        // -----------------------------------------
-        // Design Preference Validation
-        // -----------------------------------------
 
         if (spinnerStyle.getSelectedItemPosition() == 0) {
             showMessage("Please select preferred style");
@@ -494,10 +432,6 @@ public class SurveyActivity extends AppCompatActivity {
             showMessage("Please select lighting preference");
             return;
         }
-
-        // -----------------------------------------
-        // Vastu Validation
-        // -----------------------------------------
 
         if (cbEnableVastu.isChecked()) {
 
@@ -522,10 +456,6 @@ public class SurveyActivity extends AppCompatActivity {
             }
         }
 
-        // -----------------------------------------
-        // Budget Validation
-        // -----------------------------------------
-
         if (budget.isEmpty()) {
             etBudget.setError("Enter your budget");
             etBudget.requestFocus();
@@ -542,48 +472,21 @@ public class SurveyActivity extends AppCompatActivity {
             return;
         }
 
-        // -----------------------------------------
-        // Room Type
-        // -----------------------------------------
+        createProjectAndSaveSurvey();
+    }
+
+    private void createProjectAndSaveSurvey() {
 
         String roomType =
                 spinnerRoomType
                         .getSelectedItem()
                         .toString();
 
-        // Automatically generated project name
         String projectName =
                 roomType + " Design";
 
-        // -----------------------------------------
-        // Create Project
-        // -----------------------------------------
-
-        createProjectAndContinue(
-                projectName,
-                roomType,
-                length,
-                width,
-                ceilingHeight,
-                doors,
-                windows,
-                budget
-        );
-    }
-
-    private void createProjectAndContinue(
-            String projectName,
-            String roomType,
-            String length,
-            String width,
-            String ceilingHeight,
-            String doors,
-            String windows,
-            String budget
-    ) {
-
         Toast.makeText(
-                SurveyActivity.this,
+                this,
                 "Creating project...",
                 Toast.LENGTH_SHORT
         ).show();
@@ -593,99 +496,336 @@ public class SurveyActivity extends AppCompatActivity {
                         .getInstance()
                         .create(ApiService.class);
 
-        Call<JsonObject> call =
-                apiService.createProject(
-                        userId,
-                        projectName,
-                        roomType
+        apiService.createProject(
+                userId,
+                projectName,
+                roomType
+        ).enqueue(new Callback<JsonObject>() {
+
+            @Override
+            public void onResponse(
+                    Call<JsonObject> call,
+                    Response<JsonObject> response) {
+
+                if (!response.isSuccessful()
+                        || response.body() == null
+                        || !response.body().has("id")) {
+
+                    Toast.makeText(
+                            SurveyActivity.this,
+                            "Project creation failed: "
+                                    + response.code(),
+                            Toast.LENGTH_LONG
+                    ).show();
+
+                    return;
+                }
+
+                long projectId =
+                        response.body()
+                                .get("id")
+                                .getAsLong();
+
+                saveSurvey(
+                        apiService,
+                        projectId
+                );
+            }
+
+            @Override
+            public void onFailure(
+                    Call<JsonObject> call,
+                    Throwable t) {
+
+                Toast.makeText(
+                        SurveyActivity.this,
+                        "Project API error: "
+                                + t.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
+    }
+
+    private void saveSurvey(
+            ApiService apiService,
+            long projectId
+    ) {
+
+        ProjectSurveyRequest request =
+                new ProjectSurveyRequest();
+
+        request.setRoomLength(
+                Double.parseDouble(
+                        etRoomLength.getText()
+                                .toString()
+                                .trim()
+                )
+        );
+
+        request.setRoomWidth(
+                Double.parseDouble(
+                        etRoomWidth.getText()
+                                .toString()
+                                .trim()
+                )
+        );
+
+        request.setCeilingHeight(
+                Double.parseDouble(
+                        etCeilingHeight.getText()
+                                .toString()
+                                .trim()
+                )
+        );
+
+        request.setDoors(
+                Integer.parseInt(
+                        etDoors.getText()
+                                .toString()
+                                .trim()
+                )
+        );
+
+        request.setWindows(
+                Integer.parseInt(
+                        etWindows.getText()
+                                .toString()
+                                .trim()
+                )
+        );
+
+        String furniture =
+                buildFurnitureString();
+
+        request.setFurniture(furniture);
+
+        RadioButton furnitureRadio =
+                findViewById(
+                        rgFurnitureAction
+                                .getCheckedRadioButtonId()
                 );
 
-        call.enqueue(
-                new Callback<JsonObject>() {
+        if (furnitureRadio != null) {
 
-                    @Override
-                    public void onResponse(
-                            Call<JsonObject> call,
-                            Response<JsonObject> response
-                    ) {
+            request.setFurnitureAction(
+                    furnitureRadio
+                            .getText()
+                            .toString()
+            );
+        }
 
-                        if (response.isSuccessful()
-                                && response.body() != null) {
+        request.setStyle(
+                spinnerStyle
+                        .getSelectedItem()
+                        .toString()
+        );
 
-                            JsonObject projectResponse =
-                                    response.body();
+        request.setColor(
+                spinnerColor
+                        .getSelectedItem()
+                        .toString()
+        );
 
-                            if (!projectResponse.has("id")) {
+        request.setMaterial(
+                spinnerMaterial
+                        .getSelectedItem()
+                        .toString()
+        );
 
-                                Toast.makeText(
-                                        SurveyActivity.this,
-                                        "Project ID not received.",
-                                        Toast.LENGTH_LONG
-                                ).show();
+        request.setLighting(
+                spinnerLighting
+                        .getSelectedItem()
+                        .toString()
+        );
 
-                                return;
-                            }
+        request.setSpecialRequirement(
+                etSpecialRequirement
+                        .getText()
+                        .toString()
+                        .trim()
+        );
 
-                            long projectId =
-                                    projectResponse
-                                            .get("id")
-                                            .getAsLong();
+        request.setVastuEnabled(
+                cbEnableVastu.isChecked()
+        );
 
-                            Toast.makeText(
-                                    SurveyActivity.this,
-                                    "Project created. ID: "
-                                            + projectId,
-                                    Toast.LENGTH_LONG
-                            ).show();
+        if (cbEnableVastu.isChecked()) {
 
-                            openImageUpload(
-                                    projectId,
-                                    roomType,
-                                    length,
-                                    width,
-                                    ceilingHeight,
-                                    doors,
-                                    windows,
-                                    budget
-                            );
+            request.setDoorDirection(
+                    spinnerDoorDirection
+                            .getSelectedItem()
+                            .toString()
+            );
 
-                        } else {
+            request.setBedDirection(
+                    spinnerBedDirection
+                            .getSelectedItem()
+                            .toString()
+            );
 
-                            Toast.makeText(
-                                    SurveyActivity.this,
-                                    "Project creation failed. Code: "
-                                            + response.code(),
-                                    Toast.LENGTH_LONG
-                            ).show();
+            request.setKitchenDirection(
+                    spinnerKitchenDirection
+                            .getSelectedItem()
+                            .toString()
+            );
+
+            request.setPoojaDirection(
+                    spinnerPoojaDirection
+                            .getSelectedItem()
+                            .toString()
+            );
+
+        } else {
+
+            request.setDoorDirection(null);
+            request.setBedDirection(null);
+            request.setKitchenDirection(null);
+            request.setPoojaDirection(null);
+        }
+
+        request.setBudget(
+                Double.parseDouble(
+                        etBudget.getText()
+                                .toString()
+                                .trim()
+                )
+        );
+
+        RadioButton budgetRadio =
+                findViewById(
+                        rgBudgetPriority
+                                .getCheckedRadioButtonId()
+                );
+
+        if (budgetRadio != null) {
+
+            request.setBudgetPriority(
+                    budgetRadio
+                            .getText()
+                            .toString()
+            );
+        }
+
+        request.setCompletion(
+                spinnerCompletion
+                        .getSelectedItem()
+                        .toString()
+        );
+
+        Toast.makeText(
+                this,
+                "Saving survey...",
+                Toast.LENGTH_SHORT
+        ).show();
+
+        apiService.saveSurvey(
+                projectId,
+                request
+        ).enqueue(new Callback<JsonObject>() {
+
+            @Override
+            public void onResponse(
+                    Call<JsonObject> call,
+                    Response<JsonObject> response) {
+
+                if (response.isSuccessful()
+                        && response.body() != null) {
+
+                    Toast.makeText(
+                            SurveyActivity.this,
+                            "Survey saved successfully. Project ID: "
+                                    + projectId,
+                            Toast.LENGTH_LONG
+                    ).show();
+
+                    openImageUpload(
+                            projectId
+                    );
+
+                } else {
+
+                    String errorMessage =
+                            "Survey save failed: "
+                                    + response.code();
+
+                    if (response.errorBody() != null) {
+                        try {
+                            errorMessage +=
+                                    "\n"
+                                            + response.errorBody()
+                                            .string();
+                        } catch (Exception ignored) {
                         }
                     }
 
-                    @Override
-                    public void onFailure(
-                            Call<JsonObject> call,
-                            Throwable t
-                    ) {
-
-                        Toast.makeText(
-                                SurveyActivity.this,
-                                "Server error: "
-                                        + t.getMessage(),
-                                Toast.LENGTH_LONG
-                        ).show();
-                    }
+                    Toast.makeText(
+                            SurveyActivity.this,
+                            errorMessage,
+                            Toast.LENGTH_LONG
+                    ).show();
                 }
-        );
+            }
+
+            @Override
+            public void onFailure(
+                    Call<JsonObject> call,
+                    Throwable t) {
+
+                Toast.makeText(
+                        SurveyActivity.this,
+                        "Survey API error: "
+                                + t.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
+    }
+
+    private String buildFurnitureString() {
+
+        StringBuilder furniture =
+                new StringBuilder();
+
+        if (cbBed.isChecked()) {
+            furniture.append("Bed, ");
+        }
+
+        if (cbWardrobe.isChecked()) {
+            furniture.append("Wardrobe, ");
+        }
+
+        if (cbStudyTable.isChecked()) {
+            furniture.append("Study Table, ");
+        }
+
+        if (cbChair.isChecked()) {
+            furniture.append("Chair, ");
+        }
+
+        if (cbSofa.isChecked()) {
+            furniture.append("Sofa, ");
+        }
+
+        if (cbTvUnit.isChecked()) {
+            furniture.append("TV Unit, ");
+        }
+
+        if (cbOthers.isChecked()) {
+            furniture.append("Others, ");
+        }
+
+        if (furniture.length() == 0) {
+            return "None";
+        }
+
+        return furniture
+                .toString()
+                .replaceAll(", $", "");
     }
 
     private void openImageUpload(
-            long projectId,
-            String roomType,
-            String length,
-            String width,
-            String ceilingHeight,
-            String doors,
-            String windows,
-            String budget
+            long projectId
     ) {
 
         Intent intent =
@@ -694,27 +834,15 @@ public class SurveyActivity extends AppCompatActivity {
                         ImageUploadActivity.class
                 );
 
-        // -----------------------------------------
-        // Project ID
-        // -----------------------------------------
-
-        intent.putExtra(
-                "PROJECT_ID",
-                projectId
-        );
-
-        // -----------------------------------------
-        // User ID
-        // -----------------------------------------
-
         intent.putExtra(
                 "USER_ID",
                 userId
         );
 
-        // -----------------------------------------
-        // Room Image
-        // -----------------------------------------
+        intent.putExtra(
+                "PROJECT_ID",
+                projectId
+        );
 
         if (roomImageUri != null
                 && !roomImageUri.isEmpty()) {
@@ -725,43 +853,47 @@ public class SurveyActivity extends AppCompatActivity {
             );
         }
 
-        // -----------------------------------------
-        // Room Information
-        // -----------------------------------------
-
         intent.putExtra(
                 "room_type",
-                roomType
+                spinnerRoomType
+                        .getSelectedItem()
+                        .toString()
         );
 
         intent.putExtra(
                 "room_length",
-                length
+                etRoomLength.getText()
+                        .toString()
+                        .trim()
         );
 
         intent.putExtra(
                 "room_width",
-                width
+                etRoomWidth.getText()
+                        .toString()
+                        .trim()
         );
 
         intent.putExtra(
                 "ceiling_height",
-                ceilingHeight
+                etCeilingHeight.getText()
+                        .toString()
+                        .trim()
         );
 
         intent.putExtra(
                 "doors",
-                doors
+                etDoors.getText()
+                        .toString()
+                        .trim()
         );
 
         intent.putExtra(
                 "windows",
-                windows
+                etWindows.getText()
+                        .toString()
+                        .trim()
         );
-
-        // -----------------------------------------
-        // Furniture
-        // -----------------------------------------
 
         intent.putExtra(
                 "has_bed",
@@ -798,10 +930,6 @@ public class SurveyActivity extends AppCompatActivity {
                 cbOthers.isChecked()
         );
 
-        // -----------------------------------------
-        // Furniture Action
-        // -----------------------------------------
-
         RadioButton furnitureRadio =
                 findViewById(
                         rgFurnitureAction
@@ -817,10 +945,6 @@ public class SurveyActivity extends AppCompatActivity {
                             .toString()
             );
         }
-
-        // -----------------------------------------
-        // Design Preferences
-        // -----------------------------------------
 
         intent.putExtra(
                 "style",
@@ -858,10 +982,6 @@ public class SurveyActivity extends AppCompatActivity {
                         .trim()
         );
 
-        // -----------------------------------------
-        // Vastu
-        // -----------------------------------------
-
         intent.putExtra(
                 "vastu_enabled",
                 cbEnableVastu.isChecked()
@@ -898,13 +1018,11 @@ public class SurveyActivity extends AppCompatActivity {
             );
         }
 
-        // -----------------------------------------
-        // Budget
-        // -----------------------------------------
-
         intent.putExtra(
                 "budget",
-                budget
+                etBudget.getText()
+                        .toString()
+                        .trim()
         );
 
         RadioButton budgetRadio =
@@ -923,10 +1041,6 @@ public class SurveyActivity extends AppCompatActivity {
             );
         }
 
-        // -----------------------------------------
-        // Completion
-        // -----------------------------------------
-
         intent.putExtra(
                 "completion",
                 spinnerCompletion
@@ -934,11 +1048,8 @@ public class SurveyActivity extends AppCompatActivity {
                         .toString()
         );
 
-        // -----------------------------------------
-        // Open Image Upload
-        // -----------------------------------------
-
         startActivity(intent);
+        finish();
     }
 
     private void showMessage(String message) {

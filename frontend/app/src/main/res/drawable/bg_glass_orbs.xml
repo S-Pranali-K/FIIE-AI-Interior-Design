@@ -1,29 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Deep Dark Canvas -->
+
+    <!-- ========================================================= -->
+    <!-- FIIE WARM IVORY BASE                                      -->
+    <!-- ========================================================= -->
+
     <item>
-        <color android:color="#0B1120" />
+        <color android:color="@color/canvas_light" />
     </item>
 
-    <!-- Top Glow Orb (Emerald / Dark Forest Accent) -->
-    <item android:bottom="350dp" android:right="120dp">
+
+    <!-- ========================================================= -->
+    <!-- TOP-LEFT ORGANIC TAUPE GLOW                               -->
+    <!-- ========================================================= -->
+
+    <item
+        android:top="-180dp"
+        android:left="-150dp"
+        android:right="110dp"
+        android:bottom="420dp">
+
         <shape android:shape="oval">
+
             <gradient
                 android:type="radial"
-                android:gradientRadius="300dp"
-                android:startColor="#552C3E35"
-                android:endColor="#00000000" />
+                android:gradientRadius="360dp"
+                android:startColor="#55A98F78"
+                android:endColor="#00A98F78" />
+
         </shape>
+
     </item>
 
-    <!-- Bottom Glow Orb (Warm Copper / Sand Accent) -->
-    <item android:top="350dp" android:left="120dp">
+
+    <!-- ========================================================= -->
+    <!-- TOP-RIGHT SOFT BEIGE GLOW                                 -->
+    <!-- ========================================================= -->
+
+    <item
+        android:top="-80dp"
+        android:left="210dp"
+        android:right="-170dp"
+        android:bottom="500dp">
+
         <shape android:shape="oval">
+
             <gradient
                 android:type="radial"
-                android:gradientRadius="300dp"
-                android:startColor="#458C7A6B"
-                android:endColor="#00000000" />
+                android:gradientRadius="330dp"
+                android:startColor="#45D8C9B7"
+                android:endColor="#00D8C9B7" />
+
         </shape>
+
     </item>
+
+
+    <!-- ========================================================= -->
+    <!-- BOTTOM-LEFT SAGE / BLUSH GLOW                             -->
+    <!-- ========================================================= -->
+
+    <item
+        android:top="480dp"
+        android:left="-170dp"
+        android:right="180dp"
+        android:bottom="-220dp">
+
+        <shape android:shape="oval">
+
+            <gradient
+                android:type="radial"
+                android:gradientRadius="380dp"
+                android:startColor="#45C9B4A2"
+                android:endColor="#00C9B4A2" />
+
+        </shape>
+
+    </item>
+
+
+    <!-- ========================================================= -->
+    <!-- BOTTOM-RIGHT WARM TAUPE GLOW                              -->
+    <!-- ========================================================= -->
+
+    <item
+        android:top="560dp"
+        android:left="220dp"
+        android:right="-180dp"
+        android:bottom="-180dp">
+
+        <shape android:shape="oval">
+
+            <gradient
+                android:type="radial"
+                android:gradientRadius="360dp"
+                android:startColor="#40B89472"
+                android:endColor="#00B89472" />
+
+        </shape>
+
+    </item>
+
 </layer-list>

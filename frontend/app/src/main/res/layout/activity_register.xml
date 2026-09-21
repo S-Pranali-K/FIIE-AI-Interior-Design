@@ -1,139 +1,330 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_glass_orbs"
-    android:padding="24dp">
+
+    android:background="@drawable/bg_splash">
+
+
+    <!-- Soft overlay -->
+
+    <View
+        android:id="@+id/backgroundOverlay"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:background="#35FFF8F0" />
+
+
+    <!-- FIIE Logo -->
 
     <TextView
         android:id="@+id/tvRegisterLogo"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+
+        android:layout_marginTop="30dp"
+
         android:text="FIIE"
-        android:textColor="#FFFFFF"
-        android:textSize="44sp"
+        android:textColor="#4B3D33"
+        android:textSize="40sp"
         android:textStyle="bold"
-        android:letterSpacing="0.15"
+        android:fontFamily="serif"
+        android:letterSpacing="0.08"
+
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+
+    <!-- Brand descriptor -->
+
+    <TextView
+        android:id="@+id/tvRegisterBrand"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="4dp"
+
+        android:text="AI-POWERED FUNCTIONAL INTERIOR DESIGN"
+        android:textColor="#765A43"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.09"
+
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <!-- Main glass card -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/glassCard"
+
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/glass_card_10"
-        android:padding="28dp"
-        app:layout_constraintTop_toBottomOf="@id/tvRegisterLogo"
+
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="22dp"
+
+        android:background="@drawable/glass_register_card"
+
+        android:elevation="10dp"
+
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="25dp"
+        android:paddingBottom="25dp"
+
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterBrand"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+
+        <!-- Heading -->
+
         <TextView
             android:id="@+id/tvRegisterTitle"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:text="Create Account"
-            android:textColor="#FFFFFF"
+            android:textColor="#2D2621"
             android:textSize="26sp"
             android:textStyle="bold"
+            android:fontFamily="serif"
+
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <EditText
-            android:id="@+id/etName"
+
+        <!-- Subtitle -->
+
+        <TextView
+            android:id="@+id/tvRegisterSubtitle"
+
             android:layout_width="0dp"
-            android:layout_height="54dp"
-            android:layout_marginTop="28dp"
-            android:background="@drawable/glass_input_10"
-            android:hint="Full name"
-            android:inputType="textPersonName"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#80FFFFFF"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="6dp"
+
+            android:gravity="center"
+
+            android:text="Create your account and start designing smarter spaces."
+            android:textColor="#675C54"
+            android:textSize="13sp"
+
             app:layout_constraintTop_toBottomOf="@id/tvRegisterTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+
+        <!-- Name -->
+
         <EditText
-            android:id="@+id/etRegisterEmail"
+            android:id="@+id/etName"
+
             android:layout_width="0dp"
             android:layout_height="54dp"
-            android:layout_marginTop="16dp"
+
+            android:layout_marginTop="22dp"
+
             android:background="@drawable/glass_input_10"
+
+            android:hint="Full name"
+
+            android:inputType="textPersonName"
+
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+
+            android:textColor="#2D2621"
+            android:textColorHint="#806F61"
+
+            android:textSize="14sp"
+
+            android:singleLine="true"
+
+            app:layout_constraintTop_toBottomOf="@id/tvRegisterSubtitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <!-- Email -->
+
+        <EditText
+            android:id="@+id/etRegisterEmail"
+
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+
+            android:layout_marginTop="12dp"
+
+            android:background="@drawable/glass_input_10"
+
             android:hint="Email address"
+
             android:inputType="textEmailAddress"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#80FFFFFF"
+
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+
+            android:textColor="#2D2621"
+            android:textColorHint="#806F61"
+
+            android:textSize="14sp"
+
+            android:singleLine="true"
+
             app:layout_constraintTop_toBottomOf="@id/etName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+
+        <!-- Password -->
+
         <EditText
             android:id="@+id/etRegisterPassword"
+
             android:layout_width="0dp"
             android:layout_height="54dp"
-            android:layout_marginTop="16dp"
+
+            android:layout_marginTop="12dp"
+
             android:background="@drawable/glass_input_10"
-            android:hint="Password"
+
+            android:hint="Create password"
+
             android:inputType="textPassword"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#80FFFFFF"
+
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+
+            android:textColor="#2D2621"
+            android:textColorHint="#806F61"
+
+            android:textSize="14sp"
+
+            android:singleLine="true"
+
             app:layout_constraintTop_toBottomOf="@id/etRegisterEmail"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+
+        <!-- Confirm Password -->
+
         <EditText
             android:id="@+id/etConfirmPassword"
+
             android:layout_width="0dp"
             android:layout_height="54dp"
-            android:layout_marginTop="16dp"
+
+            android:layout_marginTop="12dp"
+
             android:background="@drawable/glass_input_10"
+
             android:hint="Confirm password"
+
             android:inputType="textPassword"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#80FFFFFF"
+
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+
+            android:textColor="#2D2621"
+            android:textColorHint="#806F61"
+
+            android:textSize="14sp"
+
+            android:singleLine="true"
+
             app:layout_constraintTop_toBottomOf="@id/etRegisterPassword"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+
+        <!-- Register button -->
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnRegister"
+
             android:layout_width="0dp"
             android:layout_height="54dp"
-            android:layout_marginTop="28dp"
+
+            android:layout_marginTop="20dp"
+
             android:background="@drawable/glass_btn_10"
-            android:text="REGISTER"
+
+            android:text="CREATE ACCOUNT    →"
+
             android:textColor="#FFFFFF"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:textStyle="bold"
+
+            android:letterSpacing="0.02"
+
             app:layout_constraintTop_toBottomOf="@id/etConfirmPassword"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+
+        <!-- Login link -->
+
         <TextView
             android:id="@+id/tvAlreadyAccount"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Already have an account? Login"
-            android:textColor="#E0E0E0"
-            android:textSize="14sp"
+
+            android:layout_marginTop="18dp"
+
+            android:text="Already have an account?  Login"
+
+            android:textColor="#765A43"
+            android:textSize="13sp"
+            android:textStyle="bold"
+
+            android:clickable="true"
+            android:focusable="true"
+
             app:layout_constraintTop_toBottomOf="@id/btnRegister"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!-- Bottom brand -->
+
+    <TextView
+        android:id="@+id/tvRegisterFooter"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginBottom="18dp"
+
+        android:text="FUNCTIONAL  •  PERSONALIZED  •  INTELLIGENT"
+
+        android:textColor="#806F61"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.08"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

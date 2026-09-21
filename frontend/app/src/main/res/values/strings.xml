@@ -1,3 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FIIE</string>
+    <string name="fiie_tagline">FUNCTIONAL INTERIOR INTELLIGENCE</string>
+    <string name="ai_analysis_title">AI Analysis</string>
+    <string name="ai_analysis_message">Analyzing your room...</string>
+    <string name="ai_analysis_detail">Understanding space, furniture, lighting and functionality</string>
+    <string name="ai_processing_status">FIIE AI is working...</string>
+    <string name="upload_room_title">Upload your room</string>
+    <string name="upload_room_subtitle">Add a clear photo so FIIE can understand your space.</string>
+    <string name="image_status_empty">No room image selected</string>
+    <string name="image_status_selected">Room image selected successfully</string>
+    <string name="choose_replace_image">Choose / Replace Image</string>
+    <string name="continue_ai_analysis">Continue to AI Analysis</string>
 </resources>

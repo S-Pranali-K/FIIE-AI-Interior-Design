@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Soft translucent navigation surface -->
+    <solid android:color="?attr/glassCardBackground" />
+
+    <!-- Elegant glass border -->
+    <stroke
+        android:width="1dp"
+        android:color="?attr/glassCardStroke" />
+
+    <!-- Large rounded navigation container -->
+    <corners android:radius="@dimen/fiie_bottom_nav_radius" />
+
+</shape>

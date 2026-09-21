@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
-    <!-- Match attr name: glassInputBackground -->
+    <!-- Soft translucent input surface -->
     <solid android:color="?attr/glassInputBackground" />
 
-    <corners android:radius="18dp" />
-
-    <!-- Match attr name: glassInputStroke -->
+    <!-- Thin warm border -->
     <stroke
         android:width="1dp"
         android:color="?attr/glassInputStroke" />
+
+    <!-- Soft rounded input -->
+    <corners android:radius="@dimen/fiie_input_radius" />
+
 </shape>

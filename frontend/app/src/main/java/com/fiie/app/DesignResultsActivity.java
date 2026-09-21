@@ -76,6 +76,7 @@ public class DesignResultsActivity extends AppCompatActivity {
                 findViewById(R.id.btnNewDesign);
     }
 
+
     /**
      * Receive complete project information
      * from AIAnalysisActivity.
@@ -392,6 +393,15 @@ public class DesignResultsActivity extends AppCompatActivity {
     private void setupButtons() {
 
         if (btnViewDetails != null) {
+            btnViewDetails.setOnClickListener(v -> {
+
+                Intent intent = new Intent(
+                        DesignResultsActivity.this,
+                        DesignDetailsActivity.class
+                );
+
+                startActivity(intent);
+            });
 
             btnViewDetails.setOnClickListener(
                     v -> showProjectDetails()

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="FIIE.Text.H3" parent="FIIE.Text">
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/text_primary_light</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+    <!-- Base FIIE text style -->
+    <style name="FIIE.Text">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:textColor">@color/text_primary_light</item>
+    </style>
+
+    <!-- Main editorial heading -->
+    <style name="FIIE.Text.H1" parent="FIIE.Text">
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textSize">@dimen/fiie_heading_1</item>
+        <item name="android:textColor">@color/text_primary_light</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <!-- Secondary heading -->
+    <style name="FIIE.Text.H2" parent="FIIE.Text">
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textSize">@dimen/fiie_heading_2</item>
+        <item name="android:textColor">@color/text_primary_light</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <!-- Secondary/body text -->
+    <style name="FIIE.Text.Secondary" parent="FIIE.Text">
+        <item name="android:textSize">@dimen/fiie_body_text</item>
+        <item name="android:textColor">@color/text_secondary_light</item>
+        <item name="android:lineSpacingExtra">3dp</item>
+    </style>
+
+    <!-- Small caption -->
+    <style name="FIIE.Text.Caption" parent="FIIE.Text">
+        <item name="android:textSize">@dimen/fiie_caption_text</item>
+        <item name="android:textColor">@color/text_secondary_light</item>
+    </style>
+
+    <!-- Small accent / eyebrow label -->
+    <style name="FIIE.AccentLabel" parent="FIIE.Text">
+        <item name="android:textSize">@dimen/fiie_caption_text</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.08</item>
+    </style>
+
+    <!-- Section heading -->
+    <style name="FIIE.SectionTitle" parent="FIIE.Text">
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textSize">@dimen/fiie_heading_3</item>
+        <item name="android:textColor">@color/text_primary_light</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <!-- General FIIE button -->
+    <style name="FIIE.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minHeight">@dimen/fiie_button_height</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:textSize">@dimen/fiie_button_text</item>
+        <item name="android:textColor">@color/text_on_primary</item>
+    </style>
+
+    <!-- Base compatibility style -->
+    <style name="FIIE" parent="FIIE.Text">
+        <item name="android:fontFamily">sans</item>
+    </style>
+
+</resources>

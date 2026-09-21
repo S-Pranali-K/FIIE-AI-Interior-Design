@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:name=".FiieApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -41,10 +42,6 @@
             android:exported="false" />
 
         <activity
-            android:name=".PreferencesActivity"
-            android:exported="false" />
-
-        <activity
             android:name=".SurveyActivity"
             android:exported="false" />
 
@@ -58,6 +55,18 @@
 
         <activity
             android:name=".DesignResultsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".RecommendationsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".DesignDetailsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SettingsActivity"
             android:exported="false" />
 
         <activity

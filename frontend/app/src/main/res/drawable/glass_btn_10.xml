@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
+
+    <!-- FIIE warm brown gradient -->
     <gradient
         android:angle="135"
-        android:startColor="#8C7A6B"
-        android:endColor="#4A3E35"
+        android:startColor="?attr/glassButtonGradientStart"
+        android:endColor="?attr/glassButtonGradientEnd"
         android:type="linear" />
-    <corners android:radius="18dp" />
+
+    <!-- Premium pill/rounded geometry -->
+    <corners android:radius="@dimen/fiie_button_radius" />
+
+    <!-- Very subtle highlight -->
     <stroke
         android:width="1dp"
-        android:color="#B3FFFFFF" />
+        android:color="#66FFFFFF" />
+
 </shape>

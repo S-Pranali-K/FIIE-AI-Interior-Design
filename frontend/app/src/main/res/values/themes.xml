@@ -1,26 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Light/Default Base Theme -->
-    <style name="Theme.FIIE" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Global Window Background & Status Bar -->
-        <item name="android:windowBackground">?attr/glassCanvasBackground</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">true</item>
 
-        <!-- Dynamic Glass Theme Attributes -->
+    <style name="Theme.FIIE"
+        parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <!-- ===================================================== -->
+        <!-- WINDOW                                                 -->
+        <!-- ===================================================== -->
+
+        <item name="android:windowBackground">?attr/glassCanvasBackground</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/canvas_light</item>
+
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+        <item name="android:windowActionModeOverlay">true</item>
+
+
+        <!-- ===================================================== -->
+        <!-- FIIE GLASS SYSTEM                                      -->
+        <!-- ===================================================== -->
+
         <item name="glassCanvasBackground">@drawable/bg_glass_orbs_light</item>
+
         <item name="glassCardBackground">@color/card_bg_light</item>
         <item name="glassCardStroke">@color/card_stroke_light</item>
+
         <item name="glassInputBackground">@color/input_bg_light</item>
         <item name="glassInputStroke">@color/input_stroke_light</item>
+
         <item name="glassButtonGradientStart">@color/btn_start_light</item>
         <item name="glassButtonGradientEnd">@color/btn_end_light</item>
+
         <item name="glassTextColorPrimary">@color/text_primary_light</item>
         <item name="glassTextColorSecondary">@color/text_secondary_light</item>
 
-        <!-- System Text Overrides -->
+
+        <!-- ===================================================== -->
+        <!-- MATERIAL                                                -->
+        <!-- ===================================================== -->
+
+        <item name="colorPrimary">@color/btn_start_light</item>
+        <item name="colorPrimaryVariant">@color/btn_end_light</item>
+        <item name="colorSecondary">@color/fiie_sage</item>
+        <item name="colorAccent">@color/fiie_blush</item>
+
+        <item name="colorOnPrimary">@color/fiie_cream</item>
+        <item name="colorOnSecondary">@color/fiie_cream</item>
+
+
+        <!-- ===================================================== -->
+        <!-- DEFAULT TEXT                                           -->
+        <!-- ===================================================== -->
+
         <item name="android:textColorPrimary">@color/text_primary_light</item>
         <item name="android:textColorSecondary">@color/text_secondary_light</item>
+
         <item name="android:editTextColor">@color/text_primary_light</item>
+
+        <!-- Avoid default Material purple/blue emphasis -->
+        <item name="android:colorAccent">@color/fiie_primary</item>
+
     </style>
+
 </resources>

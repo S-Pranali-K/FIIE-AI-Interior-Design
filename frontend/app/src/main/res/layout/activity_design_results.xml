@@ -1,142 +1,331 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_glass_orbs"
-    android:padding="20dp">
+    android:background="@drawable/bg_glass_orbs">
+
+    <!-- ===================================================== -->
+    <!-- SOFT INTERIOR BACKGROUND -->
+    <!-- ===================================================== -->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#38F6F0E9"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <!-- ===================================================== -->
+    <!-- MAIN CONTENT -->
+    <!-- ===================================================== -->
 
     <ScrollView
+        android:id="@+id/scrollResults"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        android:scrollbars="none"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:clipToPadding="false"
+        android:paddingBottom="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/actionContainer"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingVertical="10dp">
+            android:paddingStart="20dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="20dp">
 
-            <!-- Main Glass Card Container -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/glassCardResults"
+
+            <!-- ================================================= -->
+            <!-- HEADER -->
+            <!-- ================================================= -->
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/glass_card_10"
-                android:padding="24dp">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvHeaderTitle"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Design Results"
-                    android:textColor="#FFFFFF"
-                    android:textSize="26sp"
+                    android:text="FIIE"
+                    android:textColor="#80664F"
+                    android:textSize="13sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:letterSpacing="0.18" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:text="Your design is ready"
+                    android:textColor="#2D2621"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="AI-powered insights for your space"
+                    android:textColor="#675C54"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- DESIGN PREVIEW -->
+            <!-- ================================================= -->
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/glass_card_10"
+                android:clipToOutline="true">
+
+                <ImageView
+                    android:id="@+id/ivDesignPreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Interior design preview"
+                    android:scaleType="centerCrop"
+                    android:background="@android:color/transparent" />
+
+                <!-- Preview label -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:layout_margin="14dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="11dp"
+                    android:paddingBottom="6dp"
+                    android:text="AI DESIGN PREVIEW"
+                    android:textColor="#4B3D33"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08"
+                    android:background="@drawable/glass_card_bg" />
+
+            </FrameLayout>
+
+
+            <!-- ================================================= -->
+            <!-- ROOM OVERVIEW -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/glass_card_10"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Room Overview"
+                    android:textColor="#2D2621"
+                    android:textSize="19sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif" />
 
                 <TextView
                     android:id="@+id/tvRoomSummary"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="AI analysis completed for your room"
-                    android:textColor="#B0BEC5"
+                    android:layout_marginTop="8dp"
+                    android:text="AI analysis summary"
+                    android:textColor="#675C54"
                     android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvHeaderTitle" />
+                    android:lineSpacingExtra="4dp" />
 
-                <!-- AI Design Preview Image Container -->
-                <ImageView
-                    android:id="@+id/ivDesignPreview"
-                    android:layout_width="0dp"
-                    android:layout_height="220dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/glass_input_10"
-                    android:contentDescription="AI design preview"
-                    android:padding="4dp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvRoomSummary" />
+            </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvRecTitle"
-                    android:layout_width="0dp"
+
+            <!-- ================================================= -->
+            <!-- AI DESIGN RECOMMENDATION -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/glass_card_10"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:text="Recommended Design"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ivDesignPreview" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:gravity="center"
+                        android:text="✦"
+                        android:textColor="#FFFFFF"
+                        android:textSize="17sp"
+                        android:background="@drawable/glass_btn_10" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:text="AI Design Recommendation"
+                        android:textColor="#2D2621"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tvStyleRecommendation"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Modern functional interior"
-                    android:textColor="#E0E0E0"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvRecTitle" />
+                    android:layout_marginTop="13dp"
+                    android:textColor="#675C54"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp" />
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- FUNCTIONAL RECOMMENDATION -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/glass_card_10"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Functional Recommendations"
+                    android:textColor="#2D2621"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvFunctionalRecommendation"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Functional layout recommendations will appear here."
-                    android:textColor="#B0BEC5"
+                    android:textColor="#675C54"
                     android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvStyleRecommendation" />
+                    android:lineSpacingExtra="5dp" />
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- VASTU -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/glass_card_10"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Vastu Considerations"
+                    android:textColor="#2D2621"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvVastuRecommendation"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Vastu recommendations will appear here."
-                    android:textColor="#B0BEC5"
+                    android:textColor="#675C54"
                     android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvFunctionalRecommendation" />
+                    android:lineSpacingExtra="5dp" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnViewDetails"
-                    android:layout_width="0dp"
-                    android:layout_height="54dp"
-                    android:layout_marginTop="28dp"
-                    android:background="@drawable/glass_btn_10"
-                    android:text="VIEW DESIGN DETAILS"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvVastuRecommendation" />
+            </LinearLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
     </ScrollView>
+
+
+    <!-- ===================================================== -->
+    <!-- BOTTOM ACTION PANEL -->
+    <!-- ===================================================== -->
+
+    <LinearLayout
+        android:id="@+id/actionContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="18dp"
+        android:background="#EAF6F0E9"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/btnViewDetails"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="View Full Details"
+            android:textAllCaps="false"
+            android:textColor="#4B3D33"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="@drawable/glass_card_10"
+            android:minHeight="52dp"
+            android:stateListAnimator="@null" />
+
+        <Button
+            android:id="@+id/btnNewDesign"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:text="Create New Design"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="@drawable/glass_btn_10"
+            android:minHeight="52dp"
+            android:stateListAnimator="@null" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

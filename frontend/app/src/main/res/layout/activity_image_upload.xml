@@ -1,113 +1,309 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/glassCanvasBackground"
-    android:padding="24dp">
+    android:background="@drawable/bg_glass_orbs">
+
+    <!-- ===================================================== -->
+    <!-- SOFT WARM OVERLAY -->
+    <!-- ===================================================== -->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#42F6F0E9"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <!-- ===================================================== -->
+    <!-- SCROLL CONTENT -->
+    <!-- ===================================================== -->
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
         android:scrollbars="none"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingVertical="12dp">
+            android:paddingStart="20dp"
+            android:paddingTop="28dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="30dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+
+            <!-- ================================================= -->
+            <!-- FIIE BRAND -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FIIE"
+                android:textColor="#80664F"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.18" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Upload your room"
+                android:textColor="#2D2621"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:fontFamily="serif" />
+
+            <TextView
+                android:id="@+id/tvImageUploadTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Room Image"
+                android:textColor="#80664F"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.08" />
+
+            <TextView
+                android:id="@+id/tvImageUploadSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="Upload a clear photo of your room so FIIE can understand the space and prepare your design analysis."
+                android:textColor="#675C54"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp" />
+
+
+            <!-- ================================================= -->
+            <!-- STEP INDICATOR -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_weight="1"
+                    android:background="#8F7660" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:background="#D8C9B7" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:background="#D8C9B7" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:background="#D8C9B7" />
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- IMAGE CARD -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
                 android:background="@drawable/glass_card_10"
-                android:padding="24dp">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <TextView
-                    android:id="@+id/tvImageUploadTitle"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Room Image"
-                    android:textColor="?attr/glassTextColorPrimary"
-                    android:textSize="24sp"
+                    android:text="01  •  ROOM PHOTO"
+                    android:textColor="#8F7660"
+                    android:textSize="11sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:letterSpacing="0.08" />
 
-                <TextView
-                    android:id="@+id/tvImageUploadSubtitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Upload a clear photo of your room for AI analysis."
-                    android:textColor="?attr/glassTextColorSecondary"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvImageUploadTitle" />
+                <!-- Image preview -->
 
-                <ImageView
-                    android:id="@+id/ivRoomImage"
-                    android:layout_width="0dp"
-                    android:layout_height="260dp"
-                    android:layout_marginTop="24dp"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="Room image preview"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvImageUploadSubtitle" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/glass_card_bg"
+                    android:clipToOutline="true">
+
+                    <ImageView
+                        android:id="@+id/ivRoomImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="Room image preview"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
+
+                    <!-- Placeholder -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:gravity="center"
+                            android:text="+"
+                            android:textColor="#80664F"
+                            android:textSize="30sp"
+                            android:textStyle="normal"
+                            android:background="@drawable/glass_btn_10" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Add your room photo"
+                            android:textColor="#40372F"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="Use a clear image of the space"
+                            android:textColor="#806F62"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+
+                <!-- Image status -->
 
                 <TextView
                     android:id="@+id/tvImageStatus"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="12dp"
                     android:gravity="center"
                     android:text="No room image selected"
-                    android:textColor="?attr/glassTextColorSecondary"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ivRoomImage" />
+                    android:textColor="#806F62"
+                    android:textSize="12sp" />
+
+
+                <!-- Select -->
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnSelectImage"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/glass_btn_10"
+                    android:minHeight="52dp"
+                    android:stateListAnimator="@null"
                     android:text="SELECT ROOM IMAGE"
+                    android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvImageStatus" />
+                    android:textStyle="bold" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnContinueImage"
-                    android:layout_width="0dp"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/glass_btn_10"
-                    android:text="CONTINUE TO AI ANALYSIS"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btnSelectImage" />
+            </LinearLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ================================================= -->
+            <!-- AI ANALYSIS INFO -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/glass_card_10"
+                android:orientation="vertical"
+                android:padding="17dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="02  •  READY FOR ANALYSIS"
+                    android:textColor="#8F7660"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Let FIIE understand your space"
+                    android:textColor="#2D2621"
+                    android:textSize="19sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Your room image will be combined with your preferences and requirements for the next stage of analysis."
+                    android:textColor="#675C54"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="3dp" />
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- CONTINUE -->
+            <!-- ================================================= -->
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnContinueImage"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/glass_btn_10"
+                android:minHeight="54dp"
+                android:stateListAnimator="@null"
+                android:text="CONTINUE TO AI ANALYSIS  →"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

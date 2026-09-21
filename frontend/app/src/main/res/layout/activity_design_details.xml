@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_glass_orbs">
+
+    <!-- ========================================================= -->
+    <!-- HEADER -->
+    <!-- ========================================================= -->
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/glass_circle"
+        android:contentDescription="Back"
+        android:padding="11dp"
+        android:src="@drawable/ic_arrow_back"
+        app:tint="#4B3D33"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvHeaderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="FIIE"
+        android:textColor="#765A43"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.15"
+        app:layout_constraintStart_toEndOf="@id/btnBack"
+        app:layout_constraintTop_toTopOf="@id/btnBack"
+        app:layout_constraintBottom_toBottomOf="@id/btnBack" />
+
+    <!-- ========================================================= -->
+    <!-- TITLE -->
+    <!-- ========================================================= -->
+
+    <TextView
+        android:id="@+id/tvPageTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="20dp"
+        android:text="Design Details"
+        android:textColor="#2D2621"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:fontFamily="serif"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnBack" />
+
+    <TextView
+        android:id="@+id/tvPageSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:text="Understand how FIIE evaluates the selected design."
+        android:textColor="#675C54"
+        android:textSize="14sp"
+        android:lineSpacingExtra="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPageTitle" />
+
+    <!-- ========================================================= -->
+    <!-- CONTENT -->
+    <!-- ========================================================= -->
+
+    <ScrollView
+        android:id="@+id/designDetailsScroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="22dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="30dp"
+        app:layout_constraintTop_toBottomOf="@id/tvPageSubtitle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ================================================= -->
+            <!-- SELECTED DESIGN -->
+            <!-- ================================================= -->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardSelectedDesign"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:background="@drawable/glass_dashboard_card"
+                android:elevation="4dp"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvSelectedDesignLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SELECTED DESIGN"
+                    android:textColor="#765A43"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.12"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvSelectedDesign"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Selected design preview"
+                    android:textColor="#2D2621"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif"
+                    app:layout_constraintTop_toBottomOf="@id/tvSelectedDesignLabel"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvSelectedDesignStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Design image and AI-generated details will appear here."
+                    android:textColor="#806F61"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="2dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvSelectedDesign"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvDesignDataStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="AWAITING FIIE ANALYSIS"
+                    android:textColor="#765A43"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08"
+                    app:layout_constraintTop_toBottomOf="@id/tvSelectedDesignStatus"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ================================================= -->
+            <!-- WHY THIS DESIGN -->
+            <!-- ================================================= -->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardWhyDesign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/glass_dashboard_card"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvWhyDesignTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Why This Design"
+                    android:textColor="#2D2621"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvWhyDesign"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="FIIE's explanation of why this design suits the room, user requirements, functional needs, and selected preferences will appear here."
+                    android:textColor="#675C54"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="3dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvWhyDesignTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ================================================= -->
+            <!-- SPACE UTILIZATION -->
+            <!-- ================================================= -->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardSpaceUtilization"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/glass_dashboard_card"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvSpaceUtilizationTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Space Utilization"
+                    android:textColor="#2D2621"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvSpaceUtilization"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:text="Room-space analysis will appear here, including movement areas, usable space, circulation, and functional zones."
+                    android:textColor="#675C54"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="3dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvSpaceUtilizationTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ================================================= -->
+            <!-- FURNITURE PLACEMENT -->
+            <!-- ================================================= -->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardFurniturePlacement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/glass_dashboard_card"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvFurniturePlacementTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Furniture Placement"
+                    android:textColor="#2D2621"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvFurniturePlacement"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:text="Furniture positioning and placement logic will appear here."
+                    android:textColor="#675C54"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="3dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvFurniturePlacementTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ================================================= -->
+            <!-- LIGHTING -->
+            <!-- ================================================= -->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardLighting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/glass_dashboard_card"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvLightingTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lighting"
+                    android:textColor="#2D2621"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvLighting"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:text="Lighting strategy, placement, and lighting considerations will appear here."
+                    android:textColor="#675C54"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="3dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvLightingTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ================================================= -->
+            <!-- MATERIALS -->
+            <!-- ================================================= -->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardMaterials"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/glass_dashboard_card"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvMaterialsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Materials"
+                    android:textColor="#2D2621"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvMaterials"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:text="Recommended materials, finishes, textures, and material-selection reasoning will appear here."
+                    android:textColor="#675C54"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="3dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvMaterialsTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ================================================= -->
+            <!-- FUNCTIONAL SCORE -->
+            <!-- ================================================= -->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardFunctionalScore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/glass_dashboard_card"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvFunctionalScoreLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FUNCTIONAL SCORE"
+                    android:textColor="#765A43"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.12"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvFunctionalScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="—"
+                    android:textColor="#2D2621"
+                    android:textSize="42sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif"
+                    app:layout_constraintTop_toBottomOf="@id/tvFunctionalScoreLabel"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvFunctionalScoreStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="Score will be calculated from the FIIE functional analysis."
+                    android:textColor="#675C54"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="2dp"
+                    app:layout_constraintStart_toEndOf="@id/tvFunctionalScore"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tvFunctionalScore" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Bottom spacing -->
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

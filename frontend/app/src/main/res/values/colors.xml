@@ -1,24 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Dark Theme Colors -->
-    <color name="canvas_dark">#121815</color>
-    <color name="card_bg_dark">#21FFFFFF</color>
-    <color name="card_stroke_dark">#4DFFFFFF</color>
-    <color name="input_bg_dark">#14FFFFFF</color>
-    <color name="input_stroke_dark">#2EFFFFFF</color>
-    <color name="btn_start_dark">#5B7065</color>
-    <color name="btn_end_dark">#3A4D43</color>
-    <color name="text_primary_dark">#F0F4F1</color>
-    <color name="text_secondary_dark">#9EAFA3</color>
 
-    <!-- Light Theme Colors -->
-    <color name="canvas_light">#F5F2ED</color>
-    <color name="card_bg_light">#B8FFFFFF</color>
-    <color name="card_stroke_light">#E0FFFFFF</color>
-    <color name="input_bg_light">#66FFFFFF</color>
-    <color name="input_stroke_light">#B3FFFFFF</color>
-    <color name="btn_start_light">#3A4D43</color>
-    <color name="btn_end_light">#23302A</color>
-    <color name="text_primary_light">#1E2621</color>
-    <color name="text_secondary_light">#59645B</color>
+    <!-- ========================================================= -->
+    <!-- FIIE BRAND PALETTE                                        -->
+    <!-- Warm ivory • taupe • beige • muted sage • deep brown     -->
+    <!-- ========================================================= -->
+
+    <color name="fiie_green">#A98F78</color>
+    <color name="fiie_green_dark">#7B6654</color>
+    <color name="fiie_green_deep">#4B3D33</color>
+
+    <color name="fiie_sage">#C9B4A2</color>
+    <color name="fiie_sage_light">#E6D8CC</color>
+
+    <color name="fiie_beige">#D8C9B7</color>
+    <color name="fiie_beige_light">#EEE5DA</color>
+
+    <color name="fiie_gold">#B89472</color>
+
+    <color name="fiie_taupe">#A98F78</color>
+    <color name="fiie_taupe_dark">#7B6654</color>
+    <color name="fiie_taupe_deep">#4B3D33</color>
+
+    <color name="fiie_blush">#C9B4A2</color>
+    <color name="fiie_blush_light">#E6D8CC</color>
+
+    <color name="fiie_cream">#F5EEE7</color>
+
+
+    <!-- ========================================================= -->
+    <!-- LIGHT CANVAS                                              -->
+    <!-- ========================================================= -->
+
+    <color name="canvas_light">#F6F0E9</color>
+
+    <!-- Main glass surfaces -->
+    <color name="card_bg_light">#CCFFFFFF</color>
+    <color name="card_bg_light_strong">#F7F2ED</color>
+
+    <!-- Glass borders -->
+    <color name="card_stroke_light">#E6DED6</color>
+    <color name="card_stroke_light_soft">#D8CDC2</color>
+
+    <!-- Inputs -->
+    <color name="input_bg_light">#80FFFFFF</color>
+    <color name="input_stroke_light">#CFC4B9</color>
+
+    <!-- Buttons -->
+    <color name="btn_start_light">#8F7660</color>
+    <color name="btn_end_light">#6D594A</color>
+
+    <!-- Text -->
+    <color name="text_primary_light">#2D2621</color>
+    <color name="text_secondary_light">#675C54</color>
+    <color name="text_tertiary_light">#8C8178</color>
+    <color name="text_disabled_light">#AAA19A</color>
+
+    <!-- Progress -->
+    <color name="progress_light">#8F7660</color>
+    <color name="progress_track_light">#3D8F7660</color>
+
+    <!-- Dividers -->
+    <color name="divider_light">#263D332B</color>
+
+    <!-- Icons -->
+    <color name="icon_primary_light">#2D2621</color>
+    <color name="icon_secondary_light">#675C54</color>
+    <color name="icon_accent_light">#8F7660</color>
+
+
+    <!-- ========================================================= -->
+    <!-- DARK CANVAS                                               -->
+    <!-- ========================================================= -->
+
+    <color name="canvas_dark">#211E1C</color>
+
+    <color name="card_bg_dark">#26FFFFFF</color>
+    <color name="card_bg_dark_strong">#352C2825</color>
+
+    <color name="card_stroke_dark">#4DFFFFFF</color>
+    <color name="card_stroke_dark_soft">#35FFFFFF</color>
+
+    <color name="input_bg_dark">#18FFFFFF</color>
+    <color name="input_stroke_dark">#35FFFFFF</color>
+
+    <color name="btn_start_dark">#A98F78</color>
+    <color name="btn_end_dark">#7B6654</color>
+
+    <color name="text_primary_dark">#F7F1EB</color>
+    <color name="text_secondary_dark">#C9BDB3</color>
+    <color name="text_tertiary_dark">#95887E</color>
+    <color name="text_disabled_dark">#6E655E</color>
+
+    <color name="progress_dark">#DCC9B8</color>
+    <color name="progress_track_dark">#3DFFFFFF</color>
+
+    <color name="divider_dark">#2DFFFFFF</color>
+
+    <color name="icon_primary_dark">#F7F1EB</color>
+    <color name="icon_secondary_dark">#C9BDB3</color>
+    <color name="icon_accent_dark">#DCC9B8</color>
+
+
+    <!-- ========================================================= -->
+    <!-- STATUS                                                    -->
+    <!-- ========================================================= -->
+
+    <color name="success">#9C806B</color>
+    <color name="success_dark">#C9A992</color>
+    <color name="success_light">#775B48</color>
+
+    <color name="warning">#C79D67</color>
+    <color name="warning_dark">#DDB582</color>
+    <color name="warning_light">#8E673A</color>
+
+    <color name="error">#C97870</color>
+    <color name="error_dark">#E19A91</color>
+    <color name="error_light">#99463F</color>
+
+    <color name="info">#9A9EA4</color>
+    <color name="info_dark">#C0C3C8</color>
+    <color name="info_light">#5D626A</color>
+
+
+    <!-- ========================================================= -->
+    <!-- OVERLAYS                                                  -->
+    <!-- ========================================================= -->
+
+    <color name="overlay_dark_10">#1A000000</color>
+    <color name="overlay_dark_20">#33000000</color>
+    <color name="overlay_dark_40">#66000000</color>
+    <color name="overlay_dark_60">#99000000</color>
+
+    <color name="overlay_light_10">#1AFFFFFF</color>
+    <color name="overlay_light_20">#33FFFFFF</color>
+    <color name="overlay_light_40">#66FFFFFF</color>
+
+
+    <!-- ========================================================= -->
+    <!-- COMPATIBILITY NAMES                                       -->
+    <!-- Keep these because existing Java/XML may reference them.  -->
+    <!-- ========================================================= -->
+
+    <color name="fiie_background">#F6F0E9</color>
+    <color name="fiie_surface">#FFFFFF</color>
+    <color name="fiie_primary">#8F7660</color>
+    <color name="fiie_secondary">#A98F78</color>
+    <color name="fiie_text_primary">#2D2621</color>
+    <color name="fiie_text_secondary">#675C54</color>
+    <color name="fiie_progress_track">#3D8F7660</color>
+
+    <color name="primary">#8F7660</color>
+    <color name="text_on_primary">#FFFFFF</color>
+
 </resources>

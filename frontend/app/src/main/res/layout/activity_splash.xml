@@ -1,64 +1,265 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_glass_orbs"
-    android:padding="24dp">
 
-    <!-- Central Floating Glass Card -->
+    android:background="@drawable/bg_splash">
+
+    <!-- Small top branding -->
+
+    <TextView
+        android:id="@+id/tvBrandMark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="32dp"
+
+        android:text="FIIE • STUDIO"
+        android:textColor="#765A43"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.15"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <!-- Main glass card -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/glassCardSplash"
+
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/glass_card_10"
-        android:paddingHorizontal="32dp"
-        android:paddingVertical="48dp"
+
+        android:background="@drawable/glass_card_splash"
+
+        android:elevation="8dp"
+
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="34dp"
+
+        app:layout_constraintWidth_percent="0.86"
+
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+        <!-- FIIE logo -->
 
         <TextView
             android:id="@+id/tvLogo"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:letterSpacing="0.15"
+
             android:text="FIIE"
-            android:textColor="#FFFFFF"
+
+            android:textColor="#4B3D33"
             android:textSize="54sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="serif"
+            android:letterSpacing="0.10"
+
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <!-- Main title -->
 
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
+
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="AI-Powered Interior Design"
-            android:textColor="#E0E0E0"
+
+            android:layout_marginTop="18dp"
+
+            android:gravity="center"
+
+            android:text="Functional Interior&#10;Intelligence Engine"
+
+            android:textColor="#2D2621"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="serif"
+
+            app:layout_constraintTop_toBottomOf="@id/tvLogo"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvLogo" />
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <!-- Subtitle -->
 
         <TextView
             android:id="@+id/tvSubtitle"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="14dp"
+
+            android:gravity="center"
+
+            android:text="AI-POWERED INTERIOR DESIGN"
+
+            android:textColor="#765A43"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.12"
+
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <!-- Decorative line -->
+
+        <View
+            android:id="@+id/viewAccent"
+            android:layout_width="42dp"
+            android:layout_height="2dp"
+
+            android:layout_marginTop="22dp"
+
+            android:background="#A9825F"
+
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <!-- Product philosophy -->
+
+        <TextView
+            android:id="@+id/tvDescription"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="22dp"
+
+            android:gravity="center"
+
+            android:text="Functional  •  Personalized  •  Intelligent"
+
+            android:textColor="#675C54"
+            android:textSize="13sp"
+            android:letterSpacing="0.03"
+
+            app:layout_constraintTop_toBottomOf="@id/viewAccent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <!-- Supporting message -->
+
+        <TextView
+            android:id="@+id/tvMessage"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="10dp"
+
+            android:gravity="center"
+
+            android:text="Creating smarter spaces for a brighter you."
+
+            android:textColor="#806F61"
+            android:textSize="12sp"
+
+            app:layout_constraintTop_toBottomOf="@id/tvDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <!-- Loading dots -->
+
+        <LinearLayout
+            android:id="@+id/loadingIndicator"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:letterSpacing="0.05"
-            android:text="Functional • Personalized • Intelligent"
-            android:textColor="#B0BEC5"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="parent"
+
+            android:layout_marginTop="28dp"
+
+            android:orientation="horizontal"
+            android:gravity="center"
+
+            app:layout_constraintTop_toBottomOf="@id/tvMessage"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_margin="4dp"
+                android:background="#765A43" />
+
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_margin="4dp"
+                android:background="#A9825F" />
+
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_margin="4dp"
+                android:background="#C8AD91" />
+
+        </LinearLayout>
+
+
+        <!-- Loading text -->
+
+        <TextView
+            android:id="@+id/tvLoading"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="12dp"
+
+            android:text="Preparing your design studio..."
+            android:textColor="#806F61"
+            android:textSize="11sp"
+
+            app:layout_constraintTop_toBottomOf="@id/loadingIndicator"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!-- Bottom brand -->
+
+    <TextView
+        android:id="@+id/tvBottomBrand"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginBottom="28dp"
+
+        android:text="FIIE  /  A BRIGHTER SPACE EVERYDAY"
+        android:textColor="#806F61"
+        android:textSize="9sp"
+        android:letterSpacing="0.10"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
