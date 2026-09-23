@@ -1,4 +1,3 @@
-
 package com.file.backend.service;
 
 import com.file.backend.entity.User;
@@ -30,21 +29,23 @@ public class AuthService {
         return "Registration successful";
     }
 
-    public String login(String email, String password) {
+    public User login(String email, String password) {
+
+        System.out.println("LOGIN EMAIL RECEIVED = [" + email + "]");
 
         Optional<User> userOptional = userRepository.findByEmail(email);
 
+        System.out.println("USER FOUND = " + userOptional.isPresent());
         if (userOptional.isEmpty()) {
-            return "User not found";
+            throw new RuntimeException("User not found");
         }
 
         User user = userOptional.get();
 
         if (!user.getPassword().equals(password)) {
-            return "Invalid password";
+            throw new RuntimeException("Invalid password");
         }
 
-        return "Login successful";
+        return user;
     }
 }
-

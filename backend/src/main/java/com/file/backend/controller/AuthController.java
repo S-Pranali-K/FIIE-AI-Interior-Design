@@ -1,8 +1,9 @@
-
 package com.file.backend.controller;
 
 import com.file.backend.dto.LoginRequest;
+import com.file.backend.dto.LoginResponse;
 import com.file.backend.dto.RegisterRequest;
+import com.file.backend.entity.User;
 import com.file.backend.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -38,19 +39,20 @@ public class AuthController {
 
     // LOGIN
     @PostMapping("/login")
-    public ResponseEntity<String> login(
+    public ResponseEntity<LoginResponse> login(
             @Valid @RequestBody LoginRequest request) {
 
-        String result = authService.login(
+        User user = authService.login(
                 request.getEmail(),
                 request.getPassword()
         );
 
-        if (result.equals("Login successful")) {
-            return ResponseEntity.ok(result);
-        }
+        LoginResponse response = new LoginResponse(
+                user.getId(),
+                user.getName(),
+                user.getEmail()
+        );
 
-        return ResponseEntity.status(401).body(result);
+        return ResponseEntity.ok(response);
     }
 }
-
