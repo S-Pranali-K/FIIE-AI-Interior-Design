@@ -1,6 +1,5 @@
 package com.fiie.app;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -9,8 +8,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.fiie.app.network.ApiService;
+import com.fiie.app.network.RetrofitClient;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -21,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnRegister;
     private TextView tvAlreadyAccount;
 
+    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +44,17 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         tvAlreadyAccount = findViewById(R.id.tvAlreadyAccount);
 
-        btnRegister.setOnClickListener(v -> validateRegistration());
-        tvAlreadyAccount.setOnClickListener(v -> {
+        apiService = RetrofitClient
+                .getInstance()
+                .create(ApiService.class);
 
+        btnRegister.setOnClickListener(v -> validateRegistration());
+
+        tvAlreadyAccount.setOnClickListener(v -> {
             Intent intent = new Intent(
                     RegisterActivity.this,
                     LoginActivity.class
             );
-
             startActivity(intent);
             finish();
         });
@@ -88,21 +100,108 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         if (confirmPassword.isEmpty()) {
-            etConfirmPassword.setError("Please confirm your password");
+            etConfirmPassword.setError(
+                    "Please confirm your password"
+            );
             etConfirmPassword.requestFocus();
             return;
         }
 
         if (!password.equals(confirmPassword)) {
-            etConfirmPassword.setError("Passwords do not match");
+            etConfirmPassword.setError(
+                    "Passwords do not match"
+            );
             etConfirmPassword.requestFocus();
             return;
         }
 
-        Toast.makeText(
-                RegisterActivity.this,
-                "Registration details validated successfully",
-                Toast.LENGTH_SHORT
-        ).show();
+        registerToBackend(name, email, password);
+    }
+
+    private void registerToBackend(
+            String name,
+            String email,
+            String password
+    ) {
+
+        Map<String, String> registerData = new HashMap<>();
+
+        registerData.put("name", name);
+        registerData.put("email", email);
+        registerData.put("password", password);
+
+        btnRegister.setEnabled(false);
+
+        Call<String> call = apiService.register(registerData);
+
+        call.enqueue(new Callback<String>() {
+
+            @Override
+            public void onResponse(
+                    Call<String> call,
+                    Response<String> response
+            ) {
+
+                btnRegister.setEnabled(true);
+
+                if (response.isSuccessful()) {
+
+                    Toast.makeText(
+                            RegisterActivity.this,
+                            "Registration successful",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                    Intent intent = new Intent(
+                            RegisterActivity.this,
+                            LoginActivity.class
+                    );
+
+                    startActivity(intent);
+                    finish();
+
+                } else {
+
+                    String errorMessage =
+                            "Registration failed (" +
+                                    response.code() + ")";
+
+                    try {
+                        if (response.errorBody() != null) {
+
+                            String serverMessage =
+                                    response.errorBody().string();
+
+                            if (!serverMessage.isEmpty()) {
+                                errorMessage = serverMessage;
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    Toast.makeText(
+                            RegisterActivity.this,
+                            errorMessage,
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
+            }
+
+            @Override
+            public void onFailure(
+                    Call<String> call,
+                    Throwable t
+            ) {
+
+                btnRegister.setEnabled(true);
+
+                Toast.makeText(
+                        RegisterActivity.this,
+                        "Connection failed: " + t.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        });
     }
 }

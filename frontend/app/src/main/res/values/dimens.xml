@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ========================================================= -->
+    <!-- FIIE SPACING SYSTEM                                       -->
+    <!-- ========================================================= -->
+
+    <dimen name="fiie_space_2">2dp</dimen>
+    <dimen name="fiie_space_4">4dp</dimen>
+    <dimen name="fiie_space_6">6dp</dimen>
+    <dimen name="fiie_space_8">8dp</dimen>
+    <dimen name="fiie_space_10">10dp</dimen>
+    <dimen name="fiie_space_12">12dp</dimen>
+    <dimen name="fiie_space_14">14dp</dimen>
+    <dimen name="fiie_space_16">16dp</dimen>
+    <dimen name="fiie_space_20">20dp</dimen>
+    <dimen name="fiie_space_24">24dp</dimen>
+    <dimen name="fiie_space_28">28dp</dimen>
+    <dimen name="fiie_space_32">32dp</dimen>
+    <dimen name="fiie_space_40">40dp</dimen>
+    <dimen name="fiie_space_48">48dp</dimen>
+    <dimen name="fiie_space_56">56dp</dimen>
+    <dimen name="fiie_space_64">64dp</dimen>
+
+
+    <!-- ========================================================= -->
+    <!-- SCREEN                                                     -->
+    <!-- ========================================================= -->
+
+    <dimen name="fiie_screen_padding">20dp</dimen>
+    <dimen name="fiie_screen_padding_small">16dp</dimen>
+    <dimen name="fiie_screen_padding_large">24dp</dimen>
+
+
+    <!-- ========================================================= -->
+    <!-- CARD                                                       -->
+    <!-- ========================================================= -->
+
+    <dimen name="fiie_card_radius">24dp</dimen>
+    <dimen name="fiie_card_radius_small">18dp</dimen>
+    <dimen name="fiie_card_radius_large">28dp</dimen>
+
+    <dimen name="fiie_card_padding">20dp</dimen>
+    <dimen name="fiie_card_padding_large">24dp</dimen>
+    <dimen name="fiie_card_padding_small">16dp</dimen>
+
+    <dimen name="fiie_card_stroke">1dp</dimen>
+
+
+    <!-- ========================================================= -->
+    <!-- BUTTONS                                                    -->
+    <!-- ========================================================= -->
+
+    <dimen name="fiie_button_height">52dp</dimen>
+    <dimen name="fiie_button_height_large">56dp</dimen>
+    <dimen name="fiie_button_height_small">44dp</dimen>
+
+    <dimen name="fiie_button_radius">28dp</dimen>
+    <dimen name="fiie_button_radius_small">20dp</dimen>
+
+
+    <!-- ========================================================= -->
+    <!-- INPUTS                                                     -->
+    <!-- ========================================================= -->
+
+    <dimen name="fiie_input_height">54dp</dimen>
+    <dimen name="fiie_input_radius">18dp</dimen>
+    <dimen name="fiie_input_padding_horizontal">18dp</dimen>
+
+
+    <!-- ========================================================= -->
+    <!-- ICONS                                                      -->
+    <!-- ========================================================= -->
+
+    <dimen name="fiie_icon_16">16dp</dimen>
+    <dimen name="fiie_icon_20">20dp</dimen>
+    <dimen name="fiie_icon_24">24dp</dimen>
+    <dimen name="fiie_icon_28">28dp</dimen>
+    <dimen name="fiie_icon_32">32dp</dimen>
+
+    <dimen name="fiie_icon_container">48dp</dimen>
+    <dimen name="fiie_icon_container_large">56dp</dimen>
+
+
+    <!-- ========================================================= -->
+    <!-- BOTTOM NAVIGATION                                         -->
+    <!-- ========================================================= -->
+
+    <dimen name="fiie_bottom_nav_height">76dp</dimen>
+    <dimen name="fiie_bottom_nav_radius">28dp</dimen>
+
+
+    <!-- ========================================================= -->
+    <!-- AVATARS                                                    -->
+    <!-- ========================================================= -->
+
+    <dimen name="fiie_avatar_small">40dp</dimen>
+    <dimen name="fiie_avatar">52dp</dimen>
+    <dimen name="fiie_avatar_large">88dp</dimen>
+
+
+    <!-- ========================================================= -->
+    <!-- TYPOGRAPHY                                                 -->
+    <!-- ========================================================= -->
+
+    <dimen name="fiie_text_display">34sp</dimen>
+    <dimen name="fiie_text_h1">30sp</dimen>
+    <dimen name="fiie_text_h2">24sp</dimen>
+    <dimen name="fiie_text_h3">20sp</dimen>
+
+    <dimen name="fiie_text_body_large">17sp</dimen>
+    <dimen name="fiie_text_body">15sp</dimen>
+    <dimen name="fiie_text_body_small">14sp</dimen>
+
+    <dimen name="fiie_text_caption">12sp</dimen>
+    <dimen name="fiie_text_overline">11sp</dimen>
+    <dimen name="fiie_heading_1">34sp</dimen>
+    <dimen name="fiie_heading_2">24sp</dimen>
+    <dimen name="fiie_heading_3">20sp</dimen>
+    <dimen name="fiie_body_text">15sp</dimen>
+    <dimen name="fiie_caption_text">12sp</dimen>
+    <dimen name="fiie_button_text">14sp</dimen>
+
+    <dimen name="fiie_body">15sp</dimen>
+    <dimen name="fiie_caption">12sp</dimen>
+    <dimen name="fiie_body_large">16sp</dimen>
+    <dimen name="fiie_body_small">13sp</dimen>
+
+</resources>
