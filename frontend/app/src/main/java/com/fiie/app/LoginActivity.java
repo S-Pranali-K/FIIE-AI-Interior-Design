@@ -11,18 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.fiie.app.network.ApiService;
-import com.fiie.app.network.RetrofitClient;
-import com.google.gson.JsonObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class LoginActivity extends AppCompatActivity {
+
 
     private EditText etEmail;
     private EditText etPassword;
@@ -83,121 +73,41 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        loginToBackend(email, password);
+        loginLocally(email);
     }
 
-    private void loginToBackend(String email, String password) {
+    private void loginLocally(String email) {
 
-        ApiService apiService = RetrofitClient
-                .getInstance()
-                .create(ApiService.class);
+        // Temporary frontend-only user ID.
+        // This will be replaced by the real backend User ID
+        // when backend integration is restored.
+        long demoUserId = 1;
 
-        Map<String, String> loginData = new HashMap<>();
-        loginData.put("email", email);
-        loginData.put("password", password);
+        SharedPreferences preferences =
+                getSharedPreferences(
+                        "FIIE_PREFS",
+                        MODE_PRIVATE
+                );
 
-        Call<JsonObject> call = apiService.login(loginData);
+        preferences.edit()
+                .putLong("USER_ID", demoUserId)
+                .putString("USER_EMAIL", email)
+                .putBoolean("IS_LOGGED_IN", true)
+                .apply();
 
-        call.enqueue(new Callback<JsonObject>() {
+        Toast.makeText(
+                LoginActivity.this,
+                "Login successful",
+                Toast.LENGTH_SHORT
+        ).show();
 
-            @Override
-            public void onResponse(
-                    Call<JsonObject> call,
-                    Response<JsonObject> response) {
+        Intent intent = new Intent(
+                LoginActivity.this,
+                DashboardActivity.class
+        );
 
-                if (response.isSuccessful() && response.body() != null) {
-
-                    JsonObject result = response.body();
-
-                    // Backend must return the real user ID
-                    if (!result.has("id")
-                            || result.get("id").isJsonNull()) {
-
-                        Toast.makeText(
-                                LoginActivity.this,
-                                "Login succeeded, but User ID was not returned",
-                                Toast.LENGTH_LONG
-                        ).show();
-
-                        return;
-                    }
-
-                    long userId;
-
-                    try {
-                        userId = result.get("id").getAsLong();
-                    } catch (Exception e) {
-
-                        Toast.makeText(
-                                LoginActivity.this,
-                                "Invalid User ID received from server",
-                                Toast.LENGTH_LONG
-                        ).show();
-
-                        return;
-                    }
-
-                    // Save the logged-in user's session
-                    SharedPreferences preferences =
-                            getSharedPreferences(
-                                    "FIIE_PREFS",
-                                    MODE_PRIVATE
-                            );
-
-                    preferences.edit()
-                            .putLong("USER_ID", userId)
-                            .putString("USER_EMAIL", email)
-                            .apply();
-
-                    Toast.makeText(
-                            LoginActivity.this,
-                            "Login successful. User ID: " + userId,
-                            Toast.LENGTH_SHORT
-                    ).show();
-
-                    Intent intent = new Intent(
-                            LoginActivity.this,
-                            DashboardActivity.class
-                    );
-
-                    startActivity(intent);
-                    finish();
-
-                } else {
-
-                    String errorMessage = "Login failed. HTTP " + response.code();
-
-                    try {
-                        if (response.errorBody() != null) {
-                            String serverError = response.errorBody().string();
-
-                            if (!serverError.isEmpty()) {
-                                errorMessage += "\n" + serverError;
-                            }
-                        }
-                    } catch (Exception e) {
-                        errorMessage += "\nCould not read server error";
-                    }
-
-                    Toast.makeText(
-                            LoginActivity.this,
-                            errorMessage,
-                            Toast.LENGTH_LONG
-                    ).show();
-                }
-            }
-
-            @Override
-            public void onFailure(
-                    Call<JsonObject> call,
-                    Throwable t) {
-
-                Toast.makeText(
-                        LoginActivity.this,
-                        "Connection failed: " + t.getMessage(),
-                        Toast.LENGTH_LONG
-                ).show();
-            }
-        });
+        startActivity(intent);
+        finish();
     }
+
 }

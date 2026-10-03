@@ -37,38 +37,18 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*
-         * ---------------------------------------------------------
-         * Apply saved theme before loading the dashboard
-         * ---------------------------------------------------------
-         */
         applySavedTheme();
 
         setContentView(R.layout.activity_dashboard);
 
-        /*
-         * ---------------------------------------------------------
-         * Dashboard background
-         * ---------------------------------------------------------
-         */
         setupDashboardBackground();
 
-        /*
-         * ---------------------------------------------------------
-         * Get logged-in user's session data
-         * ---------------------------------------------------------
-         */
         SharedPreferences preferences =
                 getSharedPreferences("FIIE_PREFS", MODE_PRIVATE);
 
         userId = preferences.getLong("USER_ID", -1);
         userEmail = preferences.getString("USER_EMAIL", "");
 
-        /*
-         * ---------------------------------------------------------
-         * Check whether a user is logged in
-         * ---------------------------------------------------------
-         */
         if (userId == -1) {
 
             Toast.makeText(
@@ -87,11 +67,6 @@ public class DashboardActivity extends AppCompatActivity {
             return;
         }
 
-        /*
-         * ---------------------------------------------------------
-         * Connect dashboard views
-         * ---------------------------------------------------------
-         */
         tvDashboardTitle =
                 findViewById(R.id.tvDashboardTitle);
 
@@ -101,9 +76,6 @@ public class DashboardActivity extends AppCompatActivity {
         btnNewDesign =
                 findViewById(R.id.btnNewDesign);
 
-        /*
-         * Quick action cards
-         */
         btnProjects =
                 findViewById(R.id.glassCardProjects);
 
@@ -113,18 +85,8 @@ public class DashboardActivity extends AppCompatActivity {
         btnSaved =
                 findViewById(R.id.glassCardSaved);
 
-        /*
-         * ---------------------------------------------------------
-         * Display logged-in user information
-         * ---------------------------------------------------------
-         */
         setupUserHeader();
 
-        /*
-         * ---------------------------------------------------------
-         * Start New Design
-         * ---------------------------------------------------------
-         */
         if (btnNewDesign != null) {
 
             btnNewDesign.setOnClickListener(v -> {
@@ -140,28 +102,19 @@ public class DashboardActivity extends AppCompatActivity {
             });
         }
 
-        /*
-         * ---------------------------------------------------------
-         * Quick Action — Projects
-         * ---------------------------------------------------------
-         */
         if (btnProjects != null) {
 
             btnProjects.setOnClickListener(v -> {
 
-                Toast.makeText(
+                Intent intent = new Intent(
                         DashboardActivity.this,
-                        "Your projects will appear here.",
-                        Toast.LENGTH_SHORT
-                ).show();
+                        ProjectsActivity.class
+                );
+
+                startActivity(intent);
             });
         }
 
-        /*
-         * ---------------------------------------------------------
-         * Quick Action — Analyze
-         * ---------------------------------------------------------
-         */
         if (btnAnalyze != null) {
 
             btnAnalyze.setOnClickListener(v -> {
@@ -177,11 +130,6 @@ public class DashboardActivity extends AppCompatActivity {
             });
         }
 
-        /*
-         * ---------------------------------------------------------
-         * Quick Action — Saved
-         * ---------------------------------------------------------
-         */
         if (btnSaved != null) {
 
             btnSaved.setOnClickListener(v -> {
@@ -194,32 +142,12 @@ public class DashboardActivity extends AppCompatActivity {
             });
         }
 
-        /*
-         * ---------------------------------------------------------
-         * Header Menu
-         * ---------------------------------------------------------
-         */
         setupMenu();
 
-        /*
-         * ---------------------------------------------------------
-         * Search
-         * ---------------------------------------------------------
-         */
         setupSearch();
 
-        /*
-         * ---------------------------------------------------------
-         * Bottom Navigation
-         * ---------------------------------------------------------
-         */
         setupBottomNavigation();
     }
-
-
-    // =============================================================
-    // THEME
-    // =============================================================
 
     private void applySavedTheme() {
 
@@ -250,7 +178,6 @@ public class DashboardActivity extends AppCompatActivity {
                 break;
         }
     }
-
 
     private void showThemeMenu(View anchor) {
 
@@ -306,11 +233,6 @@ public class DashboardActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
-
-    // =============================================================
-    // MENU
-    // =============================================================
-
     private void setupMenu() {
 
         View btnMenu =
@@ -358,17 +280,17 @@ public class DashboardActivity extends AppCompatActivity {
 
                         return true;
 
-
                     case "Projects":
 
-                        Toast.makeText(
-                                DashboardActivity.this,
-                                "Your projects will appear here.",
-                                Toast.LENGTH_SHORT
-                        ).show();
+                        Intent projectsIntent =
+                                new Intent(
+                                        DashboardActivity.this,
+                                        ProjectsActivity.class
+                                );
+
+                        startActivity(projectsIntent);
 
                         return true;
-
 
                     case "Saved Designs":
 
@@ -380,13 +302,11 @@ public class DashboardActivity extends AppCompatActivity {
 
                         return true;
 
-
                     case "Theme":
 
                         showThemeMenu(btnMenu);
 
                         return true;
-
 
                     case "Settings":
 
@@ -400,7 +320,6 @@ public class DashboardActivity extends AppCompatActivity {
 
                         return true;
 
-
                     default:
 
                         return false;
@@ -410,11 +329,6 @@ public class DashboardActivity extends AppCompatActivity {
             popupMenu.show();
         });
     }
-
-
-    // =============================================================
-    // SEARCH
-    // =============================================================
 
     private void setupSearch() {
 
@@ -442,10 +356,6 @@ public class DashboardActivity extends AppCompatActivity {
                     0
             );
 
-            /*
-             * Use a simple dialog so the existing
-             * dashboard XML remains unchanged.
-             */
             androidx.appcompat.app.AlertDialog dialog =
                     new androidx.appcompat.app.AlertDialog.Builder(
                             DashboardActivity.this
@@ -503,7 +413,6 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
 
-
     private void performDashboardSearch(String query) {
 
         String search =
@@ -548,11 +457,13 @@ public class DashboardActivity extends AppCompatActivity {
 
         if (search.contains("project")) {
 
-            Toast.makeText(
-                    this,
-                    "Your projects will appear here.",
-                    Toast.LENGTH_SHORT
-            ).show();
+            Intent intent =
+                    new Intent(
+                            DashboardActivity.this,
+                            ProjectsActivity.class
+                    );
+
+            startActivity(intent);
 
             return;
         }
@@ -589,11 +500,6 @@ public class DashboardActivity extends AppCompatActivity {
         ).show();
     }
 
-
-    // =============================================================
-    // DASHBOARD BACKGROUND
-    // =============================================================
-
     private void setupDashboardBackground() {
 
         ImageView background =
@@ -603,9 +509,6 @@ public class DashboardActivity extends AppCompatActivity {
             return;
         }
 
-        /*
-         * Android 12+ supports native RenderEffect blur.
-         */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
 
             background.setRenderEffect(
@@ -617,11 +520,6 @@ public class DashboardActivity extends AppCompatActivity {
             );
         }
     }
-
-
-    // =============================================================
-    // USER HEADER
-    // =============================================================
 
     private void setupUserHeader() {
 
@@ -678,11 +576,6 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-
-    // =============================================================
-    // BOTTOM NAVIGATION
-    // =============================================================
-
     private void setupBottomNavigation() {
 
         View navHome =
@@ -700,11 +593,6 @@ public class DashboardActivity extends AppCompatActivity {
         View navProfile =
                 findViewById(R.id.navProfile);
 
-
-        // ---------------------------------------------------------
-        // HOME
-        // ---------------------------------------------------------
-
         if (navHome != null) {
 
             navHome.setOnClickListener(v -> {
@@ -712,11 +600,6 @@ public class DashboardActivity extends AppCompatActivity {
                 // Already on Dashboard.
             });
         }
-
-
-        // ---------------------------------------------------------
-        // ANALYZE
-        // ---------------------------------------------------------
 
         if (navAnalyze != null) {
 
@@ -737,11 +620,6 @@ public class DashboardActivity extends AppCompatActivity {
             });
         }
 
-
-        // ---------------------------------------------------------
-        // CREATE
-        // ---------------------------------------------------------
-
         if (navCreate != null) {
 
             navCreate.setOnClickListener(v -> {
@@ -761,11 +639,6 @@ public class DashboardActivity extends AppCompatActivity {
             });
         }
 
-
-        // ---------------------------------------------------------
-        // SAVED
-        // ---------------------------------------------------------
-
         if (navSaved != null) {
 
             navSaved.setOnClickListener(v -> {
@@ -777,11 +650,6 @@ public class DashboardActivity extends AppCompatActivity {
                 ).show();
             });
         }
-
-
-        // ---------------------------------------------------------
-        // PROFILE → SETTINGS
-        // ---------------------------------------------------------
 
         if (navProfile != null) {
 

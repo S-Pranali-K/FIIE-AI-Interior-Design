@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".FiieApplication"
         android:allowBackup="true"
@@ -14,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FIIE"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -70,8 +72,13 @@
             android:exported="false" />
 
         <activity
+            android:name=".ProjectsActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
+
     </application>
 
 </manifest>

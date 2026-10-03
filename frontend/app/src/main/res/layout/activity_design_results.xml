@@ -313,6 +313,20 @@
             android:stateListAnimator="@null" />
 
         <Button
+            android:id="@+id/btnRecommendations"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:text="View Recommendations"
+            android:textAllCaps="false"
+            android:textColor="#4B3D33"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="@drawable/glass_card_10"
+            android:minHeight="52dp"
+            android:stateListAnimator="@null" />
+
+        <Button
             android:id="@+id/btnNewDesign"
             android:layout_width="match_parent"
             android:layout_height="52dp"
@@ -325,6 +339,7 @@
             android:background="@drawable/glass_btn_10"
             android:minHeight="52dp"
             android:stateListAnimator="@null" />
+
 
     </LinearLayout>
 

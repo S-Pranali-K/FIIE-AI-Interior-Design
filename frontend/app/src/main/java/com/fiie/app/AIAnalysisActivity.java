@@ -1,6 +1,7 @@
 package com.fiie.app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -8,6 +9,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class AIAnalysisActivity extends AppCompatActivity {
 
@@ -20,16 +28,10 @@ public class AIAnalysisActivity extends AppCompatActivity {
     private final Handler handler =
             new Handler(Looper.getMainLooper());
 
-
-    // =========================================
-    // PROJECT DATA
-    // =========================================
-
     private long userId;
 
     private String roomImageUri;
 
-    // Room information
     private String roomType;
     private String roomLength;
     private String roomWidth;
@@ -37,7 +39,6 @@ public class AIAnalysisActivity extends AppCompatActivity {
     private String doors;
     private String windows;
 
-    // Existing furniture
     private boolean hasBed;
     private boolean hasWardrobe;
     private boolean hasStudyTable;
@@ -48,38 +49,28 @@ public class AIAnalysisActivity extends AppCompatActivity {
 
     private String furnitureAction;
 
-    // Design preferences
     private String style;
     private String color;
     private String material;
     private String lighting;
     private String specialRequirement;
 
-    // Vastu
     private boolean vastuEnabled;
     private String doorDirection;
     private String bedDirection;
     private String kitchenDirection;
     private String poojaDirection;
 
-    // Budget
     private String budget;
     private String budgetPriority;
 
-    // Completion
     private String completion;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_ai_analysis);
-
-
-        // -----------------------------------------
-        // Initialize Views
-        // -----------------------------------------
 
         progressAnalysis =
                 findViewById(R.id.progressAnalysis);
@@ -90,34 +81,14 @@ public class AIAnalysisActivity extends AppCompatActivity {
         tvAnalysisMessage =
                 findViewById(R.id.tvAnalysisMessage);
 
-
-        // -----------------------------------------
-        // Receive Complete Project Data
-        // -----------------------------------------
-
         receiveProjectData();
-
-
-        // -----------------------------------------
-        // Start Analysis
-        // -----------------------------------------
 
         startAnalysis();
     }
 
-
-    // =========================================
-    // RECEIVE PROJECT DATA
-    // =========================================
-
     private void receiveProjectData() {
 
         Intent intent = getIntent();
-
-
-        // -----------------------------------------
-        // User
-        // -----------------------------------------
 
         userId =
                 intent.getLongExtra(
@@ -125,20 +96,10 @@ public class AIAnalysisActivity extends AppCompatActivity {
                         -1
                 );
 
-
-        // -----------------------------------------
-        // Room Image
-        // -----------------------------------------
-
         roomImageUri =
                 intent.getStringExtra(
                         "room_image_uri"
                 );
-
-
-        // -----------------------------------------
-        // Room Information
-        // -----------------------------------------
 
         roomType =
                 intent.getStringExtra(
@@ -169,11 +130,6 @@ public class AIAnalysisActivity extends AppCompatActivity {
                 intent.getStringExtra(
                         "windows"
                 );
-
-
-        // -----------------------------------------
-        // Existing Furniture
-        // -----------------------------------------
 
         hasBed =
                 intent.getBooleanExtra(
@@ -222,11 +178,6 @@ public class AIAnalysisActivity extends AppCompatActivity {
                         "furniture_action"
                 );
 
-
-        // -----------------------------------------
-        // Design Preferences
-        // -----------------------------------------
-
         style =
                 intent.getStringExtra(
                         "style"
@@ -251,11 +202,6 @@ public class AIAnalysisActivity extends AppCompatActivity {
                 intent.getStringExtra(
                         "special_requirement"
                 );
-
-
-        // -----------------------------------------
-        // Vastu Preferences
-        // -----------------------------------------
 
         vastuEnabled =
                 intent.getBooleanExtra(
@@ -283,11 +229,6 @@ public class AIAnalysisActivity extends AppCompatActivity {
                         "pooja_direction"
                 );
 
-
-        // -----------------------------------------
-        // Budget
-        // -----------------------------------------
-
         budget =
                 intent.getStringExtra(
                         "budget"
@@ -298,21 +239,11 @@ public class AIAnalysisActivity extends AppCompatActivity {
                         "budget_priority"
                 );
 
-
-        // -----------------------------------------
-        // Completion
-        // -----------------------------------------
-
         completion =
                 intent.getStringExtra(
                         "completion"
                 );
     }
-
-
-    // =========================================
-    // AI ANALYSIS UI
-    // =========================================
 
     private void startAnalysis() {
 
@@ -325,7 +256,6 @@ public class AIAnalysisActivity extends AppCompatActivity {
         tvAnalysisMessage.setText(
                 "Starting FIIE analysis..."
         );
-
 
         handler.postDelayed(
                 new Runnable() {
@@ -342,7 +272,6 @@ public class AIAnalysisActivity extends AppCompatActivity {
                         tvProgress.setText(
                                 progress + "%"
                         );
-
 
                         if (progress < 25) {
 
@@ -380,6 +309,8 @@ public class AIAnalysisActivity extends AppCompatActivity {
                                     "Analysis completed!"
                             );
 
+                            saveProjectLocally();
+
                             handler.postDelayed(
                                     () -> openDesignResults(),
                                     800
@@ -387,7 +318,6 @@ public class AIAnalysisActivity extends AppCompatActivity {
 
                             return;
                         }
-
 
                         handler.postDelayed(
                                 this,
@@ -399,10 +329,250 @@ public class AIAnalysisActivity extends AppCompatActivity {
         );
     }
 
+    private void saveProjectLocally() {
 
-    // =========================================
-    // OPEN DESIGN RESULTS
-    // =========================================
+        try {
+
+            SharedPreferences preferences =
+                    getSharedPreferences(
+                            "FIIE_PREFS",
+                            MODE_PRIVATE
+                    );
+
+            String projectsJson =
+                    preferences.getString(
+                            "FIIE_PROJECTS",
+                            ""
+                    );
+
+            JSONArray projects;
+
+            if (projectsJson.isEmpty()) {
+                projects = new JSONArray();
+            } else {
+                projects = new JSONArray(projectsJson);
+            }
+
+            long projectId =
+                    System.currentTimeMillis();
+
+            JSONObject project =
+                    new JSONObject();
+
+            project.put(
+                    "project_id",
+                    projectId
+            );
+
+            project.put(
+                    "user_id",
+                    userId == -1 ? 1 : userId
+            );
+
+            project.put(
+                    "project_name",
+                    createProjectName()
+            );
+
+            project.put(
+                    "date",
+                    new SimpleDateFormat(
+                            "dd MMM yyyy, hh:mm a",
+                            Locale.getDefault()
+                    ).format(
+                            new Date()
+                    )
+            );
+
+            project.put(
+                    "room_image_uri",
+                    safeValue(roomImageUri)
+            );
+
+            project.put(
+                    "room_type",
+                    safeValue(roomType)
+            );
+
+            project.put(
+                    "room_length",
+                    safeValue(roomLength)
+            );
+
+            project.put(
+                    "room_width",
+                    safeValue(roomWidth)
+            );
+
+            project.put(
+                    "ceiling_height",
+                    safeValue(ceilingHeight)
+            );
+
+            project.put(
+                    "doors",
+                    safeValue(doors)
+            );
+
+            project.put(
+                    "windows",
+                    safeValue(windows)
+            );
+
+            project.put(
+                    "has_bed",
+                    hasBed
+            );
+
+            project.put(
+                    "has_wardrobe",
+                    hasWardrobe
+            );
+
+            project.put(
+                    "has_study_table",
+                    hasStudyTable
+            );
+
+            project.put(
+                    "has_chair",
+                    hasChair
+            );
+
+            project.put(
+                    "has_sofa",
+                    hasSofa
+            );
+
+            project.put(
+                    "has_tv_unit",
+                    hasTvUnit
+            );
+
+            project.put(
+                    "has_other_furniture",
+                    hasOtherFurniture
+            );
+
+            project.put(
+                    "furniture_action",
+                    safeValue(furnitureAction)
+            );
+
+            project.put(
+                    "style",
+                    safeValue(style)
+            );
+
+            project.put(
+                    "color",
+                    safeValue(color)
+            );
+
+            project.put(
+                    "material",
+                    safeValue(material)
+            );
+
+            project.put(
+                    "lighting",
+                    safeValue(lighting)
+            );
+
+            project.put(
+                    "special_requirement",
+                    safeValue(specialRequirement)
+            );
+
+            project.put(
+                    "vastu_enabled",
+                    vastuEnabled
+            );
+
+            project.put(
+                    "door_direction",
+                    safeValue(doorDirection)
+            );
+
+            project.put(
+                    "bed_direction",
+                    safeValue(bedDirection)
+            );
+
+            project.put(
+                    "kitchen_direction",
+                    safeValue(kitchenDirection)
+            );
+
+            project.put(
+                    "pooja_direction",
+                    safeValue(poojaDirection)
+            );
+
+            project.put(
+                    "budget",
+                    safeValue(budget)
+            );
+
+            project.put(
+                    "budget_priority",
+                    safeValue(budgetPriority)
+            );
+
+            project.put(
+                    "completion",
+                    safeValue(completion)
+            );
+
+            projects.put(project);
+
+            preferences.edit()
+                    .putString(
+                            "FIIE_PROJECTS",
+                            projects.toString()
+                    )
+                    .apply();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String createProjectName() {
+
+        String room =
+                safeValue(roomType);
+
+        String designStyle =
+                safeValue(style);
+
+        if (!room.isEmpty() &&
+                !designStyle.isEmpty()) {
+
+            return room + " - " + designStyle;
+        }
+
+        if (!room.isEmpty()) {
+
+            return room + " Design";
+        }
+
+        if (!designStyle.isEmpty()) {
+
+            return designStyle + " Design";
+        }
+
+        return "My Interior Design";
+    }
+
+    private String safeValue(String value) {
+
+        if (value == null) {
+            return "";
+        }
+
+        return value;
+    }
 
     private void openDesignResults() {
 
@@ -412,11 +582,6 @@ public class AIAnalysisActivity extends AppCompatActivity {
                         DesignResultsActivity.class
                 );
 
-
-        // -----------------------------------------
-        // User
-        // -----------------------------------------
-
         if (userId != -1) {
 
             intent.putExtra(
@@ -425,20 +590,15 @@ public class AIAnalysisActivity extends AppCompatActivity {
             );
         }
 
-
-        // -----------------------------------------
-        // Room Image
-        // -----------------------------------------
+        intent.putExtra(
+                "PROJECT_ID",
+                System.currentTimeMillis()
+        );
 
         intent.putExtra(
                 "room_image_uri",
                 roomImageUri
         );
-
-
-        // -----------------------------------------
-        // Room Information
-        // -----------------------------------------
 
         intent.putExtra(
                 "room_type",
@@ -469,11 +629,6 @@ public class AIAnalysisActivity extends AppCompatActivity {
                 "windows",
                 windows
         );
-
-
-        // -----------------------------------------
-        // Existing Furniture
-        // -----------------------------------------
 
         intent.putExtra(
                 "has_bed",
@@ -515,11 +670,6 @@ public class AIAnalysisActivity extends AppCompatActivity {
                 furnitureAction
         );
 
-
-        // -----------------------------------------
-        // Design Preferences
-        // -----------------------------------------
-
         intent.putExtra(
                 "style",
                 style
@@ -544,11 +694,6 @@ public class AIAnalysisActivity extends AppCompatActivity {
                 "special_requirement",
                 specialRequirement
         );
-
-
-        // -----------------------------------------
-        // Vastu
-        // -----------------------------------------
 
         intent.putExtra(
                 "vastu_enabled",
@@ -575,11 +720,6 @@ public class AIAnalysisActivity extends AppCompatActivity {
                 poojaDirection
         );
 
-
-        // -----------------------------------------
-        // Budget
-        // -----------------------------------------
-
         intent.putExtra(
                 "budget",
                 budget
@@ -590,26 +730,15 @@ public class AIAnalysisActivity extends AppCompatActivity {
                 budgetPriority
         );
 
-
-        // -----------------------------------------
-        // Completion
-        // -----------------------------------------
-
         intent.putExtra(
                 "completion",
                 completion
         );
 
-
-        // -----------------------------------------
-        // Navigate
-        // -----------------------------------------
-
         startActivity(intent);
 
         finish();
     }
-
 
     @Override
     protected void onDestroy() {

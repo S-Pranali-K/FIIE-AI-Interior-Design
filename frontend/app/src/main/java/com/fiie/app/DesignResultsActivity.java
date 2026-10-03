@@ -7,9 +7,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class DesignResultsActivity extends AppCompatActivity {
+
+    // =========================================
+    // VIEWS
+    // =========================================
 
     private ImageView ivDesignPreview;
 
@@ -19,10 +26,19 @@ public class DesignResultsActivity extends AppCompatActivity {
     private TextView tvVastuRecommendation;
 
     private Button btnViewDetails;
+    private Button btnRecommendations;
     private Button btnNewDesign;
 
-    // Project data
+
+    // =========================================
+    // PROJECT DATA
+    // =========================================
+
+    private long userId;
+
     private String roomImageUri;
+
+    // Room information
     private String roomType;
     private String roomLength;
     private String roomWidth;
@@ -30,13 +46,42 @@ public class DesignResultsActivity extends AppCompatActivity {
     private String doors;
     private String windows;
 
+    // Existing furniture
+    private boolean hasBed;
+    private boolean hasWardrobe;
+    private boolean hasStudyTable;
+    private boolean hasChair;
+    private boolean hasSofa;
+    private boolean hasTvUnit;
+    private boolean hasOtherFurniture;
+
+    private String furnitureAction;
+
+    // Design preferences
     private String style;
     private String color;
     private String material;
     private String lighting;
-
     private String specialRequirement;
+
+    // Vastu
+    private boolean vastuEnabled;
+    private String doorDirection;
+    private String bedDirection;
+    private String kitchenDirection;
+    private String poojaDirection;
+
+    // Budget
     private String budget;
+    private String budgetPriority;
+
+    // Completion
+    private String completion;
+
+
+    // =========================================
+    // ON CREATE
+    // =========================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +90,26 @@ public class DesignResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_design_results);
 
         initializeViews();
+
         receiveProjectData();
+
         displayProjectData();
+
         setupButtons();
     }
 
-    /**
-     * Initialize all views from activity_design_results.xml
-     */
+
+    // =========================================
+    // INITIALIZE VIEWS
+    // =========================================
+
     private void initializeViews() {
 
-        ivDesignPreview = findViewById(R.id.ivDesignPreview);
+        ivDesignPreview =
+                findViewById(R.id.ivDesignPreview);
 
-        tvRoomSummary = findViewById(R.id.tvRoomSummary);
+        tvRoomSummary =
+                findViewById(R.id.tvRoomSummary);
 
         tvStyleRecommendation =
                 findViewById(R.id.tvStyleRecommendation);
@@ -71,63 +123,221 @@ public class DesignResultsActivity extends AppCompatActivity {
         btnViewDetails =
                 findViewById(R.id.btnViewDetails);
 
-        // Some versions of the XML may not contain this button.
+        btnRecommendations =
+                findViewById(R.id.btnRecommendations);
+
         btnNewDesign =
                 findViewById(R.id.btnNewDesign);
     }
 
 
-    /**
-     * Receive complete project information
-     * from AIAnalysisActivity.
-     */
+    // =========================================
+    // RECEIVE PROJECT DATA
+    // =========================================
+
     private void receiveProjectData() {
 
+        Intent intent = getIntent();
+
+        // -----------------------------------------
+        // User
+        // -----------------------------------------
+
+        userId =
+                intent.getLongExtra(
+                        "USER_ID",
+                        -1
+                );
+
+
+        // -----------------------------------------
+        // Room Image
+        // -----------------------------------------
+
         roomImageUri =
-                getIntent().getStringExtra("room_image_uri");
+                intent.getStringExtra(
+                        "room_image_uri"
+                );
+
+
+        // -----------------------------------------
+        // Room Information
+        // -----------------------------------------
 
         roomType =
-                getIntent().getStringExtra("room_type");
+                intent.getStringExtra(
+                        "room_type"
+                );
 
         roomLength =
-                getIntent().getStringExtra("room_length");
+                intent.getStringExtra(
+                        "room_length"
+                );
 
         roomWidth =
-                getIntent().getStringExtra("room_width");
+                intent.getStringExtra(
+                        "room_width"
+                );
 
         ceilingHeight =
-                getIntent().getStringExtra("ceiling_height");
+                intent.getStringExtra(
+                        "ceiling_height"
+                );
 
         doors =
-                getIntent().getStringExtra("doors");
+                intent.getStringExtra(
+                        "doors"
+                );
 
         windows =
-                getIntent().getStringExtra("windows");
+                intent.getStringExtra(
+                        "windows"
+                );
+
+
+        // -----------------------------------------
+        // Existing Furniture
+        // -----------------------------------------
+
+        hasBed =
+                intent.getBooleanExtra(
+                        "has_bed",
+                        false
+                );
+
+        hasWardrobe =
+                intent.getBooleanExtra(
+                        "has_wardrobe",
+                        false
+                );
+
+        hasStudyTable =
+                intent.getBooleanExtra(
+                        "has_study_table",
+                        false
+                );
+
+        hasChair =
+                intent.getBooleanExtra(
+                        "has_chair",
+                        false
+                );
+
+        hasSofa =
+                intent.getBooleanExtra(
+                        "has_sofa",
+                        false
+                );
+
+        hasTvUnit =
+                intent.getBooleanExtra(
+                        "has_tv_unit",
+                        false
+                );
+
+        hasOtherFurniture =
+                intent.getBooleanExtra(
+                        "has_other_furniture",
+                        false
+                );
+
+        furnitureAction =
+                intent.getStringExtra(
+                        "furniture_action"
+                );
+
+
+        // -----------------------------------------
+        // Design Preferences
+        // -----------------------------------------
 
         style =
-                getIntent().getStringExtra("style");
+                intent.getStringExtra(
+                        "style"
+                );
 
         color =
-                getIntent().getStringExtra("color");
+                intent.getStringExtra(
+                        "color"
+                );
 
         material =
-                getIntent().getStringExtra("material");
+                intent.getStringExtra(
+                        "material"
+                );
 
         lighting =
-                getIntent().getStringExtra("lighting");
+                intent.getStringExtra(
+                        "lighting"
+                );
 
         specialRequirement =
-                getIntent().getStringExtra(
+                intent.getStringExtra(
                         "special_requirement"
                 );
 
+
+        // -----------------------------------------
+        // Vastu Preferences
+        // -----------------------------------------
+
+        vastuEnabled =
+                intent.getBooleanExtra(
+                        "vastu_enabled",
+                        false
+                );
+
+        doorDirection =
+                intent.getStringExtra(
+                        "door_direction"
+                );
+
+        bedDirection =
+                intent.getStringExtra(
+                        "bed_direction"
+                );
+
+        kitchenDirection =
+                intent.getStringExtra(
+                        "kitchen_direction"
+                );
+
+        poojaDirection =
+                intent.getStringExtra(
+                        "pooja_direction"
+                );
+
+
+        // -----------------------------------------
+        // Budget
+        // -----------------------------------------
+
         budget =
-                getIntent().getStringExtra("budget");
+                intent.getStringExtra(
+                        "budget"
+                );
+
+        budgetPriority =
+                intent.getStringExtra(
+                        "budget_priority"
+                );
+
+
+        // -----------------------------------------
+        // Completion
+        // -----------------------------------------
+
+        completion =
+                intent.getStringExtra(
+                        "completion"
+                );
     }
 
-    /**
-     * Display dynamic project information.
-     */
+
+    // =========================================
+    // DISPLAY PROJECT DATA
+    // =========================================
+
     private void displayProjectData() {
 
         displayRoomImage();
@@ -141,20 +351,27 @@ public class DesignResultsActivity extends AppCompatActivity {
         displayVastuRecommendation();
     }
 
-    /**
-     * Display selected room image.
-     */
+
+    // =========================================
+    // ROOM IMAGE
+    // =========================================
+
     private void displayRoomImage() {
 
-        if (roomImageUri != null
-                && !roomImageUri.isEmpty()) {
+        if (ivDesignPreview == null) {
+            return;
+        }
+
+        if (isValid(roomImageUri)) {
 
             try {
 
                 Uri imageUri =
                         Uri.parse(roomImageUri);
 
-                ivDesignPreview.setImageURI(imageUri);
+                ivDesignPreview.setImageURI(
+                        imageUri
+                );
 
             } catch (Exception e) {
 
@@ -162,361 +379,844 @@ public class DesignResultsActivity extends AppCompatActivity {
                         android.R.drawable.ic_menu_gallery
                 );
             }
+
+        } else {
+
+            ivDesignPreview.setImageResource(
+                    android.R.drawable.ic_menu_gallery
+            );
         }
     }
 
-    /**
-     * Display a dynamic room summary.
-     */
+
+    // =========================================
+    // ROOM SUMMARY
+    // =========================================
+
     private void displayRoomSummary() {
 
         StringBuilder summary =
                 new StringBuilder();
 
-        summary.append("AI analysis completed for ");
+        summary.append("Room: ")
+                .append(
+                        isValid(roomType)
+                                ? roomType
+                                : "Not specified"
+                )
+                .append("\n\n");
 
-        if (isValid(roomType)) {
-            summary.append(roomType);
-        } else {
-            summary.append("your room");
-        }
+        summary.append("Room Size: ")
+                .append(
+                        isValid(roomLength)
+                                ? roomLength
+                                : "N/A"
+                )
+                .append(" × ")
+                .append(
+                        isValid(roomWidth)
+                                ? roomWidth
+                                : "N/A"
+                )
+                .append("\n");
 
-        summary.append("\n\n");
+        summary.append("Ceiling Height: ")
+                .append(
+                        isValid(ceilingHeight)
+                                ? ceilingHeight
+                                : "N/A"
+                )
+                .append("\n");
 
-        if (isValid(roomLength)
-                && isValid(roomWidth)) {
+        summary.append("Doors: ")
+                .append(
+                        isValid(doors)
+                                ? doors
+                                : "N/A"
+                )
+                .append("\n");
 
-            summary.append("Room Size: ")
-                    .append(roomLength)
-                    .append(" × ")
-                    .append(roomWidth)
-                    .append("\n");
-        }
+        summary.append("Windows: ")
+                .append(
+                        isValid(windows)
+                                ? windows
+                                : "N/A"
+                )
+                .append("\n");
 
-        if (isValid(ceilingHeight)) {
-
-            summary.append("Ceiling Height: ")
-                    .append(ceilingHeight)
-                    .append("\n");
-        }
-
-        if (isValid(doors)) {
-
-            summary.append("Doors: ")
-                    .append(doors)
-                    .append("\n");
-        }
-
-        if (isValid(windows)) {
-
-            summary.append("Windows: ")
-                    .append(windows)
-                    .append("\n");
-        }
-
-        if (isValid(budget)) {
-
-            summary.append("Budget: ")
-                    .append(budget);
-        }
+        summary.append("Budget: ")
+                .append(
+                        isValid(budget)
+                                ? budget
+                                : "N/A"
+                );
 
         tvRoomSummary.setText(
                 summary.toString()
         );
     }
 
-    /**
-     * Display design recommendation based
-     * on the user's selected preferences.
-     */
+
+    // =========================================
+    // STYLE RECOMMENDATION
+    // =========================================
+
     private void displayStyleRecommendation() {
 
         StringBuilder recommendation =
                 new StringBuilder();
 
-        if (isValid(style)) {
+        recommendation.append(
+                        "Style: "
+                )
+                .append(
+                        isValid(style)
+                                ? style
+                                : "Not specified"
+                )
+                .append("\n\n");
 
-            recommendation.append(
-                    style
-            );
+        recommendation.append(
+                        "Color Preference: "
+                )
+                .append(
+                        isValid(color)
+                                ? color
+                                : "Not specified"
+                )
+                .append("\n\n");
 
-        } else {
+        recommendation.append(
+                        "Material: "
+                )
+                .append(
+                        isValid(material)
+                                ? material
+                                : "Not specified"
+                )
+                .append("\n\n");
 
-            recommendation.append(
-                    "Personalized Interior Design"
-            );
-        }
-
-        if (isValid(color)) {
-
-            recommendation.append(
-                    " with "
-            ).append(
-                    color
-            ).append(
-                    " color palette"
-            );
-        }
-
-        if (isValid(material)) {
-
-            recommendation.append(
-                    ", using "
-            ).append(
-                    material
-            ).append(
-                    " materials"
-            );
-        }
-
-        if (isValid(lighting)) {
-
-            recommendation.append(
-                    " and "
-            ).append(
-                    lighting
-            ).append(
-                    " lighting"
-            );
-        }
+        recommendation.append(
+                        "Lighting: "
+                )
+                .append(
+                        isValid(lighting)
+                                ? lighting
+                                : "Not specified"
+                );
 
         tvStyleRecommendation.setText(
                 recommendation.toString()
         );
     }
 
-    /**
-     * Generate functional recommendations
-     * from room information and requirements.
-     */
+
+    // =========================================
+    // FUNCTIONAL RECOMMENDATION
+    // =========================================
+
     private void displayFunctionalRecommendation() {
 
         StringBuilder recommendation =
                 new StringBuilder();
 
         recommendation.append(
-                "Functional Recommendations\n\n"
+                "• Maintain clear walking space between major furniture pieces.\n\n"
         );
 
         recommendation.append(
-                "• Maintain comfortable walking space "
-                        + "between furniture.\n"
+                "• Use furniture dimensions that are appropriate for the available room area.\n\n"
         );
 
         recommendation.append(
-                "• Arrange furniture according to "
-                        + "the room dimensions.\n"
+                "• Keep doors and windows unobstructed for comfortable movement and ventilation.\n\n"
         );
 
-        if (isValid(doors)) {
+
+        if (isValid(furnitureAction)) {
 
             recommendation.append(
-                    "• Keep the door movement area "
-                            + "clear and accessible.\n"
-            );
+                            "Furniture Preference: "
+                    )
+                    .append(furnitureAction)
+                    .append("\n\n");
         }
 
-        if (isValid(windows)) {
-
-            recommendation.append(
-                    "• Avoid blocking windows so "
-                            + "natural light can enter the room.\n"
-            );
-        }
-
-        if (isValid(lighting)) {
-
-            recommendation.append(
-                    "• Use "
-            ).append(
-                    lighting
-            ).append(
-                    " lighting according to "
-                            + "the room's activities.\n"
-            );
-        }
 
         if (isValid(specialRequirement)) {
 
             recommendation.append(
-                    "• Special requirement: "
-            ).append(
-                    specialRequirement
-            ).append(
-                    "\n"
-            );
+                            "Special Requirement: "
+                    )
+                    .append(specialRequirement)
+                    .append("\n\n");
         }
 
-        if (isValid(budget)) {
+
+        if (isValid(lighting)) {
 
             recommendation.append(
-                    "• Keep furniture and material "
-                            + "selection within the budget of "
-            ).append(
-                    budget
-            ).append(
-                    ".\n"
-            );
+                            "Lighting Consideration: "
+                    )
+                    .append(lighting)
+                    .append("\n\n");
         }
+
+
+        if (isValid(budgetPriority)) {
+
+            recommendation.append(
+                            "Budget Priority: "
+                    )
+                    .append(budgetPriority);
+        }
+
 
         tvFunctionalRecommendation.setText(
                 recommendation.toString()
         );
     }
 
-    /**
-     * Generate Vastu-related information.
-     *
-     * The current SurveyActivity does not pass
-     * the Vastu checkbox/directions yet, so this
-     * section avoids inventing directions.
-     */
+
+    // =========================================
+    // VASTU RECOMMENDATION
+    // =========================================
+
     private void displayVastuRecommendation() {
 
+        StringBuilder recommendation =
+                new StringBuilder();
+
+
+        if (!vastuEnabled) {
+
+            recommendation.append(
+                    "Vastu suggestions were not enabled for this project."
+            );
+
+        } else {
+
+            recommendation.append(
+                    "Vastu preferences are enabled for this project.\n\n"
+            );
+
+
+            if (isValid(doorDirection)) {
+
+                recommendation.append(
+                                "Door Direction: "
+                        )
+                        .append(doorDirection)
+                        .append("\n\n");
+            }
+
+
+            if (isValid(bedDirection)) {
+
+                recommendation.append(
+                                "Bed Direction: "
+                        )
+                        .append(bedDirection)
+                        .append("\n\n");
+            }
+
+
+            if (isValid(kitchenDirection)) {
+
+                recommendation.append(
+                                "Kitchen Direction: "
+                        )
+                        .append(kitchenDirection)
+                        .append("\n\n");
+            }
+
+
+            if (isValid(poojaDirection)) {
+
+                recommendation.append(
+                                "Pooja Direction: "
+                        )
+                        .append(poojaDirection);
+            }
+        }
+
+
         tvVastuRecommendation.setText(
-                "Vastu Considerations\n\n" +
-                        "• Keep the entrance area clear.\n" +
-                        "• Maintain an open and uncluttered "
-                        + "central area.\n" +
-                        "• Place furniture while maintaining "
-                        + "comfortable movement.\n" +
-                        "• Final Vastu recommendations will "
-                        + "use the selected room directions "
-                        + "when those values are connected "
-                        + "to the AI analysis."
+                recommendation.toString()
         );
     }
 
-    /**
-     * Configure action buttons.
-     */
+
+    // =========================================
+    // BUTTONS
+    // =========================================
+
     private void setupButtons() {
 
-        if (btnViewDetails != null) {
-            btnViewDetails.setOnClickListener(v -> {
+        // -----------------------------------------
+        // VIEW FULL DETAILS
+        // -----------------------------------------
 
-                Intent intent = new Intent(
+        if (btnViewDetails != null) {
+
+            btnViewDetails.setOnClickListener(
+                    v -> openDesignDetails()
+            );
+        }
+
+
+        // -----------------------------------------
+        // VIEW RECOMMENDATIONS
+        // -----------------------------------------
+
+        if (btnRecommendations != null) {
+
+            btnRecommendations.setOnClickListener(
+                    v -> openRecommendations()
+            );
+        }
+
+
+        // -----------------------------------------
+        // CREATE NEW DESIGN
+        // -----------------------------------------
+
+        if (btnNewDesign != null) {
+
+            btnNewDesign.setOnClickListener(
+                    v -> {
+
+                        Intent intent =
+                                new Intent(
+                                        DesignResultsActivity.this,
+                                        NewProjectActivity.class
+                                );
+
+                        startActivity(intent);
+
+                        finish();
+                    }
+            );
+        }
+    }
+
+
+    // =========================================
+    // OPEN DESIGN DETAILS
+    // =========================================
+
+    private void openDesignDetails() {
+
+        String selectedDesign =
+                (isValid(style)
+                        ? style
+                        : "Personalized")
+                        + " Interior Design";
+
+
+        String whySuitable =
+                "This design is selected based on your "
+                        + (isValid(style)
+                        ? style
+                        : "preferred")
+                        + " style, "
+                        + (isValid(color)
+                        ? color.toLowerCase()
+                        : "selected")
+                        + " color preference, and the "
+                        + (isValid(roomType)
+                        ? roomType.toLowerCase()
+                        : "room")
+                        + " requirements.";
+
+
+        String spaceUtilization =
+                "The layout focuses on efficient use of available "
+                        + "floor space while maintaining comfortable "
+                        + "movement around the main furniture.";
+
+
+        String furniturePlacement =
+                "Furniture placement is planned to maintain clear "
+                        + "walking paths and practical access to doors "
+                        + "and windows.";
+
+        if (isValid(furnitureAction)) {
+
+            furniturePlacement +=
+                    " Existing furniture preference: "
+                            + furnitureAction
+                            + ".";
+        }
+
+
+        String lightingDetails =
+                isValid(lighting)
+                        ? "The design follows your "
+                          + lighting
+                          + " lighting preference while maintaining "
+                          + "comfortable illumination for the room."
+                        : "The design uses a balanced lighting "
+                          + "arrangement suitable for the room.";
+
+
+        String materialDetails =
+                isValid(material)
+                        ? "The recommended material direction is "
+                          + material
+                          + " to complement the selected style."
+                        : "Materials are selected to complement "
+                          + "the overall interior style.";
+
+
+        String functionalScore =
+                "Good";
+
+
+        DesignDetailData designDetailData =
+                new DesignDetailData(
+                        selectedDesign,
+                        whySuitable,
+                        spaceUtilization,
+                        furniturePlacement,
+                        lightingDetails,
+                        materialDetails,
+                        functionalScore
+                );
+
+
+        Intent intent =
+                new Intent(
                         DesignResultsActivity.this,
                         DesignDetailsActivity.class
                 );
 
-                startActivity(intent);
-            });
 
-            btnViewDetails.setOnClickListener(
-                    v -> showProjectDetails()
+        intent.putExtra(
+                "DESIGN_DETAILS",
+                designDetailData
+        );
+
+
+        startActivity(intent);
+    }
+
+
+    // =========================================
+    // OPEN RECOMMENDATIONS
+    // =========================================
+
+    private void openRecommendations() {
+
+        ArrayList<RecommendationData> recommendations =
+                new ArrayList<>();
+
+
+        // -----------------------------------------
+        // STYLE
+        // -----------------------------------------
+
+        if (isValid(style)) {
+
+            recommendations.add(
+                    new RecommendationData(
+                            "Style",
+                            "Continue with the "
+                                    + style
+                                    + " interior style.",
+                            "It matches the design preference selected "
+                                    + "for this project."
+                    )
             );
         }
 
-        /*
-         * Some versions of activity_design_results.xml
-         * do not contain btnNewDesign.
-         *
-         * Therefore we check for null before using it.
-         */
-        if (btnNewDesign != null) {
 
-            btnNewDesign.setOnClickListener(v -> {
+        // -----------------------------------------
+        // COLOR
+        // -----------------------------------------
 
-                Intent intent = new Intent(
+        if (isValid(color)) {
+
+            recommendations.add(
+                    new RecommendationData(
+                            "Color",
+                            "Use "
+                                    + color
+                                    + " tones as part of the room palette.",
+                            "This keeps the final design aligned with "
+                                    + "your selected color preference."
+                    )
+            );
+        }
+
+
+        // -----------------------------------------
+        // MATERIAL
+        // -----------------------------------------
+
+        if (isValid(material)) {
+
+            recommendations.add(
+                    new RecommendationData(
+                            "Materials",
+                            "Consider "
+                                    + material
+                                    + " for suitable furniture and "
+                                    + "interior surfaces.",
+                            "The material choice complements the selected "
+                                    + "design direction."
+                    )
+            );
+        }
+
+
+        // -----------------------------------------
+        // LIGHTING
+        // -----------------------------------------
+
+        if (isValid(lighting)) {
+
+            recommendations.add(
+                    new RecommendationData(
+                            "Lighting",
+                            "Use "
+                                    + lighting
+                                    + " lighting in the planned areas.",
+                            "It follows the lighting preference provided "
+                                    + "during the room survey."
+                    )
+            );
+        }
+
+
+        // -----------------------------------------
+        // FURNITURE
+        // -----------------------------------------
+
+        if (isValid(furnitureAction)) {
+
+            recommendations.add(
+                    new RecommendationData(
+                            "Furniture",
+                            furnitureAction,
+                            "This recommendation considers the existing "
+                                    + "furniture arrangement and your selected "
+                                    + "furniture preference."
+                    )
+            );
+        }
+
+
+        // -----------------------------------------
+        // EXISTING FURNITURE
+        // -----------------------------------------
+
+        StringBuilder existingFurniture =
+                new StringBuilder();
+
+        if (hasBed) {
+            existingFurniture.append("Bed, ");
+        }
+
+        if (hasWardrobe) {
+            existingFurniture.append("Wardrobe, ");
+        }
+
+        if (hasStudyTable) {
+            existingFurniture.append("Study table, ");
+        }
+
+        if (hasChair) {
+            existingFurniture.append("Chair, ");
+        }
+
+        if (hasSofa) {
+            existingFurniture.append("Sofa, ");
+        }
+
+        if (hasTvUnit) {
+            existingFurniture.append("TV unit, ");
+        }
+
+        if (hasOtherFurniture) {
+            existingFurniture.append("Other furniture, ");
+        }
+
+
+        if (existingFurniture.length() > 0) {
+
+            String furnitureList =
+                    existingFurniture
+                            .toString()
+                            .replaceAll(", $", "");
+
+
+            recommendations.add(
+                    new RecommendationData(
+                            "Existing Furniture",
+                            "Plan the new layout around the existing "
+                                    + "items: "
+                                    + furnitureList
+                                    + ".",
+                            "Considering existing furniture helps avoid "
+                                    + "unnecessary replacement and improves "
+                                    + "space planning."
+                    )
+            );
+        }
+
+
+        // -----------------------------------------
+        // SPACE UTILIZATION
+        // -----------------------------------------
+
+        recommendations.add(
+                new RecommendationData(
+                        "Space Utilization",
+                        "Maintain clear movement paths around major "
+                                + "furniture pieces and avoid blocking "
+                                + "doors or windows.",
+                        "Efficient circulation helps make the room "
+                                + "more comfortable and practical."
+                )
+        );
+
+
+        // -----------------------------------------
+        // SPECIAL REQUIREMENT
+        // -----------------------------------------
+
+        if (isValid(specialRequirement)) {
+
+            recommendations.add(
+                    new RecommendationData(
+                            "Special Requirement",
+                            specialRequirement,
+                            "This recommendation is based on the "
+                                    + "specific requirement provided "
+                                    + "for the project."
+                    )
+            );
+        }
+
+
+        // -----------------------------------------
+        // BUDGET
+        // -----------------------------------------
+
+        if (isValid(budget)) {
+
+            String budgetMessage =
+                    "Plan furniture and material selections "
+                            + "within the "
+                            + budget
+                            + " budget range.";
+
+            if (isValid(budgetPriority)) {
+
+                budgetMessage +=
+                        " Your budget priority is "
+                                + budgetPriority
+                                + ".";
+            }
+
+
+            recommendations.add(
+                    new RecommendationData(
+                            "Budget",
+                            budgetMessage,
+                            "Keeping selections within the chosen "
+                                    + "budget helps maintain project "
+                                    + "feasibility."
+                    )
+            );
+        }
+
+
+        // -----------------------------------------
+        // VASTU
+        // -----------------------------------------
+
+        if (vastuEnabled) {
+
+            String vastuRecommendation =
+                    "Consider the selected Vastu directions when "
+                            + "finalizing furniture placement.";
+
+
+            if (isValid(doorDirection)) {
+
+                vastuRecommendation +=
+                        " Door: "
+                                + doorDirection
+                                + ".";
+            }
+
+
+            if (isValid(bedDirection)) {
+
+                vastuRecommendation +=
+                        " Bed: "
+                                + bedDirection
+                                + ".";
+            }
+
+
+            if (isValid(kitchenDirection)) {
+
+                vastuRecommendation +=
+                        " Kitchen: "
+                                + kitchenDirection
+                                + ".";
+            }
+
+
+            if (isValid(poojaDirection)) {
+
+                vastuRecommendation +=
+                        " Pooja: "
+                                + poojaDirection
+                                + ".";
+            }
+
+
+            recommendations.add(
+                    new RecommendationData(
+                            "Vastu",
+                            vastuRecommendation,
+                            "These suggestions are based on the Vastu "
+                                    + "preferences entered for this project."
+                    )
+            );
+        }
+
+
+        // -----------------------------------------
+        // OPEN RECOMMENDATIONS SCREEN
+        // -----------------------------------------
+
+        Intent intent =
+                new Intent(
                         DesignResultsActivity.this,
-                        NewProjectActivity.class
+                        RecommendationsActivity.class
                 );
 
-                startActivity(intent);
 
-                finish();
-            });
-        }
+        intent.putExtra(
+                "RECOMMENDATIONS",
+                recommendations
+        );
+
+
+        startActivity(intent);
     }
 
-    /**
-     * Show complete project details.
-     *
-     * This keeps the current XML unchanged while
-     * providing useful dynamic information.
-     */
+
+    // =========================================
+    // SHOW PROJECT DETAILS
+    // =========================================
+
     private void showProjectDetails() {
 
         StringBuilder details =
                 new StringBuilder();
 
-        details.append("Project Details\n\n");
+        details.append("Room Type: ")
+                .append(
+                        isValid(roomType)
+                                ? roomType
+                                : "N/A"
+                )
+                .append("\n\n");
 
-        addDetail(
-                details,
-                "Room Type",
-                roomType
-        );
+        details.append("Room Size: ")
+                .append(
+                        isValid(roomLength)
+                                ? roomLength
+                                : "N/A"
+                )
+                .append(" × ")
+                .append(
+                        isValid(roomWidth)
+                                ? roomWidth
+                                : "N/A"
+                )
+                .append("\n\n");
 
-        addDetail(
-                details,
-                "Room Length",
-                roomLength
-        );
+        details.append("Ceiling Height: ")
+                .append(
+                        isValid(ceilingHeight)
+                                ? ceilingHeight
+                                : "N/A"
+                )
+                .append("\n\n");
 
-        addDetail(
-                details,
-                "Room Width",
-                roomWidth
-        );
+        details.append("Doors: ")
+                .append(
+                        isValid(doors)
+                                ? doors
+                                : "N/A"
+                )
+                .append("\n\n");
 
-        addDetail(
-                details,
-                "Ceiling Height",
-                ceilingHeight
-        );
+        details.append("Windows: ")
+                .append(
+                        isValid(windows)
+                                ? windows
+                                : "N/A"
+                )
+                .append("\n\n");
 
-        addDetail(
-                details,
-                "Doors",
-                doors
-        );
+        details.append("Style: ")
+                .append(
+                        isValid(style)
+                                ? style
+                                : "N/A"
+                )
+                .append("\n\n");
 
-        addDetail(
-                details,
-                "Windows",
-                windows
-        );
+        details.append("Color: ")
+                .append(
+                        isValid(color)
+                                ? color
+                                : "N/A"
+                )
+                .append("\n\n");
 
-        addDetail(
-                details,
-                "Style",
-                style
-        );
+        details.append("Material: ")
+                .append(
+                        isValid(material)
+                                ? material
+                                : "N/A"
+                )
+                .append("\n\n");
 
-        addDetail(
-                details,
-                "Color",
-                color
-        );
+        details.append("Lighting: ")
+                .append(
+                        isValid(lighting)
+                                ? lighting
+                                : "N/A"
+                )
+                .append("\n\n");
 
-        addDetail(
-                details,
-                "Material",
-                material
-        );
+        details.append("Special Requirement: ")
+                .append(
+                        isValid(specialRequirement)
+                                ? specialRequirement
+                                : "None"
+                )
+                .append("\n\n");
 
-        addDetail(
-                details,
-                "Lighting",
-                lighting
-        );
+        details.append("Budget: ")
+                .append(
+                        isValid(budget)
+                                ? budget
+                                : "N/A"
+                );
 
-        addDetail(
-                details,
-                "Budget",
-                budget
-        );
 
-        addDetail(
-                details,
-                "Special Requirement",
-                specialRequirement
-        );
-
-        new android.app.AlertDialog.Builder(this)
-                .setTitle("Design Details")
+        new AlertDialog.Builder(this)
+                .setTitle("Project Details")
                 .setMessage(details.toString())
                 .setPositiveButton(
                         "OK",
@@ -525,30 +1225,16 @@ public class DesignResultsActivity extends AppCompatActivity {
                 .show();
     }
 
-    /**
-     * Add a field only when meaningful data exists.
-     */
-    private void addDetail(
-            StringBuilder details,
-            String label,
-            String value
-    ) {
 
-        if (isValid(value)) {
+    // =========================================
+    // VALIDATION HELPER
+    // =========================================
 
-            details.append(label)
-                    .append(": ")
-                    .append(value)
-                    .append("\n");
-        }
-    }
-
-    /**
-     * Check whether a String contains useful data.
-     */
     private boolean isValid(String value) {
 
         return value != null
-                && !value.trim().isEmpty();
+                && !value.trim().isEmpty()
+                && !value.equalsIgnoreCase("null");
     }
 }
+

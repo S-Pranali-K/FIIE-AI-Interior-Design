@@ -12,21 +12,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.fiie.app.network.ApiService;
-import com.fiie.app.network.RetrofitClient;
-import com.google.gson.JsonObject;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class ImageUploadActivity extends AppCompatActivity {
 
     private static final int IMAGE_PICKER_REQUEST = 100;
@@ -38,9 +23,9 @@ public class ImageUploadActivity extends AppCompatActivity {
 
     private Uri selectedImageUri;
 
-    // -----------------------------------------
-    // Project / Survey Data
-    // -----------------------------------------
+// -----------------------------------------
+// Project / Survey Data
+// -----------------------------------------
 
     private String roomImageUri;
 
@@ -81,8 +66,6 @@ public class ImageUploadActivity extends AppCompatActivity {
     private String budgetPriority;
     private String completion;
 
-    private ApiService apiService;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,35 +83,10 @@ public class ImageUploadActivity extends AppCompatActivity {
         btnContinueImage = findViewById(R.id.btnContinueImage);
 
         // -----------------------------------------
-        // Retrofit API
-        // -----------------------------------------
-
-        apiService =
-                RetrofitClient
-                        .getInstance()
-                        .create(ApiService.class);
-
-        // -----------------------------------------
         // Receive Survey Data
         // -----------------------------------------
 
         receiveSurveyData();
-
-        // -----------------------------------------
-        // Validate Project ID
-        // -----------------------------------------
-
-        if (projectId == -1) {
-
-            Toast.makeText(
-                    this,
-                    "Project ID missing. Please create the project again.",
-                    Toast.LENGTH_LONG
-            ).show();
-
-            finish();
-            return;
-        }
 
         // -----------------------------------------
         // Display Existing Image
@@ -171,9 +129,9 @@ public class ImageUploadActivity extends AppCompatActivity {
     }
 
 
-    // =========================================
-    // RECEIVE SURVEY DATA
-    // =========================================
+// =========================================
+// RECEIVE SURVEY DATA
+// =========================================
 
     private void receiveSurveyData() {
 
@@ -377,9 +335,9 @@ public class ImageUploadActivity extends AppCompatActivity {
     }
 
 
-    // =========================================
-    // CONTINUE TO AI ANALYSIS
-    // =========================================
+// =========================================
+// CONTINUE TO AI ANALYSIS
+// =========================================
 
     private void continueToAIAnalysis() {
 
@@ -399,324 +357,33 @@ public class ImageUploadActivity extends AppCompatActivity {
         }
 
         // -----------------------------------------
-        // Validate Project
-        // -----------------------------------------
-
-        if (projectId == -1) {
-
-            Toast.makeText(
-                    this,
-                    "Project ID is missing.",
-                    Toast.LENGTH_LONG
-            ).show();
-
-            return;
-        }
-
-        // -----------------------------------------
-        // Disable button during upload
+        // Frontend-only mode
         // -----------------------------------------
 
         btnContinueImage.setEnabled(false);
 
         tvImageStatus.setText(
-                "Uploading image..."
+                "Image ready for analysis"
         );
 
         Toast.makeText(
                 this,
-                "Uploading image...",
+                "Image ready for analysis.",
                 Toast.LENGTH_SHORT
         ).show();
 
         // -----------------------------------------
-        // Upload Image
+        // Directly open AI Analysis
+        // No backend upload
         // -----------------------------------------
 
-        uploadImage();
+        openAIAnalysis();
     }
 
 
-    // =========================================
-    // UPLOAD IMAGE TO BACKEND
-    // =========================================
-
-    private void uploadImage() {
-
-        try {
-
-            // -----------------------------------------
-            // Convert URI to File
-            // -----------------------------------------
-
-            File imageFile =
-                    createFileFromUri(
-                            selectedImageUri
-                    );
-
-            if (imageFile == null) {
-
-                btnContinueImage.setEnabled(true);
-
-                Toast.makeText(
-                        this,
-                        "Unable to read selected image.",
-                        Toast.LENGTH_LONG
-                ).show();
-
-                return;
-            }
-
-            // -----------------------------------------
-            // Request Body
-            // -----------------------------------------
-
-            RequestBody requestFile =
-                    RequestBody.create(
-                            MediaType.parse(
-                                    getContentResolver()
-                                            .getType(selectedImageUri)
-                            ),
-                            imageFile
-                    );
-
-            // -----------------------------------------
-            // Multipart
-            // -----------------------------------------
-
-            MultipartBody.Part body =
-                    MultipartBody.Part.createFormData(
-                            "file",
-                            imageFile.getName(),
-                            requestFile
-                    );
-
-            // -----------------------------------------
-            // API Call
-            // -----------------------------------------
-
-            Call<JsonObject> call =
-                    apiService.uploadRoomImage(
-                            projectId,
-                            body
-                    );
-
-            call.enqueue(
-                    new Callback<JsonObject>() {
-
-                        @Override
-                        public void onResponse(
-                                Call<JsonObject> call,
-                                Response<JsonObject> response
-                        ) {
-
-                            btnContinueImage.setEnabled(true);
-
-                            if (response.isSuccessful()
-                                    && response.body() != null) {
-
-                                tvImageStatus.setText(
-                                        "Image uploaded successfully"
-                                );
-
-                                Toast.makeText(
-                                        ImageUploadActivity.this,
-                                        "Image uploaded successfully.",
-                                        Toast.LENGTH_SHORT
-                                ).show();
-
-                                // -----------------------------------------
-                                // Open AI Analysis
-                                // -----------------------------------------
-
-                                openAIAnalysis();
-
-                            } else {
-
-                                Toast.makeText(
-                                        ImageUploadActivity.this,
-                                        "Image upload failed. HTTP "
-                                                + response.code(),
-                                        Toast.LENGTH_LONG
-                                ).show();
-
-                                tvImageStatus.setText(
-                                        "Image upload failed"
-                                );
-                            }
-                        }
-
-
-                        @Override
-                        public void onFailure(
-                                Call<JsonObject> call,
-                                Throwable t
-                        ) {
-
-                            btnContinueImage.setEnabled(true);
-
-                            tvImageStatus.setText(
-                                    "Image upload failed"
-                            );
-
-                            Toast.makeText(
-                                    ImageUploadActivity.this,
-                                    "Upload error: "
-                                            + t.getMessage(),
-                                    Toast.LENGTH_LONG
-                            ).show();
-                        }
-                    }
-            );
-
-        } catch (Exception e) {
-
-            btnContinueImage.setEnabled(true);
-
-            Toast.makeText(
-                    this,
-                    "Error preparing image: "
-                            + e.getMessage(),
-                    Toast.LENGTH_LONG
-            ).show();
-        }
-    }
-
-
-    // =========================================
-    // CREATE FILE FROM URI
-    // =========================================
-
-    private File createFileFromUri(Uri uri)
-            throws Exception {
-
-        String fileName =
-                getFileName(uri);
-
-        if (fileName == null
-                || fileName.isEmpty()) {
-
-            fileName =
-                    "room_image.jpg";
-        }
-
-        File file =
-                new File(
-                        getCacheDir(),
-                        fileName
-                );
-
-        InputStream inputStream =
-                getContentResolver()
-                        .openInputStream(uri);
-
-        if (inputStream == null) {
-
-            return null;
-        }
-
-        FileOutputStream outputStream =
-                new FileOutputStream(file);
-
-        byte[] buffer =
-                new byte[4096];
-
-        int bytesRead;
-
-        while (
-                (bytesRead =
-                        inputStream.read(buffer))
-                        != -1
-        ) {
-
-            outputStream.write(
-                    buffer,
-                    0,
-                    bytesRead
-            );
-        }
-
-        outputStream.flush();
-        outputStream.close();
-        inputStream.close();
-
-        return file;
-    }
-
-
-    // =========================================
-    // GET FILE NAME
-    // =========================================
-
-    private String getFileName(Uri uri) {
-
-        String result = null;
-
-        if ("content".equals(
-                uri.getScheme()
-        )) {
-
-            Cursor cursor =
-                    getContentResolver().query(
-                            uri,
-                            null,
-                            null,
-                            null,
-                            null
-                    );
-
-            if (cursor != null) {
-
-                try {
-
-                    int nameIndex =
-                            cursor.getColumnIndex(
-                                    OpenableColumns.DISPLAY_NAME
-                            );
-
-                    if (nameIndex >= 0
-                            && cursor.moveToFirst()) {
-
-                        result =
-                                cursor.getString(
-                                        nameIndex
-                                );
-                    }
-
-                } finally {
-
-                    cursor.close();
-                }
-            }
-        }
-
-        if (result == null) {
-
-            result =
-                    uri.getPath();
-
-            if (result != null) {
-
-                int cut =
-                        result.lastIndexOf('/');
-
-                if (cut != -1) {
-
-                    result =
-                            result.substring(
-                                    cut + 1
-                            );
-                }
-            }
-        }
-
-        return result;
-    }
-
-
-    // =========================================
-    // OPEN AI ANALYSIS
-    // =========================================
+// =========================================
+// OPEN AI ANALYSIS
+// =========================================
 
     private void openAIAnalysis() {
 
@@ -922,9 +589,9 @@ public class ImageUploadActivity extends AppCompatActivity {
     }
 
 
-    // =========================================
-    // IMAGE PICKER
-    // =========================================
+// =========================================
+// IMAGE PICKER
+// =========================================
 
     private void openImagePicker() {
 
@@ -946,9 +613,9 @@ public class ImageUploadActivity extends AppCompatActivity {
     }
 
 
-    // =========================================
-    // IMAGE RESULT
-    // =========================================
+// =========================================
+// IMAGE RESULT
+// =========================================
 
     @Override
     protected void onActivityResult(
@@ -990,4 +657,5 @@ public class ImageUploadActivity extends AppCompatActivity {
             ).show();
         }
     }
+
 }

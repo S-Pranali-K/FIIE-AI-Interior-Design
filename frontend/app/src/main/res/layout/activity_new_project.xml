@@ -278,7 +278,7 @@
                         android:layout_height="@dimen/fiie_button_height"
                         android:layout_marginTop="18dp"
                         android:background="@drawable/glass_btn_10"
-                        android:text="Continue to Preferences"
+                        android:text="Continue to Survey"
                         android:textAllCaps="false"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/fiie_button_text"
