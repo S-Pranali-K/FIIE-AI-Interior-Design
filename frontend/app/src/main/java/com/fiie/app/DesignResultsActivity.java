@@ -1,15 +1,38 @@
 package com.fiie.app;
 
+import android.Manifest;
+import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class DesignResultsActivity extends AppCompatActivity {
@@ -27,7 +50,10 @@ public class DesignResultsActivity extends AppCompatActivity {
 
     private Button btnViewDetails;
     private Button btnRecommendations;
+    private Button btnDownloadDesign;
     private Button btnNewDesign;
+
+    private static final int STORAGE_PERMISSION_REQUEST = 101;
 
 
     // =========================================
@@ -35,6 +61,8 @@ public class DesignResultsActivity extends AppCompatActivity {
     // =========================================
 
     private long userId;
+
+    private String projectId;
 
     private String roomImageUri;
 
@@ -126,6 +154,9 @@ public class DesignResultsActivity extends AppCompatActivity {
         btnRecommendations =
                 findViewById(R.id.btnRecommendations);
 
+        btnDownloadDesign =
+                findViewById(R.id.btnDownloadDesign);
+
         btnNewDesign =
                 findViewById(R.id.btnNewDesign);
     }
@@ -147,6 +178,15 @@ public class DesignResultsActivity extends AppCompatActivity {
                 intent.getLongExtra(
                         "USER_ID",
                         -1
+                );
+
+        // -----------------------------------------
+        // Project ID
+        // -----------------------------------------
+
+        projectId =
+                intent.getStringExtra(
+                        "PROJECT_ID"
                 );
 
 
@@ -678,6 +718,30 @@ public class DesignResultsActivity extends AppCompatActivity {
 
 
         // -----------------------------------------
+        // FULL SCREEN IMAGE PREVIEW
+        // -----------------------------------------
+
+        if (ivDesignPreview != null) {
+
+            ivDesignPreview.setOnClickListener(
+                    v -> showFullScreenImage()
+            );
+        }
+
+
+        // -----------------------------------------
+        // DOWNLOAD DESIGN
+        // -----------------------------------------
+
+        if (btnDownloadDesign != null) {
+
+            btnDownloadDesign.setOnClickListener(
+                    v -> downloadDesign()
+            );
+        }
+
+
+        // -----------------------------------------
         // CREATE NEW DESIGN
         // -----------------------------------------
 
@@ -697,6 +761,647 @@ public class DesignResultsActivity extends AppCompatActivity {
                         finish();
                     }
             );
+        }
+    }
+
+
+    // =========================================
+    // FULL SCREEN IMAGE PREVIEW
+    // =========================================
+
+    private void showFullScreenImage() {
+
+        if (ivDesignPreview == null ||
+                ivDesignPreview.getDrawable() == null) {
+
+            Toast.makeText(
+                    this,
+                    "No design image available.",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+
+        Dialog dialog =
+                new Dialog(
+                        this,
+                        android.R.style.Theme_Black_NoTitleBar_Fullscreen
+                );
+
+
+        dialog.setContentView(
+                R.layout.dialog_fullscreen_image
+        );
+
+
+        ImageView ivFullScreenImage =
+                dialog.findViewById(
+                        R.id.ivFullScreenImage
+                );
+
+
+        TextView btnCloseImage =
+                dialog.findViewById(
+                        R.id.btnCloseImage
+                );
+
+
+        // Use the same image displayed in Design Results
+        ivFullScreenImage.setImageDrawable(
+                ivDesignPreview.getDrawable()
+        );
+
+
+        // Close button
+        btnCloseImage.setOnClickListener(
+                v -> dialog.dismiss()
+        );
+
+
+        dialog.show();
+
+
+        if (dialog.getWindow() != null) {
+
+            dialog.getWindow().setBackgroundDrawable(
+                    new ColorDrawable(Color.BLACK)
+            );
+
+
+            dialog.getWindow().setLayout(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT
+            );
+        }
+    }
+
+
+    // =========================================
+    // DOWNLOAD DESIGN
+    // =========================================
+
+    private void downloadDesign() {
+
+        if (ivDesignPreview == null ||
+                ivDesignPreview.getDrawable() == null) {
+
+            Toast.makeText(
+                    this,
+                    "No design image available to download.",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+
+        // Android 9 and below
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        },
+                        STORAGE_PERMISSION_REQUEST
+                );
+
+                return;
+            }
+        }
+
+
+        saveImageToGallery();
+    }
+
+
+    // =========================================
+    // SAVE IMAGE TO GALLERY
+    // =========================================
+
+    private void saveImageToGallery() {
+
+        try {
+
+            Drawable drawable =
+                    ivDesignPreview.getDrawable();
+
+            int width =
+                    drawable.getIntrinsicWidth() > 0
+                            ? drawable.getIntrinsicWidth()
+                            : ivDesignPreview.getWidth();
+
+            int height =
+                    drawable.getIntrinsicHeight() > 0
+                            ? drawable.getIntrinsicHeight()
+                            : ivDesignPreview.getHeight();
+
+            if (width <= 0 || height <= 0) {
+
+                Toast.makeText(
+                        this,
+                        "Unable to prepare the design image.",
+                        Toast.LENGTH_SHORT
+                ).show();
+
+                return;
+            }
+
+
+            Bitmap bitmap =
+                    Bitmap.createBitmap(
+                            width,
+                            height,
+                            Bitmap.Config.ARGB_8888
+                    );
+
+
+            Canvas canvas =
+                    new Canvas(bitmap);
+
+            drawable.setBounds(
+                    0,
+                    0,
+                    canvas.getWidth(),
+                    canvas.getHeight()
+            );
+
+            drawable.draw(canvas);
+
+
+            String fileName =
+                    "FIIE_Design_"
+                            + System.currentTimeMillis()
+                            + ".jpg";
+
+
+            // =====================================
+            // ANDROID 10+
+            // =====================================
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
+                ContentValues values =
+                        new ContentValues();
+
+                values.put(
+                        MediaStore.Images.Media.DISPLAY_NAME,
+                        fileName
+                );
+
+                values.put(
+                        MediaStore.Images.Media.MIME_TYPE,
+                        "image/jpeg"
+                );
+
+                values.put(
+                        MediaStore.Images.Media.RELATIVE_PATH,
+                        Environment.DIRECTORY_PICTURES
+                                + "/FIIE"
+                );
+
+                values.put(
+                        MediaStore.Images.Media.IS_PENDING,
+                        1
+                );
+
+
+                Uri imageUri =
+                        getContentResolver().insert(
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                                values
+                        );
+
+
+                if (imageUri == null) {
+
+                    Toast.makeText(
+                            this,
+                            "Failed to save design.",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                    return;
+                }
+
+
+                try (OutputStream outputStream =
+                             getContentResolver()
+                                     .openOutputStream(imageUri)) {
+
+                    if (outputStream == null) {
+                        throw new Exception(
+                                "Unable to open image output."
+                        );
+                    }
+
+                    bitmap.compress(
+                            Bitmap.CompressFormat.JPEG,
+                            95,
+                            outputStream
+                    );
+                }
+
+
+                values.clear();
+
+                values.put(
+                        MediaStore.Images.Media.IS_PENDING,
+                        0
+                );
+
+                getContentResolver().update(
+                        imageUri,
+                        values,
+                        null,
+                        null
+                );
+
+
+                // =====================================
+                // ANDROID 9 AND BELOW
+                // =====================================
+
+            } else {
+
+                File picturesDirectory =
+                        Environment.getExternalStoragePublicDirectory(
+                                Environment.DIRECTORY_PICTURES
+                        );
+
+                File fiieDirectory =
+                        new File(
+                                picturesDirectory,
+                                "FIIE"
+                        );
+
+
+                if (!fiieDirectory.exists()) {
+
+                    if (!fiieDirectory.mkdirs()) {
+
+                        Toast.makeText(
+                                this,
+                                "Unable to create Gallery folder.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+
+                        return;
+                    }
+                }
+
+
+                File imageFile =
+                        new File(
+                                fiieDirectory,
+                                fileName
+                        );
+
+
+                try (FileOutputStream outputStream =
+                             new FileOutputStream(imageFile)) {
+
+                    bitmap.compress(
+                            Bitmap.CompressFormat.JPEG,
+                            95,
+                            outputStream
+                    );
+                }
+
+
+                // Make the image visible in Gallery
+                sendBroadcast(
+                        new Intent(
+                                android.content.Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                Uri.fromFile(imageFile)
+                        )
+                );
+            }
+
+
+            // =====================================
+            // GALLERY SAVE SUCCESSFUL
+            // =====================================
+
+            Toast.makeText(
+                    this,
+                    "Design saved to Gallery.",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            // Save to Saved Designs only after
+            // the Gallery save has succeeded.
+            saveProjectToSaved();
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            Toast.makeText(
+                    this,
+                    "Failed to save design.",
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
+
+
+    // =========================================
+    // SAVE PROJECT TO SAVED DESIGNS
+    // =========================================
+
+    private void saveProjectToSaved() {
+
+        try {
+
+            SharedPreferences preferences =
+                    getSharedPreferences(
+                            "FIIE_PREFS",
+                            MODE_PRIVATE
+                    );
+
+            String savedProjectsJson =
+                    preferences.getString(
+                            "FIIE_SAVED_PROJECTS",
+                            "[]"
+                    );
+
+            JSONArray savedProjects =
+                    new JSONArray(savedProjectsJson);
+
+
+            // -----------------------------------------
+            // Create a project ID if one was not passed
+            // -----------------------------------------
+
+            String finalProjectId =
+                    projectId;
+
+            if (!isValid(finalProjectId)) {
+
+                finalProjectId =
+                        String.valueOf(
+                                (
+                                        roomType
+                                                + "|"
+                                                + roomLength
+                                                + "|"
+                                                + roomWidth
+                                                + "|"
+                                                + style
+                                                + "|"
+                                                + color
+                                                + "|"
+                                                + budget
+                                ).hashCode()
+                        );
+            }
+
+
+            // -----------------------------------------
+            // Prevent duplicate saved projects
+            // -----------------------------------------
+
+            for (int i = 0;
+                 i < savedProjects.length();
+                 i++) {
+
+                JSONObject existingProject =
+                        savedProjects.getJSONObject(i);
+
+                String existingId =
+                        existingProject.optString(
+                                "project_id",
+                                ""
+                        );
+
+                if (existingId.equals(finalProjectId)) {
+
+                    Toast.makeText(
+                            this,
+                            "Design is already saved.",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                    return;
+                }
+            }
+
+
+            // -----------------------------------------
+            // Create saved project object
+            // -----------------------------------------
+
+            JSONObject savedProject =
+                    new JSONObject();
+
+            savedProject.put(
+                    "project_id",
+                    finalProjectId
+            );
+
+            savedProject.put(
+                    "user_id",
+                    userId
+            );
+
+            savedProject.put(
+                    "project_name",
+                    isValid(style)
+                            ? style + " Interior Design"
+                            : "My Interior Design"
+            );
+
+            savedProject.put(
+                    "room_image_uri",
+                    roomImageUri
+            );
+
+            // The current Design Results image is the
+            // image displayed in ivDesignPreview.
+            savedProject.put(
+                    "design_image_uri",
+                    roomImageUri
+            );
+
+            savedProject.put(
+                    "room_type",
+                    roomType
+            );
+
+            savedProject.put(
+                    "room_length",
+                    roomLength
+            );
+
+            savedProject.put(
+                    "room_width",
+                    roomWidth
+            );
+
+            savedProject.put(
+                    "ceiling_height",
+                    ceilingHeight
+            );
+
+            savedProject.put(
+                    "doors",
+                    doors
+            );
+
+            savedProject.put(
+                    "windows",
+                    windows
+            );
+
+            savedProject.put(
+                    "style",
+                    style
+            );
+
+            savedProject.put(
+                    "color",
+                    color
+            );
+
+            savedProject.put(
+                    "material",
+                    material
+            );
+
+            savedProject.put(
+                    "lighting",
+                    lighting
+            );
+
+            savedProject.put(
+                    "special_requirement",
+                    specialRequirement
+            );
+
+            savedProject.put(
+                    "furniture_action",
+                    furnitureAction
+            );
+
+            savedProject.put(
+                    "vastu_enabled",
+                    vastuEnabled
+            );
+
+            savedProject.put(
+                    "door_direction",
+                    doorDirection
+            );
+
+            savedProject.put(
+                    "bed_direction",
+                    bedDirection
+            );
+
+            savedProject.put(
+                    "kitchen_direction",
+                    kitchenDirection
+            );
+
+            savedProject.put(
+                    "pooja_direction",
+                    poojaDirection
+            );
+
+            savedProject.put(
+                    "budget",
+                    budget
+            );
+
+            savedProject.put(
+                    "budget_priority",
+                    budgetPriority
+            );
+
+            savedProject.put(
+                    "completion",
+                    completion
+            );
+
+            savedProject.put(
+                    "date",
+                    System.currentTimeMillis()
+            );
+
+
+            // -----------------------------------------
+            // Add project to Saved Designs
+            // -----------------------------------------
+
+            savedProjects.put(
+                    savedProject
+            );
+
+
+            preferences.edit()
+                    .putString(
+                            "FIIE_SAVED_PROJECTS",
+                            savedProjects.toString()
+                    )
+                    .apply();
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            Toast.makeText(
+                    this,
+                    "Design saved to Gallery, but could not be added to Saved Designs.",
+                    Toast.LENGTH_LONG
+            ).show();
+        }
+    }
+
+
+    // =========================================
+    // STORAGE PERMISSION RESULT
+    // =========================================
+
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode,
+            String[] permissions,
+            int[] grantResults) {
+
+        super.onRequestPermissionsResult(
+                requestCode,
+                permissions,
+                grantResults
+        );
+
+
+        if (requestCode ==
+                STORAGE_PERMISSION_REQUEST) {
+
+            if (grantResults.length > 0 &&
+                    grantResults[0] ==
+                            PackageManager.PERMISSION_GRANTED) {
+
+                saveImageToGallery();
+
+            } else {
+
+                Toast.makeText(
+                        this,
+                        "Storage permission is required to save the design.",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
         }
     }
 
@@ -1237,4 +1942,3 @@ public class DesignResultsActivity extends AppCompatActivity {
                 && !value.equalsIgnoreCase("null");
     }
 }
-

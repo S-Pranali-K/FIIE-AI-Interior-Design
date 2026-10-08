@@ -1,5 +1,4 @@
 package com.fiie.app.model;
-
 public class ProjectSurveyRequest {
 
     private Double roomLength;

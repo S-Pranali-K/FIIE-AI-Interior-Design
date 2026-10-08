@@ -146,6 +146,11 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
 
+                    getSharedPreferences("FIIE_PREFS", MODE_PRIVATE)
+                            .edit()
+                            .putString("USER_NAME", name)
+                            .apply();
+
                     Toast.makeText(
                             RegisterActivity.this,
                             "Registration successful",

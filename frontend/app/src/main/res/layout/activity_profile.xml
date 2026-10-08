@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_dashboard"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="24dp">
+
+
+        <!-- ==================== HEADER ==================== -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="18dp">
+
+            <ImageButton
+                android:id="@+id/btnProfileBack"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/glass_circle"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Back"
+                android:padding="10dp"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:text="My Profile"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:fontFamily="serif"
+                android:textColor="#2F2A26" />
+
+        </LinearLayout>
+
+
+        <!-- ==================== PROFILE HEADER CARD ==================== -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="26dp"
+            android:background="@drawable/glass_dashboard_card"
+            android:layout_marginBottom="26dp">
+
+            <ImageView
+                android:layout_width="82dp"
+                android:layout_height="82dp"
+                android:background="@drawable/glass_circle"
+                android:src="@drawable/ic_person"
+                android:padding="23dp"
+                android:scaleType="centerInside"
+                android:contentDescription="Profile" />
+
+            <TextView
+                android:id="@+id/tvProfileName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="User"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:fontFamily="serif"
+                android:textColor="#2F2A26" />
+
+            <TextView
+                android:id="@+id/tvProfileEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Not available"
+                android:textSize="15sp"
+                android:textColor="#6F675F" />
+
+        </LinearLayout>
+
+
+        <!-- ==================== PERSONAL INFORMATION ==================== -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Personal Information"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            android:textColor="#2F2A26"
+            android:layout_marginBottom="11dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="14dp"
+            android:background="@drawable/glass_dashboard_card"
+            android:layout_marginBottom="26dp">
+
+
+            <!-- Full Name -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/glass_circle"
+                    android:src="@drawable/ic_person"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:contentDescription="Name" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Full Name"
+                        android:textSize="13sp"
+                        android:textColor="#756D65" />
+
+                    <TextView
+                        android:id="@+id/tvProfileNameInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your name"
+                        android:textSize="16sp"
+                        android:textColor="#2F2A26"
+                        android:layout_marginTop="3dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- Divider -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="56dp"
+                android:layout_marginEnd="8dp"
+                android:background="#45FFFFFF" />
+
+
+            <!-- Email -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/glass_circle"
+                    android:src="@drawable/ic_notifications"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:contentDescription="Email" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email Address"
+                        android:textSize="13sp"
+                        android:textColor="#756D65" />
+
+                    <TextView
+                        android:id="@+id/tvProfileEmailInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your email"
+                        android:textSize="16sp"
+                        android:textColor="#2F2A26"
+                        android:layout_marginTop="3dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- Divider -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="56dp"
+                android:layout_marginEnd="8dp"
+                android:background="#45FFFFFF" />
+
+
+            <!-- User ID -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:gravity="center"
+                    android:text="#"
+                    android:textSize="19sp"
+                    android:textStyle="bold"
+                    android:textColor="#B89A84"
+                    android:background="@drawable/glass_circle" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="User ID"
+                        android:textSize="13sp"
+                        android:textColor="#756D65" />
+
+                    <TextView
+                        android:id="@+id/tvProfileUserId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Not available"
+                        android:textSize="16sp"
+                        android:textColor="#2F2A26"
+                        android:layout_marginTop="3dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!-- ==================== ACCOUNT ==================== -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Account"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            android:textColor="#2F2A26"
+            android:layout_marginBottom="11dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:background="@drawable/glass_dashboard_card">
+
+
+            <!-- Edit Profile -->
+
+            <LinearLayout
+                android:id="@+id/layoutEditProfile"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Edit Profile"
+                    android:textSize="16sp"
+                    android:textColor="#2F2A26" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textSize="27sp"
+                    android:textColor="#B89A84" />
+
+            </LinearLayout>
+
+
+            <!-- Divider -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#45FFFFFF" />
+
+
+            <!-- Settings -->
+
+            <LinearLayout
+                android:id="@+id/layoutSettings"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Settings"
+                    android:textSize="16sp"
+                    android:textColor="#2F2A26" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textSize="27sp"
+                    android:textColor="#B89A84" />
+
+            </LinearLayout>
+
+
+            <!-- Divider -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#45FFFFFF" />
+
+
+            <!-- Change Password -->
+
+            <LinearLayout
+                android:id="@+id/layoutChangePassword"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Change Password"
+                    android:textSize="16sp"
+                    android:textColor="#2F2A26" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textSize="27sp"
+                    android:textColor="#B89A84" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

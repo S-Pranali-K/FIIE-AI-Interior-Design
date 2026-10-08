@@ -299,6 +299,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <!-- View Full Details -->
+
         <Button
             android:id="@+id/btnViewDetails"
             android:layout_width="match_parent"
@@ -311,6 +313,9 @@
             android:background="@drawable/glass_card_10"
             android:minHeight="52dp"
             android:stateListAnimator="@null" />
+
+
+        <!-- View Recommendations -->
 
         <Button
             android:id="@+id/btnRecommendations"
@@ -326,6 +331,26 @@
             android:minHeight="52dp"
             android:stateListAnimator="@null" />
 
+
+        <!-- Download Design -->
+
+        <Button
+            android:id="@+id/btnDownloadDesign"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:text="Download Design"
+            android:textAllCaps="false"
+            android:textColor="#4B3D33"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="@drawable/glass_card_10"
+            android:minHeight="52dp"
+            android:stateListAnimator="@null" />
+
+
+        <!-- Create New Design -->
+
         <Button
             android:id="@+id/btnNewDesign"
             android:layout_width="match_parent"
@@ -339,7 +364,6 @@
             android:background="@drawable/glass_btn_10"
             android:minHeight="52dp"
             android:stateListAnimator="@null" />
-
 
     </LinearLayout>
 

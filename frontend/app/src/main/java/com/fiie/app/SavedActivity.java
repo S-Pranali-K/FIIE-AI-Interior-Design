@@ -2,11 +2,9 @@ package com.fiie.app;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,24 +13,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class ProjectsActivity extends AppCompatActivity {
+public class SavedActivity extends AppCompatActivity {
 
-    private LinearLayout projectsContainer;
-    private TextView tvEmptyProjects;
+    private LinearLayout savedContainer;
+    private TextView tvEmptySaved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_projects);
+        setContentView(R.layout.activity_saved);
 
-        projectsContainer = findViewById(R.id.projectsContainer);
-        tvEmptyProjects = findViewById(R.id.tvEmptyProjects);
+        savedContainer = findViewById(R.id.savedContainer);
+        tvEmptySaved = findViewById(R.id.tvEmptySaved);
 
-        loadProjects();
+        // Back arrow
+        findViewById(R.id.btnSavedBack).setOnClickListener(v -> {
+            finish();
+        });
+
+        loadSavedProjects();
     }
 
-    private void loadProjects() {
+    private void loadSavedProjects() {
 
         SharedPreferences preferences =
                 getSharedPreferences(
@@ -40,33 +43,35 @@ public class ProjectsActivity extends AppCompatActivity {
                         MODE_PRIVATE
                 );
 
-        String projectsJson =
+        String savedJson =
                 preferences.getString(
-                        "FIIE_PROJECTS",
+                        "FIIE_SAVED_PROJECTS",
                         ""
                 );
 
-        if (projectsJson.isEmpty()) {
+        if (savedJson.isEmpty()) {
             showEmptyState();
             return;
         }
 
         try {
 
-            JSONArray projects = new JSONArray(projectsJson);
+            JSONArray savedProjects =
+                    new JSONArray(savedJson);
 
-            if (projects.length() == 0) {
+            if (savedProjects.length() == 0) {
                 showEmptyState();
                 return;
             }
 
-            tvEmptyProjects.setVisibility(View.GONE);
+            tvEmptySaved.setVisibility(View.GONE);
 
-            for (int i = projects.length() - 1; i >= 0; i--) {
+            for (int i = savedProjects.length() - 1; i >= 0; i--) {
 
-                JSONObject project = projects.getJSONObject(i);
+                JSONObject project =
+                        savedProjects.getJSONObject(i);
 
-                addProjectCard(project);
+                addSavedProjectCard(project);
             }
 
         } catch (Exception e) {
@@ -75,22 +80,19 @@ public class ProjectsActivity extends AppCompatActivity {
     }
 
     private void showEmptyState() {
-
-        tvEmptyProjects.setVisibility(View.VISIBLE);
+        tvEmptySaved.setVisibility(View.VISIBLE);
     }
 
-    private void addProjectCard(JSONObject project) {
+    private void addSavedProjectCard(JSONObject project) {
 
-        LinearLayout card = new LinearLayout(this);
+        LinearLayout card =
+                new LinearLayout(this);
 
-        card.setOrientation(LinearLayout.VERTICAL);
-
-        card.setPadding(
-                22,
-                20,
-                22,
-                20
+        card.setOrientation(
+                LinearLayout.VERTICAL
         );
+
+        card.setPadding(22, 20, 22, 20);
 
         card.setBackgroundResource(
                 R.drawable.glass_dashboard_card
@@ -102,89 +104,23 @@ public class ProjectsActivity extends AppCompatActivity {
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
 
-        cardParams.setMargins(
-                0,
-                0,
-                0,
-                14
-        );
+        cardParams.setMargins(0, 0, 0, 14);
 
         card.setLayoutParams(cardParams);
 
-
-        // =========================================
-        // GENERATED DESIGN IMAGE
-        // =========================================
-
-        String designImageUri =
-                getProjectValue(
-                        project,
-                        "design_image_uri",
-                        ""
-                );
-
-        if (!designImageUri.isEmpty()) {
-
-            ImageView designImage = new ImageView(this);
-
-            LinearLayout.LayoutParams imageParams =
-                    new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            (int) (
-                                    180 *
-                                            getResources()
-                                                    .getDisplayMetrics()
-                                                    .density
-                            )
-                    );
-
-            imageParams.setMargins(
-                    0,
-                    0,
-                    0,
-                    14
-            );
-
-            designImage.setLayoutParams(imageParams);
-
-            designImage.setScaleType(
-                    ImageView.ScaleType.CENTER_CROP
-            );
-
-            try {
-
-                designImage.setImageURI(
-                        Uri.parse(designImageUri)
-                );
-
-                card.addView(designImage);
-
-            } catch (Exception e) {
-
-                // If saved image URI is invalid,
-                // continue showing project details.
-            }
-        }
-
-
-        // =========================================
-        // PROJECT TITLE
-        // =========================================
-
-        TextView title = new TextView(this);
+        TextView title =
+                new TextView(this);
 
         title.setText(
                 getProjectValue(
                         project,
                         "project_name",
-                        "My Interior Design"
+                        "Saved Interior Design"
                 )
         );
 
         title.setTextColor(
-                android.graphics.Color.parseColor(
-                        "#2D2621"
-                )
+                android.graphics.Color.parseColor("#2D2621")
         );
 
         title.setTextSize(19);
@@ -195,11 +131,6 @@ public class ProjectsActivity extends AppCompatActivity {
         );
 
         card.addView(title);
-
-
-        // =========================================
-        // ROOM
-        // =========================================
 
         TextView room =
                 createProjectText(
@@ -213,11 +144,6 @@ public class ProjectsActivity extends AppCompatActivity {
 
         card.addView(room);
 
-
-        // =========================================
-        // STYLE
-        // =========================================
-
         TextView style =
                 createProjectText(
                         "Style: " +
@@ -229,11 +155,6 @@ public class ProjectsActivity extends AppCompatActivity {
                 );
 
         card.addView(style);
-
-
-        // =========================================
-        // COLOR
-        // =========================================
 
         TextView color =
                 createProjectText(
@@ -247,11 +168,6 @@ public class ProjectsActivity extends AppCompatActivity {
 
         card.addView(color);
 
-
-        // =========================================
-        // BUDGET
-        // =========================================
-
         TextView budget =
                 createProjectText(
                         "Budget: " +
@@ -263,11 +179,6 @@ public class ProjectsActivity extends AppCompatActivity {
                 );
 
         card.addView(budget);
-
-
-        // =========================================
-        // DATE
-        // =========================================
 
         TextView date =
                 createProjectText(
@@ -282,16 +193,10 @@ public class ProjectsActivity extends AppCompatActivity {
             card.addView(date);
         }
 
+        TextView viewProject =
+                new TextView(this);
 
-        // =========================================
-        // VIEW PROJECT BUTTON
-        // =========================================
-
-        TextView viewProject = new TextView(this);
-
-        viewProject.setText(
-                "View Project   →"
-        );
+        viewProject.setText("View Saved Design   →");
 
         viewProject.setTextColor(
                 android.graphics.Color.WHITE
@@ -299,7 +204,9 @@ public class ProjectsActivity extends AppCompatActivity {
 
         viewProject.setTextSize(13);
 
-        viewProject.setGravity(Gravity.CENTER);
+        viewProject.setGravity(
+                Gravity.CENTER
+        );
 
         viewProject.setTypeface(
                 null,
@@ -307,10 +214,7 @@ public class ProjectsActivity extends AppCompatActivity {
         );
 
         viewProject.setPadding(
-                12,
-                8,
-                12,
-                8
+                12, 8, 12, 8
         );
 
         viewProject.setBackgroundResource(
@@ -329,26 +233,20 @@ public class ProjectsActivity extends AppCompatActivity {
                 );
 
         buttonParams.setMargins(
-                0,
-                14,
-                0,
-                0
+                0, 14, 0, 0
         );
 
-        viewProject.setLayoutParams(buttonParams);
+        viewProject.setLayoutParams(
+                buttonParams
+        );
 
         card.addView(viewProject);
-
-
-        // =========================================
-        // OPEN PROJECT
-        // =========================================
 
         viewProject.setOnClickListener(v -> {
 
             Intent intent =
                     new Intent(
-                            ProjectsActivity.this,
+                            SavedActivity.this,
                             DesignResultsActivity.class
                     );
 
@@ -360,17 +258,13 @@ public class ProjectsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        projectsContainer.addView(card);
+        savedContainer.addView(card);
     }
-
-
-    // =========================================
-    // CREATE PROJECT TEXT
-    // =========================================
 
     private TextView createProjectText(String text) {
 
-        TextView view = new TextView(this);
+        TextView view =
+                new TextView(this);
 
         view.setText(text);
 
@@ -383,19 +277,11 @@ public class ProjectsActivity extends AppCompatActivity {
         view.setTextSize(13);
 
         view.setPadding(
-                0,
-                5,
-                0,
-                0
+                0, 5, 0, 0
         );
 
         return view;
     }
-
-
-    // =========================================
-    // GET PROJECT VALUE
-    // =========================================
 
     private String getProjectValue(
             JSONObject project,
@@ -425,11 +311,6 @@ public class ProjectsActivity extends AppCompatActivity {
         }
     }
 
-
-    // =========================================
-    // SEND PROJECT DATA
-    // =========================================
-
     private void putProjectData(
             Intent intent,
             JSONObject project
@@ -451,25 +332,6 @@ public class ProjectsActivity extends AppCompatActivity {
                 )
         );
 
-
-        // =========================================
-        // GENERATED DESIGN IMAGE
-        // =========================================
-
-        intent.putExtra(
-                "design_image_uri",
-                getProjectValue(
-                        project,
-                        "design_image_uri",
-                        ""
-                )
-        );
-
-
-        // =========================================
-        // ROOM IMAGE
-        // =========================================
-
         intent.putExtra(
                 "room_image_uri",
                 getProjectValue(
@@ -479,10 +341,14 @@ public class ProjectsActivity extends AppCompatActivity {
                 )
         );
 
-
-        // =========================================
-        // ROOM INFORMATION
-        // =========================================
+        intent.putExtra(
+                "design_image_uri",
+                getProjectValue(
+                        project,
+                        "design_image_uri",
+                        ""
+                )
+        );
 
         intent.putExtra(
                 "room_type",
@@ -519,11 +385,6 @@ public class ProjectsActivity extends AppCompatActivity {
                         ""
                 )
         );
-
-
-        // =========================================
-        // DESIGN PREFERENCES
-        // =========================================
 
         intent.putExtra(
                 "style",
@@ -570,11 +431,6 @@ public class ProjectsActivity extends AppCompatActivity {
                 )
         );
 
-
-        // =========================================
-        // BUDGET
-        // =========================================
-
         intent.putExtra(
                 "budget",
                 getProjectValue(
@@ -593,11 +449,6 @@ public class ProjectsActivity extends AppCompatActivity {
                 )
         );
 
-
-        // =========================================
-        // COMPLETION
-        // =========================================
-
         intent.putExtra(
                 "completion",
                 getProjectValue(
@@ -607,11 +458,6 @@ public class ProjectsActivity extends AppCompatActivity {
                 )
         );
 
-
-        // =========================================
-        // FURNITURE
-        // =========================================
-
         intent.putExtra(
                 "furniture_action",
                 getProjectValue(
@@ -620,11 +466,6 @@ public class ProjectsActivity extends AppCompatActivity {
                         ""
                 )
         );
-
-
-        // =========================================
-        // VASTU
-        // =========================================
 
         intent.putExtra(
                 "vastu_enabled",

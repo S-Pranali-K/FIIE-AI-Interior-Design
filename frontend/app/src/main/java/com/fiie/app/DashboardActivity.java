@@ -130,15 +130,21 @@ public class DashboardActivity extends AppCompatActivity {
             });
         }
 
+        // =========================================
+        // SAVED QUICK ACTION
+        // =========================================
+
         if (btnSaved != null) {
 
             btnSaved.setOnClickListener(v -> {
 
-                Toast.makeText(
-                        DashboardActivity.this,
-                        "Saved designs will appear here.",
-                        Toast.LENGTH_SHORT
-                ).show();
+                Intent intent =
+                        new Intent(
+                                DashboardActivity.this,
+                                SavedActivity.class
+                        );
+
+                startActivity(intent);
             });
         }
 
@@ -148,6 +154,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         setupBottomNavigation();
     }
+
 
     private void applySavedTheme() {
 
@@ -160,24 +167,29 @@ public class DashboardActivity extends AppCompatActivity {
         switch (theme) {
 
             case "light":
+
                 AppCompatDelegate.setDefaultNightMode(
                         AppCompatDelegate.MODE_NIGHT_NO
                 );
+
                 break;
 
             case "dark":
+
                 AppCompatDelegate.setDefaultNightMode(
                         AppCompatDelegate.MODE_NIGHT_YES
                 );
+
                 break;
 
             default:
+
                 AppCompatDelegate.setDefaultNightMode(
                         AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                 );
-                break;
         }
     }
+
 
     private void showThemeMenu(View anchor) {
 
@@ -233,6 +245,7 @@ public class DashboardActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
+
     private void setupMenu() {
 
         View btnMenu =
@@ -280,6 +293,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                         return true;
 
+
                     case "Projects":
 
                         Intent projectsIntent =
@@ -292,21 +306,30 @@ public class DashboardActivity extends AppCompatActivity {
 
                         return true;
 
+
+                    // =========================================
+                    // SAVED DESIGNS MENU
+                    // =========================================
+
                     case "Saved Designs":
 
-                        Toast.makeText(
-                                DashboardActivity.this,
-                                "Saved designs will appear here.",
-                                Toast.LENGTH_SHORT
-                        ).show();
+                        Intent savedIntent =
+                                new Intent(
+                                        DashboardActivity.this,
+                                        SavedActivity.class
+                                );
+
+                        startActivity(savedIntent);
 
                         return true;
+
 
                     case "Theme":
 
                         showThemeMenu(btnMenu);
 
                         return true;
+
 
                     case "Settings":
 
@@ -320,6 +343,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                         return true;
 
+
                     default:
 
                         return false;
@@ -329,6 +353,7 @@ public class DashboardActivity extends AppCompatActivity {
             popupMenu.show();
         });
     }
+
 
     private void setupSearch() {
 
@@ -345,6 +370,7 @@ public class DashboardActivity extends AppCompatActivity {
                     new EditText(DashboardActivity.this);
 
             searchInput.setSingleLine(true);
+
             searchInput.setHint(
                     "Search your designs..."
             );
@@ -413,6 +439,7 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
 
+
     private void performDashboardSearch(String query) {
 
         String search =
@@ -468,16 +495,24 @@ public class DashboardActivity extends AppCompatActivity {
             return;
         }
 
+
+        // =========================================
+        // SEARCH → SAVED
+        // =========================================
+
         if (search.contains("saved")) {
 
-            Toast.makeText(
-                    this,
-                    "Saved designs will appear here.",
-                    Toast.LENGTH_SHORT
-            ).show();
+            Intent intent =
+                    new Intent(
+                            DashboardActivity.this,
+                            SavedActivity.class
+                    );
+
+            startActivity(intent);
 
             return;
         }
+
 
         if (search.contains("profile") ||
                 search.contains("setting")) {
@@ -500,6 +535,7 @@ public class DashboardActivity extends AppCompatActivity {
         ).show();
     }
 
+
     private void setupDashboardBackground() {
 
         ImageView background =
@@ -520,6 +556,7 @@ public class DashboardActivity extends AppCompatActivity {
             );
         }
     }
+
 
     private void setupUserHeader() {
 
@@ -576,6 +613,7 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
+
     private void setupBottomNavigation() {
 
         View navHome =
@@ -593,13 +631,16 @@ public class DashboardActivity extends AppCompatActivity {
         View navProfile =
                 findViewById(R.id.navProfile);
 
+
         if (navHome != null) {
 
             navHome.setOnClickListener(v -> {
 
                 // Already on Dashboard.
+
             });
         }
+
 
         if (navAnalyze != null) {
 
@@ -620,6 +661,7 @@ public class DashboardActivity extends AppCompatActivity {
             });
         }
 
+
         if (navCreate != null) {
 
             navCreate.setOnClickListener(v -> {
@@ -639,17 +681,25 @@ public class DashboardActivity extends AppCompatActivity {
             });
         }
 
+
+        // =========================================
+        // BOTTOM NAVIGATION → SAVED
+        // =========================================
+
         if (navSaved != null) {
 
             navSaved.setOnClickListener(v -> {
 
-                Toast.makeText(
-                        DashboardActivity.this,
-                        "Saved designs will appear here.",
-                        Toast.LENGTH_SHORT
-                ).show();
+                Intent intent =
+                        new Intent(
+                                DashboardActivity.this,
+                                SavedActivity.class
+                        );
+
+                startActivity(intent);
             });
         }
+
 
         if (navProfile != null) {
 
@@ -658,7 +708,7 @@ public class DashboardActivity extends AppCompatActivity {
                 Intent intent =
                         new Intent(
                                 DashboardActivity.this,
-                                SettingsActivity.class
+                                ProfileActivity.class
                         );
 
                 startActivity(intent);
